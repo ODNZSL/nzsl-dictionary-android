@@ -27,6 +27,9 @@ proguard/
 # Log Files
 *.log
 
+# Workspace files
+.idea/*
+
 # NZSL images (fetched by script)
 app/src/main/res/drawable-nodpi/*
 
