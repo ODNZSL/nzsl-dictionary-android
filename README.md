@@ -1,2 +1,2 @@
 # nzsl-dictionary-android
-NZSL Dictionary App for Android Devices
+NZSL Dictionary App for Android devices

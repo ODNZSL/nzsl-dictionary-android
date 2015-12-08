@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout android:id="@+id/handshape_header"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:background="#eee"
+            android:textSize="18sp"
+            android:text="Handshape" />
+        <Gallery android:id="@+id/handshape"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:spacing="20px" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:background="#eee"
+            android:textSize="18sp"
+            android:text="Location" />
+        <Gallery android:id="@+id/location"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:spacing="20px" />
+    </LinearLayout>
+</LinearLayout>
