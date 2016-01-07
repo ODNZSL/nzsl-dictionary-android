@@ -8,7 +8,7 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
-        <EditText android:id="@+building_list/search_box"
+        <EditText android:id="@+id/building_list_search_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -29,7 +29,7 @@
         <ListView android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
-        <LinearLayout android:id="@+building_list/wotd"
+        <LinearLayout android:id="@+id/building_list_wotd"
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
@@ -45,7 +45,7 @@
                     android:textSize="20dp"
                     android:textColor="#000000"
                     android:text="Word of the day: " />
-                <TextView android:id="@+building_list/wotd_gloss"
+                <TextView android:id="@+id/building_list_wotd_gloss"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left"
@@ -53,7 +53,7 @@
                     android:textStyle="bold"
                     android:textColor="#000000" />
             </LinearLayout>
-            <ImageView android:id="@+building_list/wotd_image"
+            <ImageView android:id="@+id/building_list_wotd_image"
                 android:layout_width="fill_parent"
                 android:layout_height="0dip"
                 android:layout_weight="1"

@@ -5,6 +5,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,6 +27,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class NZSLDictionary extends ListActivity
@@ -84,7 +88,14 @@ public class NZSLDictionary extends ListActivity
             Dictionary.DictItem item = getItem(position);
             gv.setText(item.gloss);
             mv.setText(item.minor);
-            dv.setImageResource(getApplicationContext().getResources().getIdentifier(item.imageName(), "drawable", getPackageName()));
+            try {
+                InputStream ims = getAssets().open(item.imagePath());
+                Drawable d = Drawable.createFromStream(ims, null);
+                dv.setImageDrawable(d);
+            }
+            catch(IOException e) {
+                System.out.println(e.toString());
+            }
             return v;
         }
 
@@ -307,7 +318,7 @@ public class NZSLDictionary extends ListActivity
 
         adapter = new DictAdapter(this, R.layout.list_item, dictionary.getWords());
         setListAdapter(adapter);
-        filterText = (EditText) findViewById(R.building_list.search_box);
+        filterText = (EditText) findViewById(R.id.building_list_search_box);
         filterTextWatcher = new TextWatcher() {
             public void afterTextChanged(Editable s) {}
             public void beforeTextChanged(CharSequence s, int start, int before, int count) {}
@@ -320,17 +331,22 @@ public class NZSLDictionary extends ListActivity
         filterText.addTextChangedListener(filterTextWatcher);
         //filterText.requestFocus();
         getListView().setVisibility(View.INVISIBLE);
-        wotd = (View) findViewById(R.building_list.wotd);
-        ImageView wotdImage = (ImageView) findViewById(R.building_list.wotd_image);
+        wotd = (View) findViewById(R.id.building_list_wotd);
+        ImageView wotdImage = (ImageView) findViewById(R.id.building_list_wotd_image);
         wotd.setBackgroundColor(Color.WHITE);
-        TextView wotdGloss = (TextView) findViewById(R.building_list.wotd_gloss);
+        TextView wotdGloss = (TextView) findViewById(R.id.building_list_wotd_gloss);
         {
             final Dictionary.DictItem item = dictionary.getWordOfTheDay();
-            int i = item.image.lastIndexOf('/');
-            String base = item.image.substring(i+1, item.image.length() - 4);
-            String name = base.toLowerCase().replaceAll("[-.]", "_");
-            int id = getApplicationContext().getResources().getIdentifier(name, "drawable", getPackageName());
-            wotdImage.setImageResource(id);
+
+            try {
+                InputStream ims = getAssets().open(item.imagePath());
+                Drawable d = Drawable.createFromStream(ims, null);
+                wotdImage.setImageDrawable(d);
+            }
+            catch(IOException e) {
+                System.out.println(e.toString());
+            }
+
             wotdImage.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

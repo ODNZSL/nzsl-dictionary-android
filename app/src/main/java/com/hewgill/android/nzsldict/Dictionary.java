@@ -79,9 +79,9 @@ public class Dictionary {
             this.location = location;
         }
 
-        public String imageName() {
+        public String imagePath() {
             String base = image.substring(0, image.length() - 4);
-            String name = base.toLowerCase().replaceAll("[-.]", "_");
+            String name = "images/signs/" + base.toLowerCase().replaceAll("[-.]", "_") + ".png";
             return name;
         }
 
