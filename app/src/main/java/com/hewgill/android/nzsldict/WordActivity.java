@@ -3,12 +3,16 @@ package com.hewgill.android.nzsldict;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class WordActivity extends Activity {
 
@@ -39,8 +43,16 @@ public class WordActivity extends Activity {
         maori.setText(item.maori);
         handshape.setImageResource(getApplicationContext().getResources().getIdentifier(item.handshapeImage(), "drawable", getPackageName()));
         location.setImageResource(getApplicationContext().getResources().getIdentifier(item.locationImage(), "drawable", getPackageName()));
-        int id = getApplicationContext().getResources().getIdentifier(item.imageName(), "drawable", getPackageName());
-        diagram.setImageResource(id);
+
+        try {
+            InputStream ims = getAssets().open(item.imagePath());
+            Drawable d = Drawable.createFromStream(ims, null);
+            diagram.setImageDrawable(d);
+        }
+        catch(IOException e) {
+            System.out.println(e.toString());
+        }
+
         diagram.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent next = new Intent();

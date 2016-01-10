@@ -31,6 +31,5 @@ proguard/
 .idea/*
 
 # NZSL images (fetched by script)
-app/src/main/res/drawable-nodpi/*
-!app/src/main/res/drawable-nodpi/.gitkeep
-
+app/src/main/assets/images/*
+!app/src/main/assets/images/.gitkeep
