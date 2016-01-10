@@ -32,4 +32,4 @@ proguard/
 
 # NZSL images (fetched by script)
 app/src/main/assets/images/*
-
+!app/src/main/assets/images/.gitkeep
