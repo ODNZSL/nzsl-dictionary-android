@@ -37,8 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class NZSLDictionary extends ListActivity implements AppCompatCallback
-{
+public class NZSLDictionary extends ListActivity {
     private Dictionary dictionary;
     private EditText filterText;
     private TextWatcher filterTextWatcher;
@@ -48,7 +47,6 @@ public class NZSLDictionary extends ListActivity implements AppCompatCallback
     private String handshapeFilter;
     private String locationFilter;
     private AppCompatDelegate mDelegate;
-
 
 
     class DictAdapter extends BaseAdapter {
@@ -100,8 +98,7 @@ public class NZSLDictionary extends ListActivity implements AppCompatCallback
                 InputStream ims = getAssets().open(item.imagePath());
                 Drawable d = Drawable.createFromStream(ims, null);
                 dv.setImageDrawable(d);
-            }
-            catch(IOException e) {
+            } catch (IOException e) {
                 System.out.println(e.toString());
             }
             return v;
@@ -138,7 +135,7 @@ public class NZSLDictionary extends ListActivity implements AppCompatCallback
                     int i = target.indexOf('|');
                     if (i >= 0) {
                         String hs = target.substring(0, i);
-                        String ls = target.substring(i+1, target.length());
+                        String ls = target.substring(i + 1, target.length());
                         r = dictionary.getWordsByHandshape(hs, ls);
                     } else {
                         r = dictionary.getWords(target);
@@ -174,96 +171,96 @@ public class NZSLDictionary extends ListActivity implements AppCompatCallback
         }
     }
 
-    static HandshapeInfo[] Handshapes = new HandshapeInfo[] {
-        new HandshapeInfo(0, null),
-        new HandshapeInfo(R.drawable.handshape_1_1_1, "1.1.1"),
-        new HandshapeInfo(R.drawable.handshape_1_1_2, "1.1.2"),
-        new HandshapeInfo(R.drawable.handshape_1_1_3, "1.1.3"),
-        new HandshapeInfo(R.drawable.handshape_1_2_1, "1.2.1"),
-        new HandshapeInfo(R.drawable.handshape_1_2_2, "1.2.2"),
-        new HandshapeInfo(R.drawable.handshape_1_3_1, "1.3.1"),
-        new HandshapeInfo(R.drawable.handshape_1_3_2, "1.3.2"),
-        new HandshapeInfo(R.drawable.handshape_1_4_1, "1.4.1"),
-        new HandshapeInfo(R.drawable.handshape_2_1_1, "2.1.1"),
-        new HandshapeInfo(R.drawable.handshape_2_1_2, "2.1.2"),
-        new HandshapeInfo(R.drawable.handshape_2_2_1, "2.2.1"),
-        new HandshapeInfo(R.drawable.handshape_2_2_2, "2.2.2"),
-        new HandshapeInfo(R.drawable.handshape_2_3_1, "2.3.1"),
-        new HandshapeInfo(R.drawable.handshape_2_3_2, "2.3.2"),
-        new HandshapeInfo(R.drawable.handshape_2_3_3, "2.3.3"),
-        new HandshapeInfo(R.drawable.handshape_3_1_1, "3.1.1"),
-        new HandshapeInfo(R.drawable.handshape_3_2_1, "3.2.1"),
-        new HandshapeInfo(R.drawable.handshape_3_3_1, "3.3.1"),
-        new HandshapeInfo(R.drawable.handshape_3_4_1, "3.4.1"),
-        new HandshapeInfo(R.drawable.handshape_3_4_2, "3.4.2"),
-        new HandshapeInfo(R.drawable.handshape_3_5_1, "3.5.1"),
-        new HandshapeInfo(R.drawable.handshape_3_5_2, "3.5.2"),
-        new HandshapeInfo(R.drawable.handshape_4_1_1, "4.1.1"),
-        new HandshapeInfo(R.drawable.handshape_4_1_2, "4.1.2"),
-        new HandshapeInfo(R.drawable.handshape_4_2_1, "4.2.1"),
-        new HandshapeInfo(R.drawable.handshape_4_2_2, "4.2.2"),
-        new HandshapeInfo(R.drawable.handshape_4_3_1, "4.3.1"),
-        new HandshapeInfo(R.drawable.handshape_4_3_2, "4.3.2"),
-        new HandshapeInfo(R.drawable.handshape_5_1_1, "5.1.1"),
-        new HandshapeInfo(R.drawable.handshape_5_1_2, "5.1.2"),
-        new HandshapeInfo(R.drawable.handshape_5_2_1, "5.2.1"),
-        new HandshapeInfo(R.drawable.handshape_5_3_1, "5.3.1"),
-        new HandshapeInfo(R.drawable.handshape_5_3_2, "5.3.2"),
-        new HandshapeInfo(R.drawable.handshape_5_4_1, "5.4.1"),
-        new HandshapeInfo(R.drawable.handshape_6_1_1, "6.1.1"),
-        new HandshapeInfo(R.drawable.handshape_6_1_2, "6.1.2"),
-        new HandshapeInfo(R.drawable.handshape_6_1_3, "6.1.3"),
-        new HandshapeInfo(R.drawable.handshape_6_1_4, "6.1.4"),
-        new HandshapeInfo(R.drawable.handshape_6_2_1, "6.2.1"),
-        new HandshapeInfo(R.drawable.handshape_6_2_2, "6.2.2"),
-        new HandshapeInfo(R.drawable.handshape_6_2_3, "6.2.3"),
-        new HandshapeInfo(R.drawable.handshape_6_2_4, "6.2.4"),
-        new HandshapeInfo(R.drawable.handshape_6_3_1, "6.3.1"),
-        new HandshapeInfo(R.drawable.handshape_6_3_2, "6.3.2"),
-        new HandshapeInfo(R.drawable.handshape_6_4_1, "6.4.1"),
-        new HandshapeInfo(R.drawable.handshape_6_4_2, "6.4.2"),
-        new HandshapeInfo(R.drawable.handshape_6_5_1, "6.5.1"),
-        new HandshapeInfo(R.drawable.handshape_6_5_2, "6.5.2"),
-        new HandshapeInfo(R.drawable.handshape_6_6_1, "6.6.1"),
-        new HandshapeInfo(R.drawable.handshape_6_6_2, "6.6.2"),
-        new HandshapeInfo(R.drawable.handshape_7_1_1, "7.1.1"),
-        new HandshapeInfo(R.drawable.handshape_7_1_2, "7.1.2"),
-        new HandshapeInfo(R.drawable.handshape_7_1_3, "7.1.3"),
-        new HandshapeInfo(R.drawable.handshape_7_1_4, "7.1.4"),
-        new HandshapeInfo(R.drawable.handshape_7_2_1, "7.2.1"),
-        new HandshapeInfo(R.drawable.handshape_7_3_1, "7.3.1"),
-        new HandshapeInfo(R.drawable.handshape_7_3_2, "7.3.2"),
-        new HandshapeInfo(R.drawable.handshape_7_3_3, "7.3.3"),
-        new HandshapeInfo(R.drawable.handshape_7_4_1, "7.4.1"),
-        new HandshapeInfo(R.drawable.handshape_7_4_2, "7.4.2"),
-        new HandshapeInfo(R.drawable.handshape_8_1_1, "8.1.1"),
-        new HandshapeInfo(R.drawable.handshape_8_1_2, "8.1.2"),
-        new HandshapeInfo(R.drawable.handshape_8_1_3, "8.1.3"),
+    static HandshapeInfo[] Handshapes = new HandshapeInfo[]{
+            new HandshapeInfo(0, null),
+            new HandshapeInfo(R.drawable.handshape_1_1_1, "1.1.1"),
+            new HandshapeInfo(R.drawable.handshape_1_1_2, "1.1.2"),
+            new HandshapeInfo(R.drawable.handshape_1_1_3, "1.1.3"),
+            new HandshapeInfo(R.drawable.handshape_1_2_1, "1.2.1"),
+            new HandshapeInfo(R.drawable.handshape_1_2_2, "1.2.2"),
+            new HandshapeInfo(R.drawable.handshape_1_3_1, "1.3.1"),
+            new HandshapeInfo(R.drawable.handshape_1_3_2, "1.3.2"),
+            new HandshapeInfo(R.drawable.handshape_1_4_1, "1.4.1"),
+            new HandshapeInfo(R.drawable.handshape_2_1_1, "2.1.1"),
+            new HandshapeInfo(R.drawable.handshape_2_1_2, "2.1.2"),
+            new HandshapeInfo(R.drawable.handshape_2_2_1, "2.2.1"),
+            new HandshapeInfo(R.drawable.handshape_2_2_2, "2.2.2"),
+            new HandshapeInfo(R.drawable.handshape_2_3_1, "2.3.1"),
+            new HandshapeInfo(R.drawable.handshape_2_3_2, "2.3.2"),
+            new HandshapeInfo(R.drawable.handshape_2_3_3, "2.3.3"),
+            new HandshapeInfo(R.drawable.handshape_3_1_1, "3.1.1"),
+            new HandshapeInfo(R.drawable.handshape_3_2_1, "3.2.1"),
+            new HandshapeInfo(R.drawable.handshape_3_3_1, "3.3.1"),
+            new HandshapeInfo(R.drawable.handshape_3_4_1, "3.4.1"),
+            new HandshapeInfo(R.drawable.handshape_3_4_2, "3.4.2"),
+            new HandshapeInfo(R.drawable.handshape_3_5_1, "3.5.1"),
+            new HandshapeInfo(R.drawable.handshape_3_5_2, "3.5.2"),
+            new HandshapeInfo(R.drawable.handshape_4_1_1, "4.1.1"),
+            new HandshapeInfo(R.drawable.handshape_4_1_2, "4.1.2"),
+            new HandshapeInfo(R.drawable.handshape_4_2_1, "4.2.1"),
+            new HandshapeInfo(R.drawable.handshape_4_2_2, "4.2.2"),
+            new HandshapeInfo(R.drawable.handshape_4_3_1, "4.3.1"),
+            new HandshapeInfo(R.drawable.handshape_4_3_2, "4.3.2"),
+            new HandshapeInfo(R.drawable.handshape_5_1_1, "5.1.1"),
+            new HandshapeInfo(R.drawable.handshape_5_1_2, "5.1.2"),
+            new HandshapeInfo(R.drawable.handshape_5_2_1, "5.2.1"),
+            new HandshapeInfo(R.drawable.handshape_5_3_1, "5.3.1"),
+            new HandshapeInfo(R.drawable.handshape_5_3_2, "5.3.2"),
+            new HandshapeInfo(R.drawable.handshape_5_4_1, "5.4.1"),
+            new HandshapeInfo(R.drawable.handshape_6_1_1, "6.1.1"),
+            new HandshapeInfo(R.drawable.handshape_6_1_2, "6.1.2"),
+            new HandshapeInfo(R.drawable.handshape_6_1_3, "6.1.3"),
+            new HandshapeInfo(R.drawable.handshape_6_1_4, "6.1.4"),
+            new HandshapeInfo(R.drawable.handshape_6_2_1, "6.2.1"),
+            new HandshapeInfo(R.drawable.handshape_6_2_2, "6.2.2"),
+            new HandshapeInfo(R.drawable.handshape_6_2_3, "6.2.3"),
+            new HandshapeInfo(R.drawable.handshape_6_2_4, "6.2.4"),
+            new HandshapeInfo(R.drawable.handshape_6_3_1, "6.3.1"),
+            new HandshapeInfo(R.drawable.handshape_6_3_2, "6.3.2"),
+            new HandshapeInfo(R.drawable.handshape_6_4_1, "6.4.1"),
+            new HandshapeInfo(R.drawable.handshape_6_4_2, "6.4.2"),
+            new HandshapeInfo(R.drawable.handshape_6_5_1, "6.5.1"),
+            new HandshapeInfo(R.drawable.handshape_6_5_2, "6.5.2"),
+            new HandshapeInfo(R.drawable.handshape_6_6_1, "6.6.1"),
+            new HandshapeInfo(R.drawable.handshape_6_6_2, "6.6.2"),
+            new HandshapeInfo(R.drawable.handshape_7_1_1, "7.1.1"),
+            new HandshapeInfo(R.drawable.handshape_7_1_2, "7.1.2"),
+            new HandshapeInfo(R.drawable.handshape_7_1_3, "7.1.3"),
+            new HandshapeInfo(R.drawable.handshape_7_1_4, "7.1.4"),
+            new HandshapeInfo(R.drawable.handshape_7_2_1, "7.2.1"),
+            new HandshapeInfo(R.drawable.handshape_7_3_1, "7.3.1"),
+            new HandshapeInfo(R.drawable.handshape_7_3_2, "7.3.2"),
+            new HandshapeInfo(R.drawable.handshape_7_3_3, "7.3.3"),
+            new HandshapeInfo(R.drawable.handshape_7_4_1, "7.4.1"),
+            new HandshapeInfo(R.drawable.handshape_7_4_2, "7.4.2"),
+            new HandshapeInfo(R.drawable.handshape_8_1_1, "8.1.1"),
+            new HandshapeInfo(R.drawable.handshape_8_1_2, "8.1.2"),
+            new HandshapeInfo(R.drawable.handshape_8_1_3, "8.1.3"),
     };
 
-    static HandshapeInfo[] Locations = new HandshapeInfo[] {
-        new HandshapeInfo(0, null),
-        new HandshapeInfo(R.drawable.location_1_1_in_front_of_body,   "in front of body"),
-        new HandshapeInfo(R.drawable.location_2_2_in_front_of_face,   "in front of face"),
-        new HandshapeInfo(R.drawable.location_3_3_head,               "head"),
-        new HandshapeInfo(R.drawable.location_3_4_top_of_head,        "top of head"),
-        new HandshapeInfo(R.drawable.location_3_5_eyes,               "eyes"),
-        new HandshapeInfo(R.drawable.location_3_6_nose,               "nose"),
-        new HandshapeInfo(R.drawable.location_3_7_ear,                "ear"),
-        new HandshapeInfo(R.drawable.location_3_8_cheek,              "cheek"),
-        new HandshapeInfo(R.drawable.location_3_9_lower_head,         "lower head"),
-        new HandshapeInfo(R.drawable.location_4_10_neck_throat,       "neck/throat"),
-        new HandshapeInfo(R.drawable.location_4_11_shoulders,         "shoulders"),
-        new HandshapeInfo(R.drawable.location_4_12_chest,             "chest"),
-        new HandshapeInfo(R.drawable.location_4_13_abdomen,           "abdomen"),
-        new HandshapeInfo(R.drawable.location_4_14_hips_pelvis_groin, "hips/pelvis/groin"),
-        new HandshapeInfo(R.drawable.location_4_15_upper_leg,         "upper leg"),
-        new HandshapeInfo(R.drawable.location_5_16_upper_arm,         "upper arm"),
-        new HandshapeInfo(R.drawable.location_5_17_elbow,             "elbow"),
-        new HandshapeInfo(R.drawable.location_5_18_lower_arm,         "lower arm"),
-        new HandshapeInfo(R.drawable.location_6_19_wrist,             "wrist"),
-        new HandshapeInfo(R.drawable.location_6_20_fingers_thumb,     "fingers/thumb"),
-        new HandshapeInfo(R.drawable.location_6_22_back_of_hand,      "back of hand"),
+    static HandshapeInfo[] Locations = new HandshapeInfo[]{
+            new HandshapeInfo(0, null),
+            new HandshapeInfo(R.drawable.location_1_1_in_front_of_body, "in front of body"),
+            new HandshapeInfo(R.drawable.location_2_2_in_front_of_face, "in front of face"),
+            new HandshapeInfo(R.drawable.location_3_3_head, "head"),
+            new HandshapeInfo(R.drawable.location_3_4_top_of_head, "top of head"),
+            new HandshapeInfo(R.drawable.location_3_5_eyes, "eyes"),
+            new HandshapeInfo(R.drawable.location_3_6_nose, "nose"),
+            new HandshapeInfo(R.drawable.location_3_7_ear, "ear"),
+            new HandshapeInfo(R.drawable.location_3_8_cheek, "cheek"),
+            new HandshapeInfo(R.drawable.location_3_9_lower_head, "lower head"),
+            new HandshapeInfo(R.drawable.location_4_10_neck_throat, "neck/throat"),
+            new HandshapeInfo(R.drawable.location_4_11_shoulders, "shoulders"),
+            new HandshapeInfo(R.drawable.location_4_12_chest, "chest"),
+            new HandshapeInfo(R.drawable.location_4_13_abdomen, "abdomen"),
+            new HandshapeInfo(R.drawable.location_4_14_hips_pelvis_groin, "hips/pelvis/groin"),
+            new HandshapeInfo(R.drawable.location_4_15_upper_leg, "upper leg"),
+            new HandshapeInfo(R.drawable.location_5_16_upper_arm, "upper arm"),
+            new HandshapeInfo(R.drawable.location_5_17_elbow, "elbow"),
+            new HandshapeInfo(R.drawable.location_5_18_lower_arm, "lower arm"),
+            new HandshapeInfo(R.drawable.location_6_19_wrist, "wrist"),
+            new HandshapeInfo(R.drawable.location_6_20_fingers_thumb, "fingers/thumb"),
+            new HandshapeInfo(R.drawable.location_6_22_back_of_hand, "back of hand"),
     };
 
     static class HandshapeAdapter extends ArrayAdapter<HandshapeInfo> {
@@ -292,18 +289,17 @@ public class NZSLDictionary extends ListActivity implements AppCompatCallback
         }
     }
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDelegate = AppCompatDelegate.create(this, this);
-        mDelegate.onCreate(savedInstanceState);
 
         dictionary = new Dictionary(getApplicationContext());
         // following based on http://stackoverflow.com/questions/1737009/how-to-make-a-nice-looking-listview-filter-on-android
-        mDelegate.setContentView(R.layout.main);
-        mDelegate.setSupportActionBar((Toolbar) findViewById(R.id.app_toolbar));
+        setContentView(R.layout.main);
+
 
         View header = LayoutInflater.from(this).inflate(R.layout.handshape, null);
         getListView().addHeaderView(header, null, false);
@@ -313,7 +309,9 @@ public class NZSLDictionary extends ListActivity implements AppCompatCallback
                 handshapeFilter = Handshapes[position].value;
                 updateHandshapeList();
             }
-            public void onNothingSelected(AdapterView<?> parent) {}
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
         hsv.setAdapter(new HandshapeAdapter(this, R.layout.handshape_item, R.id.handshape_label, Handshapes));
         Gallery lcv = (Gallery) findViewById(R.id.location);
@@ -322,7 +320,9 @@ public class NZSLDictionary extends ListActivity implements AppCompatCallback
                 locationFilter = Locations[position].value;
                 updateHandshapeList();
             }
-            public void onNothingSelected(AdapterView<?> parent) {}
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
         lcv.setAdapter(new HandshapeAdapter(this, R.layout.handshape_item, R.id.handshape_label, Locations));
         handshapeHeader = header.findViewById(R.id.handshape_header);
@@ -332,8 +332,12 @@ public class NZSLDictionary extends ListActivity implements AppCompatCallback
         setListAdapter(adapter);
         filterText = (EditText) findViewById(R.id.building_list_search_box);
         filterTextWatcher = new TextWatcher() {
-            public void afterTextChanged(Editable s) {}
-            public void beforeTextChanged(CharSequence s, int start, int before, int count) {}
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 adapter.getFilter().filter(s);
                 getListView().setVisibility(s.length() != 0 ? View.VISIBLE : View.INVISIBLE);
@@ -354,8 +358,7 @@ public class NZSLDictionary extends ListActivity implements AppCompatCallback
                 InputStream ims = getAssets().open(item.imagePath());
                 Drawable d = Drawable.createFromStream(ims, null);
                 wotdImage.setImageDrawable(d);
-            }
-            catch(IOException e) {
+            } catch (IOException e) {
                 System.out.println(e.toString());
             }
 
@@ -374,38 +377,34 @@ public class NZSLDictionary extends ListActivity implements AppCompatCallback
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
         filterText.removeTextChangedListener(filterTextWatcher);
     }
 
-    public void toggleHandshapeMode(View button)
-    {
-        boolean on = ((ToggleButton) button).isChecked();
-        if (on) {
+    public void toggleHandshapeMode(View button) {
+        //boolean on = ((ToggleButton) button).isChecked();
+        //if (on) {
             filterText.setText("(handshape search)");
             filterText.setEnabled(false);
             handshapeHeader.setVisibility(View.VISIBLE);
             updateHandshapeList();
-        } else {
-            filterText.setText("");
-            filterText.setEnabled(true);
-            handshapeHeader.setVisibility(View.GONE);
-            adapter.getFilter().filter(null);
-        }
+        //} else {
+         //   filterText.setText("");
+          //  filterText.setEnabled(true);
+          //  handshapeHeader.setVisibility(View.GONE);
+           // adapter.getFilter().filter(null);
+        //}
     }
 
-    private void updateHandshapeList()
-    {
+    private void updateHandshapeList() {
         String hf = handshapeFilter != null ? handshapeFilter : "";
         String lf = locationFilter != null ? locationFilter : "";
         adapter.getFilter().filter(hf + "|" + lf);
     }
 
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id)
-    {
+    protected void onListItemClick(ListView l, View v, int position, long id) {
         Dictionary.DictItem item = (Dictionary.DictItem) getListView().getItemAtPosition(position);
         Log.d("list", item.gloss);
         Intent next = new Intent();
@@ -414,38 +413,4 @@ public class NZSLDictionary extends ListActivity implements AppCompatCallback
         startActivity(next);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId()) {
-            case R.id.about:
-                startActivity(new Intent(this, AboutActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onSupportActionModeStarted(ActionMode mode) {
-
-    }
-
-    @Override
-    public void onSupportActionModeFinished(ActionMode mode) {
-
-    }
-
-    @Nullable
-    @Override
-    public ActionMode onWindowStartingSupportActionMode(ActionMode.Callback callback) {
-        return null;
-    }
 }

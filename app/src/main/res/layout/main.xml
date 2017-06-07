@@ -5,6 +5,8 @@
     android:layout_height="fill_parent"
     >
 
+
+
     <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -12,6 +14,7 @@
         android:padding="16dp"
         android:id="@+id/app_toolbar"
         android:background="@color/primary"
+        android:gravity="top"
         android:elevation="4dp">
 
         <LinearLayout
@@ -20,12 +23,54 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-            <include layout="@layout/title_bar" />
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NZSL "
+                    android:textColor="@android:color/white"
+
+                    />
+
+                <TextView
+                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="dictionary"
+                    android:textColor="@android:color/white"
+                    android:textStyle="italic|normal" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+
+                <Button
+                    android:id="@+id/foo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Handshapes"
+                    android:onClick="toggleHandshapeMode"
+                    android:background="@color/accent"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:textColor="@color/textColorPrimary" />
+
+
+            </LinearLayout>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp">
+                android:layout_marginTop="16dp">
 
                 <EditText
                     android:id="@+id/building_list_search_box"
