@@ -1,6 +1,5 @@
 package com.hewgill.android.nzsldict;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,15 +10,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Gallery;
@@ -80,6 +76,7 @@ public class NZSLDictionary extends ListActivity
             }
             TextView gv = (TextView) v.findViewById(R.id.item_gloss);
             TextView mv = (TextView) v.findViewById(R.id.item_minor);
+            TextView mtv = (TextView) v.findViewById(R.id.item_maori);
             ImageView dv = (ImageView) v.findViewById(R.id.diagram);
             if (position >= getCount()) {
                 Log.e("filter", "request for item " + position + " in list of size " + getCount());
@@ -88,6 +85,8 @@ public class NZSLDictionary extends ListActivity
             Dictionary.DictItem item = getItem(position);
             gv.setText(item.gloss);
             mv.setText(item.minor);
+            mtv.setText(item.maori);
+
             try {
                 InputStream ims = getAssets().open(item.imagePath());
                 Drawable d = Drawable.createFromStream(ims, null);
