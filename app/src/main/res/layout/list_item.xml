@@ -17,6 +17,12 @@
             android:textSize="20sp"
             android:textColor="#000"
             android:textStyle="bold">
+        <TextView
+            android:id="@+id/item_maori"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            style="@style/Base.TextAppearance.AppCompat.Subhead">
         </TextView>
         <TextView
             android:id="@+id/item_minor"
