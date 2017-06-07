@@ -53,11 +53,12 @@
                     android:layout_weight="1" />
 
 
-                <Button
+                <ToggleButton
                     android:id="@+id/foo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Handshapes"
+                    android:textOn="Search"
+                    android:textOff="Handshapes"
                     android:onClick="toggleHandshapeMode"
                     android:background="@color/accent"
                     android:paddingLeft="4dp"

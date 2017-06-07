@@ -383,18 +383,18 @@ public class NZSLDictionary extends ListActivity {
     }
 
     public void toggleHandshapeMode(View button) {
-        //boolean on = ((ToggleButton) button).isChecked();
-        //if (on) {
+        boolean on = ((ToggleButton) button).isChecked();
+        if (on) {
             filterText.setText("(handshape search)");
             filterText.setEnabled(false);
             handshapeHeader.setVisibility(View.VISIBLE);
             updateHandshapeList();
-        //} else {
-         //   filterText.setText("");
-          //  filterText.setEnabled(true);
-          //  handshapeHeader.setVisibility(View.GONE);
-           // adapter.getFilter().filter(null);
-        //}
+        } else {
+            filterText.setText("");
+            filterText.setEnabled(true);
+            handshapeHeader.setVisibility(View.GONE);
+            adapter.getFilter().filter(null);
+        }
     }
 
     private void updateHandshapeList() {
