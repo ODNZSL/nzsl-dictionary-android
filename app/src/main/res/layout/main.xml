@@ -54,7 +54,7 @@
 
 
                 <ToggleButton
-                    android:id="@+id/foo"
+                    android:id="@+id/toggle_search_mode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textOn="Search"

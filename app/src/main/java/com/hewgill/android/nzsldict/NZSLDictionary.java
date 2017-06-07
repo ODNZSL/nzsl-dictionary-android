@@ -38,6 +38,7 @@ import java.io.InputStream;
 import java.util.List;
 
 public class NZSLDictionary extends ListActivity {
+
     private Dictionary dictionary;
     private EditText filterText;
     private TextWatcher filterTextWatcher;
@@ -46,8 +47,6 @@ public class NZSLDictionary extends ListActivity {
     private DictAdapter adapter;
     private String handshapeFilter;
     private String locationFilter;
-    private AppCompatDelegate mDelegate;
-
 
     class DictAdapter extends BaseAdapter {
         private int resource;
