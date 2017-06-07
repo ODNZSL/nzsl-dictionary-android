@@ -73,18 +73,18 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-        <ToggleButton android:id="@+id/handshape_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOn="Handshape"
-            android:textOff="Word"
-            android:onClick="toggleHandshapeMode" />
-    </LinearLayout>
+        <!--<ToggleButton android:id="@+id/handshape_toggle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textOn="Handshape"-->
+            <!--android:textOff="Word"-->
+            <!--android:onClick="toggleHandshapeMode" />-->
+    <!--</LinearLayout>-->
     <RelativeLayout
         android:layout_width="fill_parent" 
         android:layout_height="0dip" 
