@@ -3,9 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
+    android:layout_marginTop="8dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="20dp"
     android:background="#fff">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -14,9 +19,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="1dp"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:textStyle="bold">
+            style="@style/Base.TextAppearance.AppCompat.Title">
+        </TextView>
         <TextView
             android:id="@+id/item_maori"
             android:layout_width="fill_parent"
@@ -29,12 +33,12 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="1dp"
-            android:textSize="16sp"
-            android:textColor="#000">
+            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:textStyle="italic">
         </TextView>
     </LinearLayout>
     <ImageView android:id="@+id/diagram"
         android:layout_width="120dp"
-        android:layout_height="80dp"
-        android:scaleType="fitCenter" />
+        android:layout_height="88dp"
+        android:scaleType="fitEnd" />
 </LinearLayout>
