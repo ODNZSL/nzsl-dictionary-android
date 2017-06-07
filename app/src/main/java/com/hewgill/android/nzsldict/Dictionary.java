@@ -20,8 +20,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class Dictionary {
+
+    private static final Integer EXACT_PRIMARY_MATCH_WEIGHTING = 100;
+    private static final Integer CONTAINS_PRIMARY_MATCH_WEIGHTING = 80;
+    private static final Integer EXACT_SECONDARY_MATCH_WEIGHTING = 70;
+    private static final Integer CONTAINS_SECONDARY_MATCH_WEIGHTING = 60;
 
     public static class DictItem implements Serializable {
         public String gloss;
@@ -104,7 +110,7 @@ public class Dictionary {
 
     private ArrayList<DictItem> words = new ArrayList();
 
-    Dictionary(Context context)
+    public Dictionary(Context context)
     {
         InputStream db = null;
         try {
@@ -119,7 +125,7 @@ public class Dictionary {
                 words.add(new DictItem(a[0], a[1], a[2], a[3], a[4], a[5], a[6]));
             }
         } catch (IOException x) {
-            Log.d("dictionary", "exception reading from word list");
+            Log.d("dictionary", "exception reading from word list " + x.getMessage());
         } finally {
             if (db != null) {
                 try {
@@ -161,16 +167,25 @@ public class Dictionary {
 
     public List<DictItem> getWords(String target)
     {
-        List<DictItem> r = new ArrayList<DictItem>(words.size());
-        String t = normalise(target);
-        for (DictItem d: words) {
-            if (normalise(d.gloss).indexOf(t) >= 0
-             || normalise(d.minor).indexOf(t) >= 0
-             || normalise(d.maori).indexOf(t) >= 0) {
-                r.add(d);
+        TreeMap<Integer, DictItem> results = new TreeMap<Integer, DictItem>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer weight1, Integer weight2) {
+                return weight2.compareTo(weight1);
             }
+        });
+        String term = normalise(target);
+        for (DictItem d: words) {
+            String gloss = normalise(d.gloss);
+            String minor = normalise(d.minor);
+            String maori = normalise(d.maori);
+
+            if (gloss.equals(term) || maori.equals(term)) results.put(EXACT_PRIMARY_MATCH_WEIGHTING, d);
+            else if (gloss.contains(term) || maori.contains(term)) results.put(CONTAINS_PRIMARY_MATCH_WEIGHTING, d);
+            else if (minor.equals(term)) results.put(EXACT_SECONDARY_MATCH_WEIGHTING, d);
+            else if (minor.contains(term)) results.put(CONTAINS_SECONDARY_MATCH_WEIGHTING, d);
         }
-        return r;
+
+        return new ArrayList<DictItem>(results.values());
     }
 
     public List<DictItem> getWordsByHandshape(String handshape, String location)
