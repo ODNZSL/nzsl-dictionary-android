@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#2980B9</color><!--Background color for AppBar-->
+    <color name="accent">#F57958</color><!--color effects, EditText, RadioButtons...-->
+    <color name="primaryDark">#18435F</color>
+    <color name="textColorPrimary">@android:color/white</color>
+</resources>

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends BaseActivity {
 
     private WebView web;
 
@@ -13,6 +13,7 @@ public class AboutActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
+        setupAppToolbar();
         web = (WebView) findViewById(R.id.about);
         web.loadUrl("file:///android_asset/html/about.html");
     }

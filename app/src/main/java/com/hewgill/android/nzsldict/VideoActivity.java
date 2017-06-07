@@ -7,15 +7,18 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-public class VideoActivity extends Activity {
+public class VideoActivity extends BaseActivity {
 
     private TextView gloss;
     private TextView minor;
@@ -52,6 +55,7 @@ public class VideoActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video);
+        setupAppToolbar();
         gloss = (TextView) findViewById(R.id.gloss);
         minor = (TextView) findViewById(R.id.minor);
         maori = (TextView) findViewById(R.id.maori);
