@@ -185,8 +185,6 @@ public class Dictionary {
             else if (minor.contains(term)) results.put(CONTAINS_SECONDARY_MATCH_WEIGHTING, d);
         }
 
-        Log.d("Results", results.toString());
-
         return new ArrayList<DictItem>(results.values());
     }
 
