@@ -6,7 +6,10 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +17,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class WordActivity extends Activity {
+public class WordActivity extends BaseActivity {
 
     private TextView gloss;
     private TextView minor;
@@ -25,10 +28,10 @@ public class WordActivity extends Activity {
     private Dictionary.DictItem item;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word);
+        setupAppToolbar();
         gloss = (TextView) findViewById(R.id.gloss);
         minor = (TextView) findViewById(R.id.minor);
         maori = (TextView) findViewById(R.id.maori);
@@ -48,8 +51,7 @@ public class WordActivity extends Activity {
             InputStream ims = getAssets().open(item.imagePath());
             Drawable d = Drawable.createFromStream(ims, null);
             diagram.setImageDrawable(d);
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             System.out.println(e.toString());
         }
 
