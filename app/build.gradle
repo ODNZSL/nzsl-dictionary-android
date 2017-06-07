@@ -8,8 +8,8 @@ android {
         applicationId "com.hewgill.android.nzsldict"
         minSdkVersion 9
         targetSdkVersion 15
-        versionCode 18
-        versionName "18"
+        versionCode 19
+        versionName "19"
     }
 
     buildTypes {
