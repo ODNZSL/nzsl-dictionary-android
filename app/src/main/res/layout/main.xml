@@ -45,21 +45,30 @@
             </LinearLayout>
 
 
-            <EditText
-                android:layout_marginTop="8dp"
-                android:id="@+id/building_list_search_box"
-                style="@style/Widget.AppCompat.EditText"
-                android:layout_width="fill_parent"
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/white"
-                android:drawableEnd="@android:drawable/ic_menu_search"
-                android:inputType="textFilter"
-                android:maxLines="1"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:drawableRight="@android:drawable/ic_menu_search" />
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/building_list_search_box"
+                    style="@style/Widget.AppCompat.EditText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/ic_search"
+                    android:drawableRight="@drawable/ic_search"
+                    android:ellipsize="end"
+                    android:imeOptions="actionSearch|flagNoExtractUi"
+                    android:inputType="textFilter"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </android.support.v7.widget.CardView>
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
