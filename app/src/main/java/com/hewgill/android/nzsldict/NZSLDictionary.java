@@ -7,6 +7,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatCallback;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.view.ActionMode;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -32,7 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class NZSLDictionary extends ListActivity
+public class NZSLDictionary extends ListActivity implements AppCompatCallback
 {
     private Dictionary dictionary;
     private EditText filterText;
@@ -42,6 +47,9 @@ public class NZSLDictionary extends ListActivity
     private DictAdapter adapter;
     private String handshapeFilter;
     private String locationFilter;
+    private AppCompatDelegate mDelegate;
+
+
 
     class DictAdapter extends BaseAdapter {
         private int resource;
@@ -289,9 +297,13 @@ public class NZSLDictionary extends ListActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        mDelegate = AppCompatDelegate.create(this, this);
+        mDelegate.onCreate(savedInstanceState);
+
         dictionary = new Dictionary(getApplicationContext());
         // following based on http://stackoverflow.com/questions/1737009/how-to-make-a-nice-looking-listview-filter-on-android
-        setContentView(R.layout.main);
+        mDelegate.setContentView(R.layout.main);
+        mDelegate.setSupportActionBar((Toolbar) findViewById(R.id.app_toolbar));
 
         View header = LayoutInflater.from(this).inflate(R.layout.handshape, null);
         getListView().addHeaderView(header, null, false);
@@ -419,5 +431,21 @@ public class NZSLDictionary extends ListActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onSupportActionModeStarted(ActionMode mode) {
+
+    }
+
+    @Override
+    public void onSupportActionModeFinished(ActionMode mode) {
+
+    }
+
+    @Nullable
+    @Override
+    public ActionMode onWindowStartingSupportActionMode(ActionMode.Callback callback) {
+        return null;
     }
 }
