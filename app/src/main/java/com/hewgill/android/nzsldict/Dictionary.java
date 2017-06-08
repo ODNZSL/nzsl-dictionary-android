@@ -21,7 +21,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class Dictionary {
 
@@ -178,6 +180,7 @@ public class Dictionary {
         // in. Because it is a sorted set, uniqueness is guaranteed, and results should also be
         // naturally ordered.
         SortedSet<DictItem> exactPrimaryMatches = new TreeSet<>();
+        SortedSet<DictItem> startsWithPrimaryMatches = new TreeSet<>();
         SortedSet<DictItem> containsPrimaryMatches = new TreeSet<>();
         SortedSet<DictItem> exactSecondaryMatches = new TreeSet<>();
         SortedSet<DictItem> containsSecondaryMatches = new TreeSet<>();
@@ -189,6 +192,7 @@ public class Dictionary {
             String maori = normalise(d.maori);
 
             if (gloss.equals(term) || maori.equals(term)) exactPrimaryMatches.add(d);
+            if (gloss.startsWith(term) || maori.startsWith(term)) startsWithPrimaryMatches.add(d);
             else if (gloss.contains(term) || maori.contains(term)) containsPrimaryMatches.add(d);
             else if (minor.equals(term)) exactSecondaryMatches.add(d);
             else if (minor.contains(term)) containsSecondaryMatches.add(d);
@@ -200,12 +204,14 @@ public class Dictionary {
         // Given: [exact: [e1, e2, e3], contains: [c1, c2, c2], exactSecondary: [es1, es2, es3]
         // Then: results = [e1, e2, e3, c1, c2, c3, es1, es2, es3]
         int resultCount = exactPrimaryMatches.size() +
+                          startsWithPrimaryMatches.size() +
                           containsPrimaryMatches.size() +
                           exactSecondaryMatches.size() +
                           containsSecondaryMatches.size();
 
         List<DictItem> results = new ArrayList<>(resultCount);
         results.addAll(exactPrimaryMatches);
+        results.addAll(startsWithPrimaryMatches);
         results.addAll(containsPrimaryMatches);
         results.addAll(exactSecondaryMatches);
         results.addAll(containsSecondaryMatches);
