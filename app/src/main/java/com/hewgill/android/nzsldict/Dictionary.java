@@ -174,19 +174,43 @@ public class Dictionary {
 
     public List<DictItem> getWords(String target)
     {
+        // Create a sorted set for each type of match. This provides "buckets" to place results
+        // in. Because it is a sorted set, uniqueness is guaranteed, and results should also be
+        // naturally ordered.
+        SortedSet<DictItem> exactPrimaryMatches = new TreeSet<>();
+        SortedSet<DictItem> containsPrimaryMatches = new TreeSet<>();
+        SortedSet<DictItem> exactSecondaryMatches = new TreeSet<>();
+        SortedSet<DictItem> containsSecondaryMatches = new TreeSet<>();
+
         String term = normalise(target);
         for (DictItem d: words) {
             String gloss = normalise(d.gloss);
             String minor = normalise(d.minor);
             String maori = normalise(d.maori);
 
-            if (gloss.equals(term) || maori.equals(term)) results.put(EXACT_PRIMARY_MATCH_WEIGHTING, d);
-            else if (gloss.contains(term) || maori.contains(term)) results.put(CONTAINS_PRIMARY_MATCH_WEIGHTING, d);
-            else if (minor.equals(term)) results.put(EXACT_SECONDARY_MATCH_WEIGHTING, d);
-            else if (minor.contains(term)) results.put(CONTAINS_SECONDARY_MATCH_WEIGHTING, d);
+            if (gloss.equals(term) || maori.equals(term)) exactPrimaryMatches.add(d);
+            else if (gloss.contains(term) || maori.contains(term)) containsPrimaryMatches.add(d);
+            else if (minor.equals(term)) exactSecondaryMatches.add(d);
+            else if (minor.contains(term)) containsSecondaryMatches.add(d);
         }
 
-        return new ArrayList<DictItem>(results.values());
+        // Create an ArrayList of the size of all the results, and add each of the sets to it.
+        // This returns a data structure ordered first by the priority of the result type, then
+        // natural ordering within each set, e.g.:
+        // Given: [exact: [e1, e2, e3], contains: [c1, c2, c2], exactSecondary: [es1, es2, es3]
+        // Then: results = [e1, e2, e3, c1, c2, c3, es1, es2, es3]
+        int resultCount = exactPrimaryMatches.size() +
+                          containsPrimaryMatches.size() +
+                          exactSecondaryMatches.size() +
+                          containsSecondaryMatches.size();
+
+        List<DictItem> results = new ArrayList<>(resultCount);
+        results.addAll(exactPrimaryMatches);
+        results.addAll(containsPrimaryMatches);
+        results.addAll(exactSecondaryMatches);
+        results.addAll(containsSecondaryMatches);
+
+        return results;
     }
 
     public List<DictItem> getWordsByHandshape(String handshape, String location)
