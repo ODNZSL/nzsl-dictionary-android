@@ -1,6 +1,7 @@
 package com.hewgill.android.nzsldict;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -29,7 +30,7 @@ public class Dictionary {
     private static final Integer EXACT_SECONDARY_MATCH_WEIGHTING = 70;
     private static final Integer CONTAINS_SECONDARY_MATCH_WEIGHTING = 60;
 
-    public static class DictItem implements Serializable {
+    public static class DictItem implements Serializable, Comparable {
         public String gloss;
         public String minor;
         public String maori;
@@ -105,6 +106,12 @@ public class Dictionary {
 
         public String toString() {
             return gloss + "|" + minor + "|" + maori;
+        }
+
+        @Override
+        public int compareTo(@NonNull Object o) {
+            DictItem other = (DictItem) o;
+            return this.gloss.compareTo(other.gloss);
         }
     }
 
