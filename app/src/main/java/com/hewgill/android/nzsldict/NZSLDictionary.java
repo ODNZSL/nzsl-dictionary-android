@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -338,16 +339,15 @@ public class NZSLDictionary extends ListActivity {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 adapter.getFilter().filter(s);
-                getListView().setVisibility(s.length() != 0 ? View.VISIBLE : View.INVISIBLE);
-                wotd.setVisibility(s.length() == 0 ? View.VISIBLE : View.INVISIBLE);
+                getListView().setVisibility(s.length() != 0 ? View.VISIBLE : View.GONE);
+                wotd.setVisibility(s.length() == 0 ? View.VISIBLE : View.GONE);
             }
         };
         filterText.addTextChangedListener(filterTextWatcher);
         //filterText.requestFocus();
-        getListView().setVisibility(View.INVISIBLE);
-        wotd = (View) findViewById(R.id.building_list_wotd);
+        getListView().setVisibility(View.GONE);
+        wotd = findViewById(R.id.building_list_wotd);
         ImageView wotdImage = (ImageView) findViewById(R.id.building_list_wotd_image);
-        wotd.setBackgroundColor(Color.WHITE);
         TextView wotdGloss = (TextView) findViewById(R.id.building_list_wotd_gloss);
         {
             final Dictionary.DictItem item = dictionary.getWordOfTheDay();
@@ -372,6 +372,8 @@ public class NZSLDictionary extends ListActivity {
             });
             wotdGloss.setText(item.gloss);
         }
+
+        ((WebView) findViewById(R.id.about_content)).loadUrl("file:///android_asset/html/about.html");
     }
 
     @Override

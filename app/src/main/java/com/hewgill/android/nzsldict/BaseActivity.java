@@ -21,18 +21,13 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) finish();
-        if (item.getItemId() == R.id.about) {
-            startActivity(new Intent(this, AboutActivity.class));
-            return true;
+        switch (item.getItemId()) {
+            // Respond to the toolbar's NavigationIcon as up/home button
+            case android.R.id.home:
+                finish();
+                //NavigationIcon
+                return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
     }
 }
