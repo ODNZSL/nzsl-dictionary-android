@@ -174,12 +174,6 @@ public class Dictionary {
 
     public List<DictItem> getWords(String target)
     {
-        TreeMap<Integer, DictItem> results = new TreeMap<Integer, DictItem>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer weight1, Integer weight2) {
-                return weight2.compareTo(weight1);
-            }
-        });
         String term = normalise(target);
         for (DictItem d: words) {
             String gloss = normalise(d.gloss);
