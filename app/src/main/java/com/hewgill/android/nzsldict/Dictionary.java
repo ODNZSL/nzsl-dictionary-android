@@ -3,10 +3,11 @@ package com.hewgill.android.nzsldict;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.IOException;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.text.Normalizer;
@@ -22,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class Dictionary {
@@ -42,6 +42,7 @@ public class Dictionary {
         public String location;
 
         static Map<String, String> Locations = new HashMap<String, String>();
+
         static {
             Locations.put("in front of body", "location_1_1_in_front_of_body");
             //"palm",
@@ -66,7 +67,9 @@ public class Dictionary {
             Locations.put("upper arm", "location_5_16_upper_arm");
             Locations.put("elbow", "location_5_17_elbow");
             Locations.put("upper leg", "location_4_15_upper_leg");
-        };
+        }
+
+        ;
 
         public DictItem() {
             gloss = null;
@@ -119,8 +122,7 @@ public class Dictionary {
 
     private ArrayList<DictItem> words = new ArrayList();
 
-    public Dictionary(Context context)
-    {
+    public Dictionary(Context context) {
         InputStream db = null;
         try {
             db = context.getAssets().open("db/nzsl.dat");
@@ -155,13 +157,11 @@ public class Dictionary {
         });
     }
 
-    public List<DictItem> getWords()
-    {
+    public List<DictItem> getWords() {
         return words;
     }
 
-    private static String normalise(String s)
-    {
+    private static String normalise(String s) {
         s = Normalizer.normalize(s, Normalizer.Form.NFD);
         StringBuilder r = new StringBuilder(s.length());
         int len = s.length();
@@ -174,8 +174,7 @@ public class Dictionary {
         return r.toString().toLowerCase();
     }
 
-    public List<DictItem> getWords(String target)
-    {
+    public List<DictItem> getWords(String target) {
         // Create a sorted set for each type of match. This provides "buckets" to place results
         // in. Because it is a sorted set, uniqueness is guaranteed, and results should also be
         // naturally ordered.
@@ -186,7 +185,7 @@ public class Dictionary {
         SortedSet<DictItem> containsSecondaryMatches = new TreeSet<>();
 
         String term = normalise(target);
-        for (DictItem d: words) {
+        for (DictItem d : words) {
             String gloss = normalise(d.gloss);
             String minor = normalise(d.minor);
             String maori = normalise(d.maori);
@@ -204,10 +203,10 @@ public class Dictionary {
         // Given: [exact: [e1, e2, e3], contains: [c1, c2, c2], exactSecondary: [es1, es2, es3]
         // Then: results = [e1, e2, e3, c1, c2, c3, es1, es2, es3]
         int resultCount = exactPrimaryMatches.size() +
-                          startsWithPrimaryMatches.size() +
-                          containsPrimaryMatches.size() +
-                          exactSecondaryMatches.size() +
-                          containsSecondaryMatches.size();
+                startsWithPrimaryMatches.size() +
+                containsPrimaryMatches.size() +
+                exactSecondaryMatches.size() +
+                containsSecondaryMatches.size();
 
         List<DictItem> results = new ArrayList<>(resultCount);
         results.addAll(exactPrimaryMatches);
@@ -219,94 +218,92 @@ public class Dictionary {
         return results;
     }
 
-    public List<DictItem> getWordsByHandshape(String handshape, String location)
-    {
+    public List<DictItem> getWordsByHandshape(String handshape, String location) {
         List<DictItem> r = new ArrayList<DictItem>(words.size());
-        for (DictItem d: words) {
+        for (DictItem d : words) {
             if ((handshape == null || handshape.length() == 0 || d.handshape.equals(handshape))
-             && (location == null || location.length() == 0 || d.location.equals(location))) {
+                    && (location == null || location.length() == 0 || d.location.equals(location))) {
                 r.add(d);
             }
         }
         return r;
     }
 
-    static Set taboo = new HashSet(Arrays.asList(new String[] {
-        "(vaginal) discharge",
-        "abortion",
-        "abuse",
-        "anus",
-        "asshole",
-        "attracted",
-        "balls",
-        "been to",
-        "bisexual",
-        "bitch",
-        "blow job",
-        "breech (birth)",
-        "bugger",
-        "bullshit",
-        "cervical smear",
-        "cervix",
-        "circumcise",
-        "cold (behaviour)",
-        "come",
-        "condom",
-        "contraction (labour)",
-        "cunnilingus",
-        "cunt",
-        "damn",
-        "defecate, faeces",
-        "dickhead",
-        "dilate (cervix)",
-        "ejaculate, sperm",
-        "episiotomy",
-        "erection",
-        "fart",
-        "foreplay",
-        "gay",
-        "gender",
-        "get intimate",
-        "get stuffed",
-        "hard-on",
-        "have sex",
-        "heterosexual",
-        "homo",
-        "horny",
-        "hysterectomy",
-        "intercourse",
-        "labour pains",
-        "lesbian",
-        "lose one's virginity",
-        "love bite",
-        "lust",
-        "masturbate (female)",
-        "masturbate, wanker",
-        "miscarriage",
-        "orgasm",
-        "ovaries",
-        "penis",
-        "period",
-        "period pains",
-        "promiscuous",
-        "prostitute",
-        "rape",
-        "sanitary pad",
-        "sex",
-        "sexual abuse",
-        "shit",
-        "smooch",
-        "sperm",
-        "strip",
-        "suicide",
-        "tampon",
-        "testicles",
-        "vagina",
-        "virgin",
+    static Set taboo = new HashSet(Arrays.asList(new String[]{
+            "(vaginal) discharge",
+            "abortion",
+            "abuse",
+            "anus",
+            "asshole",
+            "attracted",
+            "balls",
+            "been to",
+            "bisexual",
+            "bitch",
+            "blow job",
+            "breech (birth)",
+            "bugger",
+            "bullshit",
+            "cervical smear",
+            "cervix",
+            "circumcise",
+            "cold (behaviour)",
+            "come",
+            "condom",
+            "contraction (labour)",
+            "cunnilingus",
+            "cunt",
+            "damn",
+            "defecate, faeces",
+            "dickhead",
+            "dilate (cervix)",
+            "ejaculate, sperm",
+            "episiotomy",
+            "erection",
+            "fart",
+            "foreplay",
+            "gay",
+            "gender",
+            "get intimate",
+            "get stuffed",
+            "hard-on",
+            "have sex",
+            "heterosexual",
+            "homo",
+            "horny",
+            "hysterectomy",
+            "intercourse",
+            "labour pains",
+            "lesbian",
+            "lose one's virginity",
+            "love bite",
+            "lust",
+            "masturbate (female)",
+            "masturbate, wanker",
+            "miscarriage",
+            "orgasm",
+            "ovaries",
+            "penis",
+            "period",
+            "period pains",
+            "promiscuous",
+            "prostitute",
+            "rape",
+            "sanitary pad",
+            "sex",
+            "sexual abuse",
+            "shit",
+            "smooch",
+            "sperm",
+            "strip",
+            "suicide",
+            "tampon",
+            "testicles",
+            "vagina",
+            "virgin",
     }));
 
-    public DictItem getWordOfTheDay()
-    {
+    public DictItem getWordOfTheDay() {
         String buf = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         try {
             byte[] digest = MessageDigest.getInstance("SHA-1").digest(buf.getBytes());
@@ -321,12 +318,11 @@ public class Dictionary {
         }
     }
 
-    private String skip_parens(String s)
-    {
+    private String skip_parens(String s) {
         if (s.charAt(0) == '(') {
             int i = s.indexOf(") ");
             if (i > 0) {
-                s = s.substring(i+2);
+                s = s.substring(i + 2);
             } else {
                 Log.d("Dictionary", "expected to find closing parenthesis: " + s);
             }
