@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
+    android:orientation="vertical">
 
 
-
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/app_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:id="@+id/app_toolbar"
         android:background="@color/primary"
+        android:elevation="4dp"
         android:gravity="top"
-        android:elevation="4dp">
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,12 +20,10 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
@@ -57,13 +52,13 @@
                     android:id="@+id/toggle_search_mode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textOn="Search"
-                    android:textOff="Handshapes"
-                    android:onClick="toggleHandshapeMode"
                     android:background="@color/accent"
+                    android:onClick="toggleHandshapeMode"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
-                    android:textColor="@color/textColorPrimary" />
+                    android:textColor="@color/textColorPrimary"
+                    android:textOff="Handshapes"
+                    android:textOn="Search" />
 
 
             </LinearLayout>
@@ -96,43 +91,80 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <RelativeLayout
-        android:layout_width="fill_parent" 
-        android:layout_height="0dip" 
-        android:layout_weight="1">
-        <ListView android:id="@android:id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-        <LinearLayout android:id="@+id/building_list_wotd"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/building_list_wotd"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@android:color/white"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/building_list_wotd_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="125dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/handshape_3_4_1" />
+
                 <TextView
+                    android:id="@+id/building_list_wotd_gloss_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textSize="20dp"
-                    android:textColor="#000000"
-                    android:text="Word of the day: " />
-                <TextView android:id="@+id/building_list_wotd_gloss"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Word of the day"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/building_list_wotd_gloss"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:textSize="24dp"
-                    android:textStyle="bold"
-                    android:textColor="#000000" />
-            </LinearLayout>
-            <ImageView android:id="@+id/building_list_wotd_image"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/building_list_wotd_gloss_label"
+                    android:layout_toLeftOf="@id/building_list_wotd_image"
+                    android:layout_toStartOf="@id/building_list_wotd_image"
+                    android:text="Something really really really long"
+
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
+
+
+            </RelativeLayout>
+
+
+            <!-- Bottom border -->
+            <View
                 android:layout_width="fill_parent"
-                android:layout_height="0dip"
-                android:layout_weight="1"
-                android:scaleType="fitStart" />
+                android:layout_height="1dp"
+                android:background="#EEEEEE" />
+
+
+            <WebView
+                android:id="@+id/about_content"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+
+                />
         </LinearLayout>
-    </RelativeLayout>
+    </ScrollView>
+
+
 </LinearLayout>
 
