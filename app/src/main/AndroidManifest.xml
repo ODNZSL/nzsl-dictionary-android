@@ -17,6 +17,5 @@
             </intent-filter>
         </activity>
         <activity android:name=".WordActivity" />
-        <activity android:name=".VideoActivity" />
     </application>
 </manifest> 
