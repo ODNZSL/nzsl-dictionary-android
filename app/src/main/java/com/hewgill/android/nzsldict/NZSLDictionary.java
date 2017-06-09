@@ -360,7 +360,7 @@ public class NZSLDictionary extends ListActivity {
                 System.out.println(e.toString());
             }
 
-            wotdImage.setOnClickListener(new View.OnClickListener() {
+            wotd.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
