@@ -338,7 +338,7 @@ public class NZSLDictionary extends ListActivity {
             }
         };
         filterText.addTextChangedListener(filterTextWatcher);
-        //filterText.requestFocus();
+        
         getListView().setVisibility(View.GONE);
         wotd = findViewById(R.id.building_list_wotd);
         ImageView wotdImage = (ImageView) findViewById(R.id.building_list_wotd_image);
