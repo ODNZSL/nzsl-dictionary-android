@@ -365,7 +365,7 @@ public class NZSLDictionary extends ListActivity {
                     InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     Intent next = new Intent();
-                    next.setClass(NZSLDictionary.this, VideoActivity.class);
+                    next.setClass(NZSLDictionary.this, WordActivity.class);
                     next.putExtra("item", item);
                     startActivity(next);
                 }
