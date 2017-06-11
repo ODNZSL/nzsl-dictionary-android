@@ -42,9 +42,16 @@ public class DictionaryAndroidUnitTest {
     }
 
     @Test
+    public void dictionary_getWordsStartsWithMatchMainGlass() {
+        mResults = mDictionary.getWords("sunglasse");
+        assertEquals(mResults.get(0).gloss, "sunglasses");
+    }
+
+
+    @Test
     public void dictionary_getWordsContainsMatchMainGlass() {
         mResults = mDictionary.getWords("las");
-        assertEquals(mResults.get(0).gloss, "sunglasses");
+        assertEquals(mResults.get(0).gloss, "lasagna");
     }
 
     @Test
@@ -56,7 +63,13 @@ public class DictionaryAndroidUnitTest {
     @Test
     public void dictionary_getWordsContainsMatchMaoriGloss() {
         mResults = mDictionary.getWords("orang");
-        assertEquals(mResults.get(0).gloss, "politics");
+        assertEquals(mResults.get(0).gloss, "medical");
+    }
+
+    @Test
+    public void dictionary_getWordsStartsWithMatchMaoriGloss() {
+        mResults = mDictionary.getWords("Aorang");
+        assertEquals(mResults.get(0).gloss, "Feilding");
     }
 
     @Test
@@ -67,7 +80,7 @@ public class DictionaryAndroidUnitTest {
 
     @Test
     public void dictionary_getWordsContainsSecondaryGloss() {
-        mResults = mDictionary.getWords("keep ou");
+        mResults = mDictionary.getWords("avoid, keep");
         assertEquals(mResults.get(0).gloss, "want nothing to do with");
     }
 }
