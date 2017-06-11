@@ -18,6 +18,5 @@
         </activity>
         <activity android:name=".WordActivity" />
         <activity android:name=".VideoActivity" />
-        <activity android:name=".AboutActivity" />
     </application>
 </manifest> 
