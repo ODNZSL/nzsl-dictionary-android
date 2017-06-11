@@ -338,34 +338,32 @@ public class NZSLDictionary extends ListActivity {
             }
         };
         filterText.addTextChangedListener(filterTextWatcher);
-        
+
         getListView().setVisibility(View.GONE);
         wotd = findViewById(R.id.building_list_wotd);
         ImageView wotdImage = (ImageView) findViewById(R.id.building_list_wotd_image);
         TextView wotdGloss = (TextView) findViewById(R.id.building_list_wotd_gloss);
-        {
-            final Dictionary.DictItem item = dictionary.getWordOfTheDay();
+        final Dictionary.DictItem item = dictionary.getWordOfTheDay();
 
-            try {
-                InputStream ims = getAssets().open(item.imagePath());
-                Drawable d = Drawable.createFromStream(ims, null);
-                wotdImage.setImageDrawable(d);
-            } catch (IOException e) {
-                System.out.println(e.toString());
-            }
-
-            wotd.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    Intent next = new Intent();
-                    next.setClass(NZSLDictionary.this, WordActivity.class);
-                    next.putExtra("item", item);
-                    startActivity(next);
-                }
-            });
-            wotdGloss.setText(item.gloss);
+        try {
+            InputStream ims = getAssets().open(item.imagePath());
+            Drawable d = Drawable.createFromStream(ims, null);
+            wotdImage.setImageDrawable(d);
+        } catch (IOException e) {
+            System.out.println(e.toString());
         }
+
+        wotd.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                Intent next = new Intent();
+                next.setClass(NZSLDictionary.this, WordActivity.class);
+                next.putExtra("item", item);
+                startActivity(next);
+            }
+        });
+        wotdGloss.setText(item.gloss);
 
         ((WebView) findViewById(R.id.about_content)).loadUrl("file:///android_asset/html/about.html");
     }
