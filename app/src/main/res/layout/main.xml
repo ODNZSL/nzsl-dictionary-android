@@ -99,7 +99,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/building_list_wotd"
         android:fillViewport="true">
 
         <LinearLayout
@@ -109,6 +108,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:id="@+id/building_list_wotd"
                 android:background="@android:color/white"
                 android:padding="16dp">
 
