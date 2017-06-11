@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -324,6 +326,14 @@ public class NZSLDictionary extends ListActivity {
         adapter = new DictAdapter(this, R.layout.list_item, dictionary.getWords());
         setListAdapter(adapter);
         filterText = (EditText) findViewById(R.id.building_list_search_box);
+        filterText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) NZSLDictionary.this.hideKeyboard();
+                return false;
+            }
+        });
+
         filterTextWatcher = new TextWatcher() {
             public void afterTextChanged(Editable s) {
             }
@@ -355,8 +365,7 @@ public class NZSLDictionary extends ListActivity {
 
         wotd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                hideKeyboard();
                 Intent next = new Intent();
                 next.setClass(NZSLDictionary.this, WordActivity.class);
                 next.putExtra("item", item);
@@ -372,6 +381,11 @@ public class NZSLDictionary extends ListActivity {
     public void onDestroy() {
         super.onDestroy();
         filterText.removeTextChangedListener(filterTextWatcher);
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     public void toggleHandshapeMode(View button) {
