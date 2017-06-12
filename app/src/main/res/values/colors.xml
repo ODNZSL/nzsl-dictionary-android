@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="primary">#2980B9</color><!--Background color for AppBar-->
     <color name="accent">#F57958</color><!--color effects, EditText, RadioButtons...-->
     <color name="primaryDark">#18435F</color>
     <color name="primaryLight">#E0EEF7</color>
     <color name="textColorPrimary">@android:color/white</color>
+
+    <!-- Overridden from https://chromium.googlesource.com/android_tools/+/master/sdk/extras/android/support/v7/appcompat/res/values/colors_material.xml -->
+    <color tools:override="true" name="secondary_text_default_material_light">#8a000000</color>
+
+    <color name="twelve_percent_black">#1f000000</color>
 </resources>
