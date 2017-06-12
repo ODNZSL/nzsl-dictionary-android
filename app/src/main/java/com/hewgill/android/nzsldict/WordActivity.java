@@ -6,6 +6,11 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,6 +21,8 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WordActivity extends BaseActivity {
 
@@ -25,6 +32,7 @@ public class WordActivity extends BaseActivity {
     private ImageView handshape;
     private ImageView location;
     private ImageView diagram;
+    private ViewPager viewPager;
     private Dictionary.DictItem item;
 
     @Override
@@ -32,36 +40,59 @@ public class WordActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word);
         setupAppToolbar();
+        Intent intent = getIntent();
+        item = (Dictionary.DictItem) intent.getSerializableExtra("item");
+
         gloss = (TextView) findViewById(R.id.gloss);
         minor = (TextView) findViewById(R.id.minor);
         maori = (TextView) findViewById(R.id.maori);
         handshape = (ImageView) findViewById(R.id.handshape);
         location = (ImageView) findViewById(R.id.location);
-        diagram = (ImageView) findViewById(R.id.diagram);
-        diagram.setBackgroundColor(Color.WHITE);
-        Intent intent = getIntent();
-        item = (Dictionary.DictItem) intent.getSerializableExtra("item");
+        viewPager = (ViewPager) findViewById(R.id.sign_media_pager);
+        setupSignMediaPager(viewPager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sign_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
         gloss.setText(item.gloss);
         minor.setText(item.minor);
         maori.setText(item.maori);
-        handshape.setImageResource(getApplicationContext().getResources().getIdentifier(item.handshapeImage(), "drawable", getPackageName()));
-        location.setImageResource(getApplicationContext().getResources().getIdentifier(item.locationImage(), "drawable", getPackageName()));
+//        handshape.setImageResource(getApplicationContext().getResources().getIdentifier(item.handshapeImage(), "drawable", getPackageName()));
+//        location.setImageResource(getApplicationContext().getResources().getIdentifier(item.locationImage(), "drawable", getPackageName()));
+    }
 
-        try {
-            InputStream ims = getAssets().open(item.imagePath());
-            Drawable d = Drawable.createFromStream(ims, null);
-            diagram.setImageDrawable(d);
-        } catch (IOException e) {
-            System.out.println(e.toString());
+    private void setupSignMediaPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(SignIllustrationFragment.newInstance(item), "Illustration");
+        adapter.addFragment(SignVideoFragment.newInstance(item), "Video");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
         }
 
-        diagram.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent next = new Intent();
-                next.setClass(WordActivity.this, VideoActivity.class);
-                next.putExtra("item", item);
-                startActivity(next);
-            }
-        });
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 }

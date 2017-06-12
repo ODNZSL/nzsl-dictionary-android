@@ -1,57 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <include layout="@layout/toolbar" />
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:background="@color/primaryLight"
         android:layout_height="wrap_content"
-        android:background="#fff">
+        android:paddingTop="24dp"
+        android:paddingBottom="16dp">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView android:id="@+id/gloss"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:background="#fff"
+                android:paddingBottom="8dp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
+                android:layout_height="wrap_content"
+                android:text="Test gloss"
+                android:textColor="@android:color/primary_text_light"
+                android:layout_width="fill_parent" />
+            <TextView android:id="@+id/maori"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                android:text="Test Maori gloss"
+                android:paddingBottom="8dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
             <TextView android:id="@+id/minor"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="18sp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-            <TextView android:id="@+id/maori"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="18sp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                android:text="Test minor gloss"
                 android:textStyle="italic"
-                android:textColor="#000"
-                android:background="#fff"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-        <ImageView android:id="@+id/handshape"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="#fff"
-            android:scaleType="fitCenter" />
-        <ImageView android:id="@+id/location"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="#fff"
-            android:scaleType="fitCenter" />
-    </LinearLayout>
-    <ImageView android:id="@+id/diagram"
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sign_tabs"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/sign_media_pager"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:scaleType="fitCenter" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
 </LinearLayout>

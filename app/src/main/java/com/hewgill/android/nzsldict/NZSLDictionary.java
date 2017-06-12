@@ -3,20 +3,16 @@ package com.hewgill.android.nzsldict;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatCallback;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.view.ActionMode;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -330,6 +326,14 @@ public class NZSLDictionary extends ListActivity {
         adapter = new DictAdapter(this, R.layout.list_item, dictionary.getWords());
         setListAdapter(adapter);
         filterText = (EditText) findViewById(R.id.building_list_search_box);
+        filterText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) NZSLDictionary.this.hideKeyboard();
+                return false;
+            }
+        });
+
         filterTextWatcher = new TextWatcher() {
             public void afterTextChanged(Editable s) {
             }
@@ -344,34 +348,31 @@ public class NZSLDictionary extends ListActivity {
             }
         };
         filterText.addTextChangedListener(filterTextWatcher);
-        //filterText.requestFocus();
+
         getListView().setVisibility(View.GONE);
         wotd = findViewById(R.id.building_list_wotd);
         ImageView wotdImage = (ImageView) findViewById(R.id.building_list_wotd_image);
         TextView wotdGloss = (TextView) findViewById(R.id.building_list_wotd_gloss);
-        {
-            final Dictionary.DictItem item = dictionary.getWordOfTheDay();
+        final Dictionary.DictItem item = dictionary.getWordOfTheDay();
 
-            try {
-                InputStream ims = getAssets().open(item.imagePath());
-                Drawable d = Drawable.createFromStream(ims, null);
-                wotdImage.setImageDrawable(d);
-            } catch (IOException e) {
-                System.out.println(e.toString());
-            }
-
-            wotdImage.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    Intent next = new Intent();
-                    next.setClass(NZSLDictionary.this, VideoActivity.class);
-                    next.putExtra("item", item);
-                    startActivity(next);
-                }
-            });
-            wotdGloss.setText(item.gloss);
+        try {
+            InputStream ims = getAssets().open(item.imagePath());
+            Drawable d = Drawable.createFromStream(ims, null);
+            wotdImage.setImageDrawable(d);
+        } catch (IOException e) {
+            System.out.println(e.toString());
         }
+
+        wotd.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                hideKeyboard();
+                Intent next = new Intent();
+                next.setClass(NZSLDictionary.this, WordActivity.class);
+                next.putExtra("item", item);
+                startActivity(next);
+            }
+        });
+        wotdGloss.setText(item.gloss);
 
         ((WebView) findViewById(R.id.about_content)).loadUrl("file:///android_asset/html/about.html");
     }
@@ -380,6 +381,11 @@ public class NZSLDictionary extends ListActivity {
     public void onDestroy() {
         super.onDestroy();
         filterText.removeTextChangedListener(filterTextWatcher);
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     public void toggleHandshapeMode(View button) {
