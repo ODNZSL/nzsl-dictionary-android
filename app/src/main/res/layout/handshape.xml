@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
+    android:paddingBottom="24dp"
     android:layout_height="wrap_content">
     <LinearLayout android:id="@+id/handshape_header"
         android:orientation="vertical"
@@ -10,24 +11,33 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:background="#eee"
-            android:textSize="18sp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+            android:textColor="@color/secondary_text_default_material_light"
+            android:padding="16dp"
             android:text="Handshape" />
         <Gallery android:id="@+id/handshape"
             android:layout_width="fill_parent"
+            android:background="@android:color/white"
             android:layout_height="wrap_content"
-            android:spacing="20px" />
+            android:padding="16dp"
+            android:spacing="16dp" />
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:background="#eee"
-            android:textSize="18sp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+            android:textColor="@color/secondary_text_default_material_light"
+            android:padding="8dp"
             android:text="Location" />
         <Gallery android:id="@+id/location"
             android:layout_width="fill_parent"
+            android:background="@android:color/white"
             android:layout_height="wrap_content"
-            android:spacing="20px" />
+            android:padding="16dp"
+            android:spacing="8dp" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/twelve_percent_black" />
 </LinearLayout>
