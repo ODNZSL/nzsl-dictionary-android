@@ -1,5 +1,6 @@
 package com.hewgill.android.nzsldict;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -7,12 +8,16 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import java.io.IOException;
@@ -26,7 +31,11 @@ import java.io.InputStream;
  */
 public class SignVideoFragment extends Fragment {
     private static final String ARG_DICT_ITEM = "dictItem";
+    private VideoView mVideo;
+    private View mRootView;
+    private boolean mMediaControllerLaidOut = false;
     private Dictionary.DictItem mDictItem;
+    private NoHideMediaController mMediaController;
 
     public SignVideoFragment() {
         // Required empty public constructor
@@ -50,6 +59,7 @@ public class SignVideoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mMediaController = new NoHideMediaController(getContext());
         if (getArguments() != null) {
             mDictItem = (Dictionary.DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
         }
@@ -58,24 +68,39 @@ public class SignVideoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_sign_video, container, false);
-        VideoView video = (VideoView) rootView;
-        MediaController mc = new NoHideMediaController(getContext());
-        video.setMediaController(mc);
-        video.setVideoURI(Uri.parse(mDictItem.video));
-        video.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+         mRootView = inflater.inflate(R.layout.fragment_sign_video, container, false);
+
+        mVideo = (VideoView) mRootView.findViewById(R.id.sign_video);
+        mVideo.setVideoURI(Uri.parse(mDictItem.video));
+        mVideo.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             public boolean onError(MediaPlayer mp, int what, int extra) {
                 return false;
             }
         });
-        video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        mVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             public void onPrepared(MediaPlayer mp) {
-
+                fixLayoutOfMediaController();
             }
         });
-        video.start();
 
-        return rootView;
+        return mRootView;
+    }
+
+    private void fixLayoutOfMediaController() {
+        if (mMediaControllerLaidOut) return;
+        RelativeLayout parentLayout = (RelativeLayout) mVideo.getParent();
+        FrameLayout frameLayout = (FrameLayout) mMediaController.getParent();
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, this.getId());
+
+        ((LinearLayout)frameLayout.getParent()).removeView(frameLayout);
+        parentLayout.addView(frameLayout, layoutParams);
+
+        mMediaController.setAnchorView(mVideo);
+        mVideo.setMediaController(mMediaController);
+        mMediaController.hide();
+        mMediaControllerLaidOut = true;
     }
 
     class NoHideMediaController extends MediaController {
@@ -87,7 +112,7 @@ public class SignVideoFragment extends Fragment {
         @Override
         public boolean dispatchKeyEvent(KeyEvent event) {
             if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-                getActivity().finish();
+                ((Activity) getContext()).finish();
                 return true;
             }
             return super.dispatchKeyEvent(event);
