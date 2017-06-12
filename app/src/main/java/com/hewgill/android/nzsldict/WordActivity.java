@@ -46,8 +46,8 @@ public class WordActivity extends BaseActivity {
         gloss = (TextView) findViewById(R.id.gloss);
         minor = (TextView) findViewById(R.id.minor);
         maori = (TextView) findViewById(R.id.maori);
-        handshape = (ImageView) findViewById(R.id.handshape);
-        location = (ImageView) findViewById(R.id.location);
+        //handshape = (ImageView) findViewById(R.id.handshape);
+        //location = (ImageView) findViewById(R.id.location);
         viewPager = (ViewPager) findViewById(R.id.sign_media_pager);
         setupSignMediaPager(viewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sign_tabs);
