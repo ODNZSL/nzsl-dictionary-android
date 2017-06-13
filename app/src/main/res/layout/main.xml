@@ -58,7 +58,7 @@
                     android:paddingRight="4dp"
                     android:textColor="@color/textColorPrimary"
                     android:textOff="Handshapes"
-                    android:textOn="Search" />
+                    android:textOn="Keywords" />
 
 
             </LinearLayout>
