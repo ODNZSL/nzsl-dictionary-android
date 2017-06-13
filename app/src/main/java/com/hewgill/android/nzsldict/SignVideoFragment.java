@@ -75,10 +75,21 @@ public class SignVideoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMediaController = new NoHideMediaController(getContext());
-        getContext().registerReceiver(mConnectivityChangeReceiver, mConnectivityIntentFilter);
         if (getArguments() != null) {
             mDictItem = (Dictionary.DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getContext().registerReceiver(mConnectivityChangeReceiver, mConnectivityIntentFilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getContext().unregisterReceiver(mConnectivityChangeReceiver);
     }
 
     public boolean checkConnectivity() {
@@ -121,6 +132,7 @@ public class SignVideoFragment extends Fragment {
 
         return mRootView;
     }
+
 
     private void fixLayoutOfMediaController() {
         if (mMediaControllerLaidOut) return;
