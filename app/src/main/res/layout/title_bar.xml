@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="NZSL "
+        fontPath="fonts/Montserrat-Bold.ttf"
         android:textColor="@android:color/white"
 
         />
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="dictionary"
         android:textColor="@android:color/white"
+        fontPath="fonts/Montserrat-Italic.ttf"
         android:textStyle="italic|normal" />
 
 </LinearLayout>
