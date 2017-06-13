@@ -384,8 +384,12 @@ public class NZSLDictionary extends ListActivity {
     }
 
     private void hideKeyboard() {
-        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        try {
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (NullPointerException npe) {
+            Log.d(getClass().getName(), "Failed to hide keyboard: window token was null");
+        }
     }
 
     public void toggleHandshapeMode(View button) {
