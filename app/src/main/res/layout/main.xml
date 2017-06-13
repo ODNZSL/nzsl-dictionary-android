@@ -159,6 +159,7 @@
 
             <WebView
                 android:id="@+id/about_content"
+                android:overScrollMode="never"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
 
