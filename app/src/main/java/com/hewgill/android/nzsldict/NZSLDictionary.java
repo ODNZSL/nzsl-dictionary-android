@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class NZSLDictionary extends ListActivity {
 
     private Dictionary dictionary;
@@ -417,6 +419,11 @@ public class NZSLDictionary extends ListActivity {
         next.setClass(this, WordActivity.class);
         next.putExtra("item", item);
         startActivity(next);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }
