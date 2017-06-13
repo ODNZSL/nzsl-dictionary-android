@@ -1,10 +1,16 @@
 package com.hewgill.android.nzsldict;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,10 +42,19 @@ public class SignVideoFragment extends Fragment {
     private boolean mMediaControllerLaidOut = false;
     private Dictionary.DictItem mDictItem;
     private NoHideMediaController mMediaController;
+    private View mNoNetworkFrame;
+    private IntentFilter mConnectivityIntentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+    private BroadcastReceiver mConnectivityChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            SignVideoFragment.this.checkConnectivity();
+        }
+    };
 
     public SignVideoFragment() {
         // Required empty public constructor
     }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -60,9 +75,25 @@ public class SignVideoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMediaController = new NoHideMediaController(getContext());
+        getContext().registerReceiver(mConnectivityChangeReceiver, mConnectivityIntentFilter);
         if (getArguments() != null) {
             mDictItem = (Dictionary.DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
         }
+    }
+
+    public boolean checkConnectivity() {
+        boolean networkIsAvailable = isNetworkAvailable();
+
+        if (networkIsAvailable) {
+            mVideo.setVisibility(View.VISIBLE);
+            mNoNetworkFrame.setVisibility(View.GONE);
+            mVideo.setVideoURI(Uri.parse(mDictItem.video));
+        } else {
+            mVideo.setVisibility(View.GONE);
+            mNoNetworkFrame.setVisibility(View.VISIBLE);
+        }
+
+        return networkIsAvailable;
     }
 
     @Override
@@ -71,7 +102,9 @@ public class SignVideoFragment extends Fragment {
          mRootView = inflater.inflate(R.layout.fragment_sign_video, container, false);
 
         mVideo = (VideoView) mRootView.findViewById(R.id.sign_video);
-        mVideo.setVideoURI(Uri.parse(mDictItem.video));
+        mNoNetworkFrame = mRootView.findViewById(R.id.sign_video_network_unavailable);
+
+
         mVideo.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             public boolean onError(MediaPlayer mp, int what, int extra) {
                 return false;
@@ -82,6 +115,9 @@ public class SignVideoFragment extends Fragment {
                 fixLayoutOfMediaController();
             }
         });
+
+        // Start loading video if network is available
+        if (checkConnectivity()) mVideo.setVideoURI(Uri.parse(mDictItem.video));
 
         return mRootView;
     }
@@ -101,6 +137,13 @@ public class SignVideoFragment extends Fragment {
         mVideo.setMediaController(mMediaController);
         mMediaController.hide();
         mMediaControllerLaidOut = true;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     class NoHideMediaController extends MediaController {
