@@ -1,26 +1,14 @@
 package com.hewgill.android.nzsldict;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +17,6 @@ public class WordActivity extends BaseActivity {
     private TextView gloss;
     private TextView minor;
     private TextView maori;
-    private ImageView handshape;
-    private ImageView location;
-    private ImageView diagram;
     private ViewPager viewPager;
     private Dictionary.DictItem item;
 
@@ -46,8 +31,6 @@ public class WordActivity extends BaseActivity {
         gloss = (TextView) findViewById(R.id.gloss);
         minor = (TextView) findViewById(R.id.minor);
         maori = (TextView) findViewById(R.id.maori);
-        //handshape = (ImageView) findViewById(R.id.handshape);
-        //location = (ImageView) findViewById(R.id.location);
         viewPager = (ViewPager) findViewById(R.id.sign_media_pager);
         setupSignMediaPager(viewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sign_tabs);
@@ -56,8 +39,6 @@ public class WordActivity extends BaseActivity {
         gloss.setText(item.gloss);
         minor.setText(item.minor);
         maori.setText(item.maori);
-//        handshape.setImageResource(getApplicationContext().getResources().getIdentifier(item.handshapeImage(), "drawable", getPackageName()));
-//        location.setImageResource(getApplicationContext().getResources().getIdentifier(item.locationImage(), "drawable", getPackageName()));
     }
 
     private void setupSignMediaPager(ViewPager viewPager) {
