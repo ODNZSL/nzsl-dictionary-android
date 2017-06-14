@@ -1,15 +1,18 @@
 package com.hewgill.android.nzsldict;
 
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -24,7 +27,6 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,16 +34,17 @@ import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class NZSLDictionary extends ListActivity {
-
+public class NZSLDictionary extends AppCompatActivity {
     private Dictionary dictionary;
     private EditText filterText;
     private TextWatcher filterTextWatcher;
     private View handshapeHeader;
     private View wotd;
+    private ListView mSearchResultsList;
     private DictAdapter adapter;
     private String handshapeFilter;
     private String locationFilter;
+    private Toolbar mToolbar;
 
     class DictAdapter extends BaseAdapter {
         private int resource;
@@ -297,6 +300,9 @@ public class NZSLDictionary extends ListActivity {
         // following based on http://stackoverflow.com/questions/1737009/how-to-make-a-nice-looking-listview-filter-on-android
         setContentView(R.layout.main);
 
+        mSearchResultsList = (ListView) findViewById(android.R.id.list);
+        mToolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(mToolbar);
 
         View header = LayoutInflater.from(this).inflate(R.layout.handshape, null);
         getListView().addHeaderView(header, null, false);
@@ -326,7 +332,7 @@ public class NZSLDictionary extends ListActivity {
         handshapeHeader.setVisibility(View.GONE);
 
         adapter = new DictAdapter(this, R.layout.list_item, dictionary.getWords());
-        setListAdapter(adapter);
+        getListView().setAdapter(adapter);
         filterText = (EditText) findViewById(R.id.building_list_search_box);
         filterText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -352,6 +358,13 @@ public class NZSLDictionary extends ListActivity {
         filterText.addTextChangedListener(filterTextWatcher);
 
         getListView().setVisibility(View.GONE);
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onListItemClick((ListView) parent, view, position, id);
+            }
+        });
+
         wotd = findViewById(R.id.building_list_wotd);
         ImageView wotdImage = (ImageView) findViewById(R.id.building_list_wotd_image);
         TextView wotdGloss = (TextView) findViewById(R.id.building_list_wotd_gloss);
@@ -379,6 +392,10 @@ public class NZSLDictionary extends ListActivity {
         ((WebView) findViewById(R.id.about_content)).loadUrl("file:///android_asset/html/about.html");
     }
 
+    public ListView getListView() {
+        return mSearchResultsList;
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -394,22 +411,6 @@ public class NZSLDictionary extends ListActivity {
         }
     }
 
-    public void toggleHandshapeMode(View button) {
-        boolean on = ((ToggleButton) button).isChecked();
-        if (on) {
-            filterText.setText("(handshape search)");
-            filterText.setVisibility(View.GONE);
-            filterText.setEnabled(false);
-            handshapeHeader.setVisibility(View.VISIBLE);
-            updateHandshapeList();
-        } else {
-            filterText.setText("");
-            filterText.setEnabled(true);
-            filterText.setVisibility(View.VISIBLE);
-            handshapeHeader.setVisibility(View.GONE);
-            adapter.getFilter().filter(null);
-        }
-    }
 
     private void updateHandshapeList() {
         String hf = handshapeFilter != null ? handshapeFilter : "";
@@ -417,7 +418,6 @@ public class NZSLDictionary extends ListActivity {
         adapter.getFilter().filter(hf + "|" + lf);
     }
 
-    @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         Dictionary.DictItem item = (Dictionary.DictItem) getListView().getItemAtPosition(position);
         Log.d("list", item.gloss);
@@ -428,8 +428,53 @@ public class NZSLDictionary extends ListActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.nzsl_dictionary_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean keywordSearchActive = filterText.isEnabled();
+        MenuItem actionKeywordItem = menu.findItem(R.id.action_search_mode_keyword);
+        MenuItem actionHandshapeItem = menu.findItem(R.id.action_search_mode_handshape);
+
+        if (keywordSearchActive) {
+            actionHandshapeItem.setVisible(true);
+            actionKeywordItem.setVisible(false);
+        } else {
+            actionHandshapeItem.setVisible(false);
+            actionKeywordItem.setVisible(true);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search_mode_handshape:
+                filterText.setText("(handshape search)");
+                filterText.setEnabled(false);
+                filterText.setVisibility(View.GONE);
+                handshapeHeader.setVisibility(View.VISIBLE);
+                updateHandshapeList();
+                break;
+            case R.id.action_search_mode_keyword:
+                filterText.setText("");
+                filterText.setEnabled(true);
+                filterText.setVisibility(View.VISIBLE);
+                handshapeHeader.setVisibility(View.GONE);
+                adapter.getFilter().filter(null);
+                break;
+        }
+
+        invalidateOptionsMenu();
+        return super.onOptionsItemSelected(item);
+    }
+
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
 }

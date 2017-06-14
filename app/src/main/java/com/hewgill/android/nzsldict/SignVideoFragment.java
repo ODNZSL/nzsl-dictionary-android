@@ -47,7 +47,7 @@ public class SignVideoFragment extends Fragment {
     private BroadcastReceiver mConnectivityChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            SignVideoFragment.this.checkConnectivity();
+            SignVideoFragment.this.updateViewForConnectivityStatus();
         }
     };
 

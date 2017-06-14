@@ -4,93 +4,40 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar" />
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/app_toolbar"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primary"
+        android:padding="16dp"
+        android:paddingTop="0dp"
         android:elevation="4dp"
-        android:gravity="top"
-        android:padding="16dp">
+        android:background="@color/primary"
+        android:layout_height="wrap_content">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
+        <EditText
+            android:id="@+id/building_list_search_box"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="start|center_vertical"
+            android:background="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_search"
+            android:drawableRight="@drawable/ic_search"
+            android:ellipsize="end"
+            android:imeOptions="actionSearch|flagNoExtractUi"
+            android:inputType="textFilter"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    </android.support.v7.widget.CardView>
+    </FrameLayout>
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NZSL "
-                    fontPath="fonts/Montserrat-Bold.ttf"
-                    android:textColor="@android:color/white"
-
-                    />
-
-                <TextView
-                    style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="dictionary"
-                    android:textColor="@android:color/white"
-                    fontPath="fonts/Montserrat-Italic.ttf"
-                    android:textStyle="italic|normal" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-
-                <ToggleButton
-                    android:id="@+id/toggle_search_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/accent"
-                    android:onClick="toggleHandshapeMode"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:textColor="@color/textColorPrimary"
-                    android:textOff="Handshapes"
-                    android:textOn="Keywords" />
-
-
-            </LinearLayout>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-                <EditText
-                    android:id="@+id/building_list_search_box"
-                    style="@style/Widget.AppCompat.EditText"
-                    android:layout_width="fill_parent"
-                    android:layout_height="48dp"
-                    android:layout_gravity="start|center_vertical"
-                    android:background="@android:color/transparent"
-                    android:drawableEnd="@drawable/ic_search"
-                    android:drawableRight="@drawable/ic_search"
-                    android:ellipsize="end"
-                    android:imeOptions="actionSearch|flagNoExtractUi"
-                    android:inputType="textFilter"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
-
-    </android.support.v7.widget.Toolbar>
 
     <ListView
         android:id="@android:id/list"
@@ -148,6 +95,7 @@
 
 
             </RelativeLayout>
+
 
 
             <!-- Bottom border -->
