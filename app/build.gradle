@@ -9,8 +9,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        versionCode 22
-        versionName "22"
+        versionCode 23
+        versionName "23"
     }
 
     buildTypes {
