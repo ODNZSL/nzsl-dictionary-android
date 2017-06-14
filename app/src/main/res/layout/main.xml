@@ -30,6 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="NZSL "
+                    fontPath="fonts/Montserrat-Bold.ttf"
                     android:textColor="@android:color/white"
 
                     />
@@ -40,6 +41,7 @@
                     android:layout_height="wrap_content"
                     android:text="dictionary"
                     android:textColor="@android:color/white"
+                    fontPath="fonts/Montserrat-Italic.ttf"
                     android:textStyle="italic|normal" />
 
                 <View
@@ -157,6 +159,7 @@
 
             <WebView
                 android:id="@+id/about_content"
+                android:overScrollMode="never"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
 
