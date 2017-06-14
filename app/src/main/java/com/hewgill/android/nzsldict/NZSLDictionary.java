@@ -403,9 +403,14 @@ public class NZSLDictionary extends AppCompatActivity {
     }
 
     private void hideKeyboard() {
-        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        try {
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (NullPointerException npe) {
+            Log.d(getClass().getName(), "Failed to hide keyboard: window token was null");
+        }
     }
+
 
     private void updateHandshapeList() {
         String hf = handshapeFilter != null ? handshapeFilter : "";
@@ -452,12 +457,14 @@ public class NZSLDictionary extends AppCompatActivity {
             case R.id.action_search_mode_handshape:
                 filterText.setText("(handshape search)");
                 filterText.setEnabled(false);
+                filterText.setVisibility(View.GONE);
                 handshapeHeader.setVisibility(View.VISIBLE);
                 updateHandshapeList();
                 break;
             case R.id.action_search_mode_keyword:
                 filterText.setText("");
                 filterText.setEnabled(true);
+                filterText.setVisibility(View.VISIBLE);
                 handshapeHeader.setVisibility(View.GONE);
                 adapter.getFilter().filter(null);
                 break;

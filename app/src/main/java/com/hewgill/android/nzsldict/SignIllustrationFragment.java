@@ -52,15 +52,24 @@ public class SignIllustrationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sign_illustration, container, false);
+        ImageView illustrationImageView = (ImageView) rootView.findViewById(R.id.sign_illustration);
+        ImageView handshapeImageView    = (ImageView) rootView.findViewById(R.id.sign_handshape);
+        ImageView locationImageView     = (ImageView) rootView.findViewById(R.id.sign_location);
+
+        illustrationImageView.setContentDescription(mDictItem.gloss + " illustration");
+        handshapeImageView.setContentDescription(mDictItem.handshape);
+        locationImageView.setContentDescription(mDictItem.location);
+        handshapeImageView.setImageResource(getContext().getResources().getIdentifier(mDictItem.handshapeImage(), "drawable", getContext().getPackageName()));
+        locationImageView.setImageResource(getContext().getResources().getIdentifier(mDictItem.locationImage(), "drawable", getContext().getPackageName()));
+
         try {
             InputStream ims = getActivity().getAssets().open(mDictItem.imagePath());
             Drawable d = Drawable.createFromStream(ims, null);
-            ((ImageView) rootView).setImageDrawable(d);
+            illustrationImageView.setImageDrawable(d);
         } catch (IOException e) {
             System.out.println(e.toString());
         }
 
         return rootView;
     }
-
 }

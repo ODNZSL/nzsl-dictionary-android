@@ -2,12 +2,14 @@ import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.hewgill.android.nzsldict.Dictionary;
+import com.hewgill.android.nzsldict.Dictionary.DictItem;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
@@ -18,7 +20,7 @@ import static org.junit.Assert.assertNotEquals;
 @SmallTest
 public class DictionaryAndroidUnitTest {
     private Dictionary mDictionary;
-    private List<Dictionary.DictItem> mResults;
+    private List<DictItem> mResults;
 
     @Before
     public void createDictionary() {
@@ -82,5 +84,19 @@ public class DictionaryAndroidUnitTest {
     public void dictionary_getWordsContainsSecondaryGloss() {
         mResults = mDictionary.getWords("avoid, keep");
         assertEquals(mResults.get(0).gloss, "want nothing to do with");
+    }
+
+    @Test
+    public void dictionary_getWordsRemovesDuplicatesFromMatchGroups() {
+        mResults = mDictionary.getWords("Auckland");
+        List<DictItem> resultsThatAreAuckland = new ArrayList<>();
+
+        for (DictItem di : mResults) {
+            if (di.gloss.equals("Auckland")) resultsThatAreAuckland.add(di);
+        }
+
+        // The term 'Auckland' matches both an exact match and has few enough results it appears
+        // as a 'starts with'. If duplicate detection is working, the sign should appear only once.
+        assertEquals(resultsThatAreAuckland.size(), 1);
     }
 }
