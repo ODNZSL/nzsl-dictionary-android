@@ -1,15 +1,18 @@
 package com.hewgill.android.nzsldict;
 
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -30,16 +33,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class NZSLDictionary extends ListActivity {
+public class NZSLDictionary extends AppCompatActivity {
 
     private Dictionary dictionary;
     private EditText filterText;
     private TextWatcher filterTextWatcher;
     private View handshapeHeader;
     private View wotd;
+    private ListView mSearchResultsList;
     private DictAdapter adapter;
     private String handshapeFilter;
     private String locationFilter;
+    private Toolbar mToolbar;
 
     class DictAdapter extends BaseAdapter {
         private int resource;
@@ -295,6 +300,9 @@ public class NZSLDictionary extends ListActivity {
         // following based on http://stackoverflow.com/questions/1737009/how-to-make-a-nice-looking-listview-filter-on-android
         setContentView(R.layout.main);
 
+        mSearchResultsList = (ListView) findViewById(android.R.id.list);
+        mToolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(mToolbar);
 
         View header = LayoutInflater.from(this).inflate(R.layout.handshape, null);
         getListView().addHeaderView(header, null, false);
@@ -324,7 +332,7 @@ public class NZSLDictionary extends ListActivity {
         handshapeHeader.setVisibility(View.GONE);
 
         adapter = new DictAdapter(this, R.layout.list_item, dictionary.getWords());
-        setListAdapter(adapter);
+        getListView().setAdapter(adapter);
         filterText = (EditText) findViewById(R.id.building_list_search_box);
         filterText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -350,6 +358,13 @@ public class NZSLDictionary extends ListActivity {
         filterText.addTextChangedListener(filterTextWatcher);
 
         getListView().setVisibility(View.GONE);
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onListItemClick((ListView) parent, view, position, id);
+            }
+        });
+
         wotd = findViewById(R.id.building_list_wotd);
         ImageView wotdImage = (ImageView) findViewById(R.id.building_list_wotd_image);
         TextView wotdGloss = (TextView) findViewById(R.id.building_list_wotd_gloss);
@@ -375,6 +390,10 @@ public class NZSLDictionary extends ListActivity {
         wotdGloss.setText(item.gloss);
 
         ((WebView) findViewById(R.id.about_content)).loadUrl("file:///android_asset/html/about.html");
+    }
+
+    public ListView getListView() {
+        return mSearchResultsList;
     }
 
     @Override
@@ -409,7 +428,6 @@ public class NZSLDictionary extends ListActivity {
         adapter.getFilter().filter(hf + "|" + lf);
     }
 
-    @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         Dictionary.DictItem item = (Dictionary.DictItem) getListView().getItemAtPosition(position);
         Log.d("list", item.gloss);
