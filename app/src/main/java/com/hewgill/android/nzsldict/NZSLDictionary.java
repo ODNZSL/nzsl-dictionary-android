@@ -407,21 +407,6 @@ public class NZSLDictionary extends AppCompatActivity {
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    public void toggleHandshapeMode(View button) {
-        boolean on = ((ToggleButton) button).isChecked();
-        if (on) {
-            filterText.setText("(handshape search)");
-            filterText.setEnabled(false);
-            handshapeHeader.setVisibility(View.VISIBLE);
-            updateHandshapeList();
-        } else {
-            filterText.setText("");
-            filterText.setEnabled(true);
-            handshapeHeader.setVisibility(View.GONE);
-            adapter.getFilter().filter(null);
-        }
-    }
-
     private void updateHandshapeList() {
         String hf = handshapeFilter != null ? handshapeFilter : "";
         String lf = locationFilter != null ? locationFilter : "";
