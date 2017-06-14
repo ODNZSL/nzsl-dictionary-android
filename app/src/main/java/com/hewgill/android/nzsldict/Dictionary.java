@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -174,7 +175,7 @@ public class Dictionary {
         return r.toString().toLowerCase();
     }
 
-    public List<DictItem> getWords(String target) {
+    public ArrayList<DictItem> getWords(String target) {
         // Create a sorted set for each type of match. This provides "buckets" to place results
         // in. Because it is a sorted set, uniqueness is guaranteed, and results should also be
         // naturally ordered.
@@ -208,14 +209,17 @@ public class Dictionary {
                 exactSecondaryMatches.size() +
                 containsSecondaryMatches.size();
 
-        List<DictItem> results = new ArrayList<>(resultCount);
+        LinkedHashSet<DictItem> results = new LinkedHashSet<>(resultCount);
         results.addAll(exactPrimaryMatches);
         results.addAll(startsWithPrimaryMatches);
         results.addAll(containsPrimaryMatches);
         results.addAll(exactSecondaryMatches);
         results.addAll(containsSecondaryMatches);
 
-        return results;
+        ArrayList<DictItem> indexAccessibleCollection = new ArrayList<>();
+        indexAccessibleCollection.addAll(results);
+
+        return indexAccessibleCollection;
     }
 
     public List<DictItem> getWordsByHandshape(String handshape, String location) {
