@@ -1,10 +1,16 @@
 package com.hewgill.android.nzsldict;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,10 +42,19 @@ public class SignVideoFragment extends Fragment {
     private boolean mMediaControllerLaidOut = false;
     private Dictionary.DictItem mDictItem;
     private NoHideMediaController mMediaController;
+    private View mNoNetworkFrame;
+    private IntentFilter mConnectivityIntentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+    private BroadcastReceiver mConnectivityChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            SignVideoFragment.this.checkConnectivity();
+        }
+    };
 
     public SignVideoFragment() {
         // Required empty public constructor
     }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -66,12 +81,41 @@ public class SignVideoFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getContext().registerReceiver(mConnectivityChangeReceiver, mConnectivityIntentFilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getContext().unregisterReceiver(mConnectivityChangeReceiver);
+    }
+
+    public boolean updateViewForConnectivityStatus() {
+        boolean networkIsAvailable = isNetworkAvailable();
+
+        if (networkIsAvailable) {
+            mVideo.setVisibility(View.VISIBLE);
+            mNoNetworkFrame.setVisibility(View.GONE);
+            mVideo.setVideoURI(Uri.parse(mDictItem.video));
+        } else {
+            mVideo.setVisibility(View.GONE);
+            mNoNetworkFrame.setVisibility(View.VISIBLE);
+        }
+
+        return networkIsAvailable;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          mRootView = inflater.inflate(R.layout.fragment_sign_video, container, false);
 
         mVideo = (VideoView) mRootView.findViewById(R.id.sign_video);
-        mVideo.setVideoURI(Uri.parse(mDictItem.video));
+        mNoNetworkFrame = mRootView.findViewById(R.id.sign_video_network_unavailable);
+
+
         mVideo.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             public boolean onError(MediaPlayer mp, int what, int extra) {
                 return false;
@@ -83,8 +127,12 @@ public class SignVideoFragment extends Fragment {
             }
         });
 
+        // Start loading video if network is available
+        if (isNetworkAvailable()) updateViewForConnectivityStatus();
+
         return mRootView;
     }
+
 
     private void fixLayoutOfMediaController() {
         if (mMediaControllerLaidOut) return;
@@ -101,6 +149,13 @@ public class SignVideoFragment extends Fragment {
         mVideo.setMediaController(mMediaController);
         mMediaController.hide();
         mMediaControllerLaidOut = true;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     class NoHideMediaController extends MediaController {

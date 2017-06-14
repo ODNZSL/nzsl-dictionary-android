@@ -27,14 +27,14 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class NZSLDictionary extends AppCompatActivity {
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+public class NZSLDictionary extends AppCompatActivity {
     private Dictionary dictionary;
     private EditText filterText;
     private TextWatcher filterTextWatcher;
@@ -465,5 +465,9 @@ public class NZSLDictionary extends AppCompatActivity {
 
         invalidateOptionsMenu();
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }
