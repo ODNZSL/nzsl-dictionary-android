@@ -92,7 +92,7 @@ public class SignVideoFragment extends Fragment {
         getContext().unregisterReceiver(mConnectivityChangeReceiver);
     }
 
-    public boolean checkConnectivity() {
+    public boolean updateViewForConnectivityStatus() {
         boolean networkIsAvailable = isNetworkAvailable();
 
         if (networkIsAvailable) {
@@ -128,7 +128,7 @@ public class SignVideoFragment extends Fragment {
         });
 
         // Start loading video if network is available
-        if (checkConnectivity()) mVideo.setVideoURI(Uri.parse(mDictItem.video));
+        if (isNetworkAvailable()) updateViewForConnectivityStatus();
 
         return mRootView;
     }
