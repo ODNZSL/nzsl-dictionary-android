@@ -60,7 +60,7 @@
                     android:paddingRight="4dp"
                     android:textColor="@color/textColorPrimary"
                     android:textOff="Handshapes"
-                    android:textOn="Search" />
+                    android:textOn="Keywords" />
 
 
             </LinearLayout>
@@ -161,7 +161,7 @@
                 android:id="@+id/about_content"
                 android:overScrollMode="never"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
 
                 />
         </LinearLayout>
