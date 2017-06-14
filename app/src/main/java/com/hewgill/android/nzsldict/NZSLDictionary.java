@@ -437,4 +437,48 @@ public class NZSLDictionary extends AppCompatActivity {
         startActivity(next);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.nzsl_dictionary_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean keywordSearchActive = filterText.isEnabled();
+        MenuItem actionKeywordItem = menu.findItem(R.id.action_search_mode_keyword);
+        MenuItem actionHandshapeItem = menu.findItem(R.id.action_search_mode_handshape);
+
+        if (keywordSearchActive) {
+            actionHandshapeItem.setVisible(true);
+            actionKeywordItem.setVisible(false);
+        } else {
+            actionHandshapeItem.setVisible(false);
+            actionKeywordItem.setVisible(true);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search_mode_handshape:
+                filterText.setText("(handshape search)");
+                filterText.setEnabled(false);
+                handshapeHeader.setVisibility(View.VISIBLE);
+                updateHandshapeList();
+                break;
+            case R.id.action_search_mode_keyword:
+                filterText.setText("");
+                filterText.setEnabled(true);
+                handshapeHeader.setVisibility(View.GONE);
+                adapter.getFilter().filter(null);
+                break;
+        }
+
+        invalidateOptionsMenu();
+        return super.onOptionsItemSelected(item);
+    }
 }
