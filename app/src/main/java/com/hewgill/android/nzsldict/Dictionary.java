@@ -114,10 +114,11 @@ public class Dictionary {
             return gloss + "|" + minor + "|" + maori;
         }
 
+        
         @Override
         public int compareTo(@NonNull Object o) {
             DictItem other = (DictItem) o;
-            return this.gloss.compareTo(other.gloss);
+            return this.image.compareTo(other.image);
         }
     }
 
