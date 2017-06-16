@@ -63,10 +63,9 @@ public class NZSLDictionaryTest {
 
     @Test
     public void test_toggleHandshapeSearch() {
-        onView(withId(R.id.toggle_search_mode)).perform(click());
+        onView(withId(R.id.action_search_mode_handshape)).perform(click());
         onView(withId(R.id.building_list_search_box))
-                .check(matches(withText("(handshape search)")))
-                .check(matches(not(isEnabled())));
+                .check(matches(not(isDisplayed())));
 
         // TODO JM: Test should also assert that handshape view is present, but I cannot get
         // http://google.github.io/android-testing-support-library/docs/espresso/advanced/#matching-a-view-that-is-a-footerheader-in-a-listview
@@ -76,9 +75,8 @@ public class NZSLDictionaryTest {
 
     @Test
     public void test_toggleNormalSearch() {
-        onView(withId(R.id.toggle_search_mode))
-                .perform(click())
-                .perform(click()); // Toggle twice to switch back
+        //onView(withId(R.id.action_search_mode_handshape)).perform(click());
+        //onView(withId(R.id.action_search_mode_keyword)).perform(click());
         onView(withId(R.id.building_list_search_box))
                 .check(matches(withText("")))
                 .check(matches(isEnabled()));
