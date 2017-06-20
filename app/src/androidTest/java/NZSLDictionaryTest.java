@@ -13,9 +13,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.TimeUnit;
+
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -27,26 +32,23 @@ import static android.support.test.espresso.web.sugar.Web.onWebView;
 import static android.support.test.espresso.web.webdriver.DriverAtoms.findElement;
 import static android.support.test.espresso.web.webdriver.DriverAtoms.getText;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class NZSLDictionaryTest {
     @Rule
-    public ActivityTestRule<NZSLDictionary> mActivityRule = new ActivityTestRule<NZSLDictionary>(NZSLDictionary.class, false, false) {
-        @Override
-        protected void afterActivityLaunched() {
-            // Enable JS!
-            onWebView(withId(R.id.about_content)).forceJavascriptEnabled();
-        }
-    };
+    public ActivityTestRule<NZSLDictionary> mActivityRule = new ActivityTestRule<NZSLDictionary>(NZSLDictionary.class);
 
     @Before
-    public void startActivity() {
-        mActivityRule.launchActivity(new Intent());
+    public void setUp() {
+        onWebView(withId(R.id.about_content)).forceJavascriptEnabled();
     }
 
     @Test
@@ -75,8 +77,8 @@ public class NZSLDictionaryTest {
 
     @Test
     public void test_toggleNormalSearch() {
-        //onView(withId(R.id.action_search_mode_handshape)).perform(click());
-        //onView(withId(R.id.action_search_mode_keyword)).perform(click());
+        onView(withId(R.id.action_search_mode_handshape)).perform(click());
+        onView(withId(R.id.action_search_mode_keyword)).perform(click());
         onView(withId(R.id.building_list_search_box))
                 .check(matches(withText("")))
                 .check(matches(isEnabled()));
@@ -89,7 +91,7 @@ public class NZSLDictionaryTest {
     @Test
     public void test_aboutWebviewRenders() {
         onWebView(withId(R.id.about_content))
-                .withElement(findElement(Locator.TAG_NAME, "body"))
+                .withElement(findElement(Locator.TAG_NAME, "H1"))
                 .check(webMatches(getText(), containsString("NZSL Dictionary Official App")));
     }
 

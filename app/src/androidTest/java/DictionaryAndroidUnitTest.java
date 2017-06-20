@@ -64,7 +64,7 @@ public class DictionaryAndroidUnitTest {
 
     @Test
     public void dictionary_getWordsContainsMatchMaoriGloss() {
-        mResults = mDictionary.getWords("orang");
+        mResults = mDictionary.getWords("oranga tina");
         assertEquals(mResults.get(0).gloss, "medical");
     }
 
@@ -96,7 +96,8 @@ public class DictionaryAndroidUnitTest {
         }
 
         // The term 'Auckland' matches both an exact match and has few enough results it appears
-        // as a 'starts with'. If duplicate detection is working, the sign should appear only once.
-        assertEquals(resultsThatAreAuckland.size(), 1);
+        // as a 'starts with'. If duplicate detection is working, the sign should appear only once per sign,
+        // with three unique signs for Auckland
+        assertEquals(resultsThatAreAuckland.size(), 3);
     }
 }

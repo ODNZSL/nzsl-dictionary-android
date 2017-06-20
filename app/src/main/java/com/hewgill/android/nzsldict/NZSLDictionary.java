@@ -470,7 +470,7 @@ public class NZSLDictionary extends AppCompatActivity {
                 break;
         }
 
-        invalidateOptionsMenu();
+        supportInvalidateOptionsMenu();
         return super.onOptionsItemSelected(item);
     }
 
