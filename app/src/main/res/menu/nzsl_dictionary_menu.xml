@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
             android:id="@+id/action_search_mode_handshape"
-            android:icon="@drawable/ic_hand_search"
+            android:icon="@drawable/ic_action_handshape"
             android:title="Search by Handshape/Location"
             app:showAsAction="ifRoom"/>
 
         <item
             android:title="Search by Keyword"
             android:id="@+id/action_search_mode_keyword"
-            android:icon="@drawable/ic_keyword_search"
+            android:icon="@drawable/ic_action_keyword"
             app:showAsAction="ifRoom"/>
 
 </menu>
