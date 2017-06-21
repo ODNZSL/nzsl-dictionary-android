@@ -9,6 +9,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:id="@+id/building_list_search_container"
         android:padding="16dp"
         android:paddingTop="0dp"
         android:elevation="4dp"

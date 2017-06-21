@@ -45,6 +45,7 @@ public class NZSLDictionary extends AppCompatActivity {
     private String handshapeFilter;
     private String locationFilter;
     private Toolbar mToolbar;
+    private View filterTextContainer;
 
     class DictAdapter extends BaseAdapter {
         private int resource;
@@ -334,6 +335,7 @@ public class NZSLDictionary extends AppCompatActivity {
         adapter = new DictAdapter(this, R.layout.list_item, dictionary.getWords());
         getListView().setAdapter(adapter);
         filterText = (EditText) findViewById(R.id.building_list_search_box);
+        filterTextContainer = findViewById(R.id.building_list_search_container);
         filterText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
@@ -457,14 +459,14 @@ public class NZSLDictionary extends AppCompatActivity {
             case R.id.action_search_mode_handshape:
                 filterText.setText("(handshape search)");
                 filterText.setEnabled(false);
-                filterText.setVisibility(View.GONE);
+                filterTextContainer.setVisibility(View.GONE);
                 handshapeHeader.setVisibility(View.VISIBLE);
                 updateHandshapeList();
                 break;
             case R.id.action_search_mode_keyword:
                 filterText.setText("");
                 filterText.setEnabled(true);
-                filterText.setVisibility(View.VISIBLE);
+                filterTextContainer.setVisibility(View.VISIBLE);
                 handshapeHeader.setVisibility(View.GONE);
                 adapter.getFilter().filter(null);
                 break;
