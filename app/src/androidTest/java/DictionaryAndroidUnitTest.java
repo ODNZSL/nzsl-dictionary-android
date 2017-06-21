@@ -100,4 +100,5 @@ public class DictionaryAndroidUnitTest {
         // with three unique signs for Auckland
         assertEquals(resultsThatAreAuckland.size(), 3);
     }
+    
 }
