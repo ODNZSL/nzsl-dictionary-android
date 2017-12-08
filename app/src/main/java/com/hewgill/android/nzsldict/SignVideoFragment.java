@@ -39,6 +39,7 @@ public class SignVideoFragment extends Fragment {
     private static final String ARG_DICT_ITEM = "dictItem";
     private VideoView mVideo;
     private View mRootView;
+    private View mAnchorView;
     private boolean mMediaControllerLaidOut = false;
     private Dictionary.DictItem mDictItem;
     private MediaController mMediaController;
@@ -111,6 +112,7 @@ public class SignVideoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          mRootView = inflater.inflate(R.layout.fragment_sign_video, container, false);
+         mAnchorView = mRootView.findViewById(R.id.sign_video_anchor);
 
         mVideo = (VideoView) mRootView.findViewById(R.id.sign_video);
         mNoNetworkFrame = mRootView.findViewById(R.id.sign_video_network_unavailable);
@@ -124,6 +126,7 @@ public class SignVideoFragment extends Fragment {
         mVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             public void onPrepared(MediaPlayer mp) {
                 mVideo.setMediaController(mMediaController);
+                mMediaController.setAnchorView(mAnchorView);
             }
         });
 

@@ -5,13 +5,19 @@
     android:layout_width="fill_parent"
     android:background="@android:color/black"
     android:layout_height="wrap_content">
-    <VideoView
-        android:id="@+id/sign_video"
-        android:layout_width="fill_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-     />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/sign_video_anchor">
+        <VideoView
+            android:id="@+id/sign_video"
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+         />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
