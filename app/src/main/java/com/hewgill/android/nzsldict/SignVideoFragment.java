@@ -41,7 +41,7 @@ public class SignVideoFragment extends Fragment {
     private View mRootView;
     private boolean mMediaControllerLaidOut = false;
     private Dictionary.DictItem mDictItem;
-    private NoHideMediaController mMediaController;
+    private MediaController mMediaController;
     private View mNoNetworkFrame;
     private IntentFilter mConnectivityIntentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
     private BroadcastReceiver mConnectivityChangeReceiver = new BroadcastReceiver() {
@@ -74,7 +74,7 @@ public class SignVideoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMediaController = new NoHideMediaController(getContext());
+        mMediaController = new MediaController(getContext());
         if (getArguments() != null) {
             mDictItem = (Dictionary.DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
         }
@@ -123,7 +123,7 @@ public class SignVideoFragment extends Fragment {
         });
         mVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             public void onPrepared(MediaPlayer mp) {
-                fixLayoutOfMediaController();
+                mVideo.setMediaController(mMediaController);
             }
         });
 
@@ -134,22 +134,6 @@ public class SignVideoFragment extends Fragment {
     }
 
 
-    private void fixLayoutOfMediaController() {
-        if (mMediaControllerLaidOut) return;
-        RelativeLayout parentLayout = (RelativeLayout) mVideo.getParent();
-        FrameLayout frameLayout = (FrameLayout) mMediaController.getParent();
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, this.getId());
-
-        ((LinearLayout)frameLayout.getParent()).removeView(frameLayout);
-        parentLayout.addView(frameLayout, layoutParams);
-
-        mMediaController.setAnchorView(mVideo);
-        mVideo.setMediaController(mMediaController);
-        mMediaController.hide();
-        mMediaControllerLaidOut = true;
-    }
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -158,26 +142,7 @@ public class SignVideoFragment extends Fragment {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    class NoHideMediaController extends MediaController {
-        public NoHideMediaController(Context context) {
-            super(context);
-        }
 
-        // http://stackoverflow.com/questions/6051825/android-back-button-and-mediacontroller
-        @Override
-        public boolean dispatchKeyEvent(KeyEvent event) {
-            if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-                ((Activity) getContext()).finish();
-                return true;
-            }
-            return super.dispatchKeyEvent(event);
-        }
-
-        // http://stackoverflow.com/questions/6651718/keeping-mediacontroller-on-the-screen-in-a-videoview
-        @Override
-        public void hide() {
-            show(0);
-        }
     }
 
 }
