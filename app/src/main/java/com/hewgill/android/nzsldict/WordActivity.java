@@ -17,6 +17,7 @@ public class WordActivity extends BaseActivity {
     private TextView gloss;
     private TextView minor;
     private TextView maori;
+    private SignVideoFragment mVideoFragment;
     private ViewPager viewPager;
     private Dictionary.DictItem item;
 
@@ -44,7 +45,9 @@ public class WordActivity extends BaseActivity {
     private void setupSignMediaPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(SignIllustrationFragment.newInstance(item), "Illustration");
-        adapter.addFragment(SignVideoFragment.newInstance(item), "Video");
+        mVideoFragment = SignVideoFragment.newInstance(item);
+        adapter.addFragment(mVideoFragment, "Video");
+        viewPager.addOnPageChangeListener(new WordPageChangeListener(viewPager));
         viewPager.setAdapter(adapter);
     }
 
@@ -74,6 +77,32 @@ public class WordActivity extends BaseActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
+        }
+    }
+
+    private class WordPageChangeListener implements ViewPager.OnPageChangeListener {
+        private final ViewPager mPager;
+
+        private WordPageChangeListener(ViewPager pager) {
+            mPager = pager;
+        }
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            ViewPagerAdapter vpa = (ViewPagerAdapter) mPager.getAdapter();
+            if (vpa.getPageTitle(position).equals("Video")) {
+                mVideoFragment.showControls();
+            } else {
+                mVideoFragment.stop();
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
         }
     }
 }

@@ -39,9 +39,10 @@ public class SignVideoFragment extends Fragment {
     private static final String ARG_DICT_ITEM = "dictItem";
     private VideoView mVideo;
     private View mRootView;
+    private View mAnchorView;
     private boolean mMediaControllerLaidOut = false;
     private Dictionary.DictItem mDictItem;
-    private NoHideMediaController mMediaController;
+    private MediaController mMediaController;
     private View mNoNetworkFrame;
     private IntentFilter mConnectivityIntentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
     private BroadcastReceiver mConnectivityChangeReceiver = new BroadcastReceiver() {
@@ -74,7 +75,7 @@ public class SignVideoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMediaController = new NoHideMediaController(getContext());
+        mMediaController = new MediaController(getContext());
         if (getArguments() != null) {
             mDictItem = (Dictionary.DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
         }
@@ -111,6 +112,7 @@ public class SignVideoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          mRootView = inflater.inflate(R.layout.fragment_sign_video, container, false);
+         mAnchorView = mRootView.findViewById(R.id.sign_video_anchor);
 
         mVideo = (VideoView) mRootView.findViewById(R.id.sign_video);
         mNoNetworkFrame = mRootView.findViewById(R.id.sign_video_network_unavailable);
@@ -123,7 +125,8 @@ public class SignVideoFragment extends Fragment {
         });
         mVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             public void onPrepared(MediaPlayer mp) {
-                fixLayoutOfMediaController();
+                mVideo.setMediaController(mMediaController);
+                mMediaController.setAnchorView(mAnchorView);
             }
         });
 
@@ -134,22 +137,6 @@ public class SignVideoFragment extends Fragment {
     }
 
 
-    private void fixLayoutOfMediaController() {
-        if (mMediaControllerLaidOut) return;
-        RelativeLayout parentLayout = (RelativeLayout) mVideo.getParent();
-        FrameLayout frameLayout = (FrameLayout) mMediaController.getParent();
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, this.getId());
-
-        ((LinearLayout)frameLayout.getParent()).removeView(frameLayout);
-        parentLayout.addView(frameLayout, layoutParams);
-
-        mMediaController.setAnchorView(mVideo);
-        mVideo.setMediaController(mMediaController);
-        mMediaController.hide();
-        mMediaControllerLaidOut = true;
-    }
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -158,26 +145,15 @@ public class SignVideoFragment extends Fragment {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    class NoHideMediaController extends MediaController {
-        public NoHideMediaController(Context context) {
-            super(context);
-        }
+    public void showControls() {
+        mVideo.setVisibility(View.VISIBLE);
+        mMediaController.show();
+    }
 
-        // http://stackoverflow.com/questions/6051825/android-back-button-and-mediacontroller
-        @Override
-        public boolean dispatchKeyEvent(KeyEvent event) {
-            if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-                ((Activity) getContext()).finish();
-                return true;
-            }
-            return super.dispatchKeyEvent(event);
-        }
-
-        // http://stackoverflow.com/questions/6651718/keeping-mediacontroller-on-the-screen-in-a-videoview
-        @Override
-        public void hide() {
-            show(0);
-        }
+    public void stop() {
+        mVideo.stopPlayback();
+        mVideo.setVisibility(View.INVISIBLE);
+        mMediaController.hide();
     }
 
 }
