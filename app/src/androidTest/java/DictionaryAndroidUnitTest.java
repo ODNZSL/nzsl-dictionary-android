@@ -105,7 +105,7 @@ public class DictionaryAndroidUnitTest {
     public void dictionaryItem_imagePathHandlesMissingImage() {
         DictItem di = new DictItem();
         di.image = "";
-        assertNull(di.imagePath(), "When the image is missing, NULL is returned");
+        assertEquals(di.imagePath(), "", "When the image is missing, an empty string is returned");
     }
 
     @Test

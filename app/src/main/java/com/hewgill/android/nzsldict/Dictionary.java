@@ -96,7 +96,7 @@ public class Dictionary {
             String base = image.substring(0, image.length() - 4);
             String name = "images/signs/" + base.toLowerCase().replaceAll("[-.]", "_") + ".png";
             return name;
-            if (image.isEmpty()) return null;
+            if (image.isEmpty()) return "";
         }
 
         public String handshapeImage() {
