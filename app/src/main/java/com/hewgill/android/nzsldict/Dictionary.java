@@ -93,9 +93,9 @@ public class Dictionary {
         }
 
         public String imagePath() {
-            String base = image.substring(0, image.length() - 4);
-            String name = "images/signs/" + base.toLowerCase().replaceAll("[-.]", "_") + ".png";
-            return name;
+            if (image.isEmpty()) return "";
+            String assetName = "images/signs/" + image.toLowerCase();
+            return assetName;
         }
 
         public String handshapeImage() {
