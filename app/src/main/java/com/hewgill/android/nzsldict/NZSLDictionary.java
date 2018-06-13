@@ -100,6 +100,7 @@ public class NZSLDictionary extends AppCompatActivity {
                 Drawable d = Drawable.createFromStream(ims, null);
                 dv.setImageDrawable(d);
             } catch (IOException e) {
+                dv.setImageDrawable(null);
                 System.out.println(e.toString());
             }
             return v;
