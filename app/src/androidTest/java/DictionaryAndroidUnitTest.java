@@ -14,6 +14,7 @@ import java.util.List;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -98,5 +99,20 @@ public class DictionaryAndroidUnitTest {
         // The term 'Auckland' matches both an exact match and has few enough results it appears
         // as a 'starts with'. If duplicate detection is working, the sign should appear only once.
         assertEquals(resultsThatAreAuckland.size(), 1);
+    }
+
+    @Test
+    public void dictionaryItem_imagePathHandlesMissingImage() {
+        DictItem di = new DictItem();
+        di.image = "";
+        assertNull(di.imagePath(), "When the image is missing, NULL is returned");
+    }
+
+    @Test
+    public void dictionaryItem_imagePathHandlesRegularImage() {
+        DictItem di = new DictItem();
+        di.image = "picture_w30_6739.png";
+        String expectedPath = "images/signs/picture_w30_6739.png";
+        assertEquals(di.imagePath(), expectedPath);
     }
 }
