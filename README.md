@@ -2,7 +2,7 @@
 
 This repository holds the code necessary to develop the NZSL Dictionary App for Android. This codebase can be imported into Android Studio and you are invited to fork it to add features and bug fixes.
 
-The original code was developed by [Greg Hewgill](http://hewgill.com/) and generously gifted to the [Deaf Studies Research Unit](http://www.victoria.ac.nz/lals/centres-and-institutes/dsru) of [Victoria University of Wellignton](http://www.victoria.ac.nz/). It is maintained by [Ackama](http://www.ackama.com/). 
+The original code was developed by [Greg Hewgill](http://hewgill.com/) and generously gifted to the [Deaf Studies Research Unit](http://www.victoria.ac.nz/lals/centres-and-institutes/dsru) of [Victoria University of Wellignton](http://www.victoria.ac.nz/). It is maintained by [Ackama](https://www.ackama.com/). 
 
 # Missing images?
 
