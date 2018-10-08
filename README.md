@@ -25,7 +25,7 @@ Two approvals are required before a PR can be merged.
 
 # Deployment
 
-To deploy to production: a feature branch into ODNZSL master.
+To deploy to production: merge a feature branch into ODNZSL master.
 A repositiory adminstrator will perform the necessary actions when a release is planned.
 
 # License
