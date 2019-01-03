@@ -20,6 +20,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -27,6 +28,9 @@ public class BaseActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.action_vocab_sheet:
+                startActivity(new Intent(this, VocabSheetActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
