@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.security.MessageDigest;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
@@ -17,11 +16,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -85,6 +82,15 @@ public class Dictionary {
             }
         }
         return r.toString().toLowerCase();
+    }
+
+    public DictItem getWord(String key) {
+        for (DictItem d : words) {
+            if (d.uniqueKey().equals(key)) {
+                return d;
+            }
+        }
+        return null;
     }
 
     public ArrayList<DictItem> getWords(String target) {
