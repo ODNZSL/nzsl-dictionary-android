@@ -20,7 +20,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Gallery;
@@ -41,124 +40,60 @@ public class NZSLDictionary extends AppCompatActivity {
     private View handshapeHeader;
     private View wotd;
     private ListView mSearchResultsList;
-    private DictAdapter adapter;
+    private DictionaryAdapter adapter;
     private String handshapeFilter;
     private String locationFilter;
     private Toolbar mToolbar;
     private View filterTextContainer;
+    private List<DictItem> words;
 
-    class DictAdapter extends BaseAdapter {
-        private int resource;
-        private List<Dictionary.DictItem> words;
-        private LayoutInflater inflater;
-        private Filter filter;
-
-        public DictAdapter(Context context, int resource, List<Dictionary.DictItem> words) {
-            this.resource = resource;
-            this.words = words;
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
+    protected class HandshapeFilter extends Filter {
         @Override
-        public int getCount() {
-            return words.size();
-        }
+        protected Filter.FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
 
-        @Override
-        public Dictionary.DictItem getItem(int position) {
-            return words.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View v;
-            if (convertView == null) {
-                v = inflater.inflate(resource, parent, false);
-            } else {
-                v = convertView;
-            }
-            TextView gv = (TextView) v.findViewById(R.id.item_gloss);
-            TextView mv = (TextView) v.findViewById(R.id.item_minor);
-            TextView mtv = (TextView) v.findViewById(R.id.item_maori);
-            ImageView dv = (ImageView) v.findViewById(R.id.diagram);
-            if (position >= getCount()) {
-                Log.e("filter", "request for item " + position + " in list of size " + getCount());
-                return v;
-            }
-            Dictionary.DictItem item = getItem(position);
-            gv.setText(item.gloss);
-            mv.setText(item.minor);
-            mtv.setText(item.maori);
-
+            final String hf = handshapeFilter;
+            final String lf = locationFilter;
             try {
-                InputStream ims = getAssets().open(item.imagePath());
-                Drawable d = Drawable.createFromStream(ims, null);
-                dv.setImageDrawable(d);
-            } catch (IOException e) {
-                dv.setImageDrawable(null);
-                System.out.println(e.toString());
+                Thread.sleep(500);
+            } catch (InterruptedException x) {
             }
-            return v;
+            if (hf != handshapeFilter || lf != locationFilter) {
+                // something has changed, abandon and we will get rerun
+                return null;
+            }
+
+            List<DictItem> r;
+            if (constraint == null) {
+                r = dictionary.getWords();
+            } else {
+                String target = constraint.toString();
+                int i = target.indexOf('|');
+                if (i >= 0) {
+                    String hs = target.substring(0, i);
+                    String ls = target.substring(i + 1, target.length());
+                    r = dictionary.getWordsByHandshape(hs, ls);
+                } else {
+                    r = dictionary.getWords(target);
+                }
+            }
+            results.values = r;
+            results.count = r.size();
+            return results;
         }
 
-        public Filter getFilter() {
-            if (filter == null) {
-                filter = new HandshapeFilter();
+        @Override
+        protected void publishResults(CharSequence constraint, Filter.FilterResults results) {
+            if (results == null) {
+                return;
             }
-            return filter;
-        }
-
-        private class HandshapeFilter extends Filter {
-            @Override
-            protected Filter.FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-
-                final String hf = handshapeFilter;
-                final String lf = locationFilter;
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException x) {
-                }
-                if (hf != handshapeFilter || lf != locationFilter) {
-                    // something has changed, abandon and we will get rerun
-                    return null;
-                }
-
-                List<Dictionary.DictItem> r;
-                if (constraint == null) {
-                    r = dictionary.getWords();
-                } else {
-                    String target = constraint.toString();
-                    int i = target.indexOf('|');
-                    if (i >= 0) {
-                        String hs = target.substring(0, i);
-                        String ls = target.substring(i + 1, target.length());
-                        r = dictionary.getWordsByHandshape(hs, ls);
-                    } else {
-                        r = dictionary.getWords(target);
-                    }
-                }
-                results.values = r;
-                results.count = r.size();
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, Filter.FilterResults results) {
-                if (results == null) {
-                    return;
-                }
-                words = (List<Dictionary.DictItem>) results.values;
-                if (results.count > 0) {
-                    notifyDataSetChanged();
-                } else {
-                    notifyDataSetInvalidated();
-                }
+            words = (List<DictItem>) results.values;
+            if (results.count > 0) {
+                adapter.setWords(words);
+                adapter.notifyDataSetChanged();
+            } else {
+                adapter.setWords(words);
+                adapter.notifyDataSetInvalidated();
             }
         }
     }
@@ -299,6 +234,7 @@ public class NZSLDictionary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         dictionary = new Dictionary(getApplicationContext());
+        words = dictionary.getWords();
         // following based on http://stackoverflow.com/questions/1737009/how-to-make-a-nice-looking-listview-filter-on-android
         setContentView(R.layout.main);
 
@@ -333,7 +269,8 @@ public class NZSLDictionary extends AppCompatActivity {
         handshapeHeader = header.findViewById(R.id.handshape_header);
         handshapeHeader.setVisibility(View.GONE);
 
-        adapter = new DictAdapter(this, R.layout.list_item, dictionary.getWords());
+        adapter = new DictionaryAdapter(this, R.layout.list_item, words);
+        adapter.setFilter(new HandshapeFilter());
         getListView().setAdapter(adapter);
         filterText = (EditText) findViewById(R.id.building_list_search_box);
         filterTextContainer = findViewById(R.id.building_list_search_container);
@@ -371,7 +308,7 @@ public class NZSLDictionary extends AppCompatActivity {
         wotd = findViewById(R.id.building_list_wotd);
         ImageView wotdImage = (ImageView) findViewById(R.id.building_list_wotd_image);
         TextView wotdGloss = (TextView) findViewById(R.id.building_list_wotd_gloss);
-        final Dictionary.DictItem item = dictionary.getWordOfTheDay();
+        final DictItem item = dictionary.getWordOfTheDay();
 
         try {
             InputStream ims = getAssets().open(item.imagePath());
@@ -422,7 +359,7 @@ public class NZSLDictionary extends AppCompatActivity {
     }
 
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        Dictionary.DictItem item = (Dictionary.DictItem) getListView().getItemAtPosition(position);
+        DictItem item = (DictItem) getListView().getItemAtPosition(position);
         Log.d("list", item.gloss);
         Intent next = new Intent();
         next.setClass(this, WordActivity.class);
@@ -470,6 +407,9 @@ public class NZSLDictionary extends AppCompatActivity {
                 filterTextContainer.setVisibility(View.VISIBLE);
                 handshapeHeader.setVisibility(View.GONE);
                 adapter.getFilter().filter(null);
+                break;
+            case R.id.action_vocab_sheet:
+                startActivity(new Intent(this, VocabSheetActivity.class));
                 break;
         }
 
