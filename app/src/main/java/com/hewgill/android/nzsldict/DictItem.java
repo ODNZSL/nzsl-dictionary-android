@@ -1,6 +1,6 @@
 package com.hewgill.android.nzsldict;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -42,8 +42,6 @@ public class DictItem implements Serializable, Comparable {
         Locations.put("elbow", "location_5_17_elbow");
         Locations.put("upper leg", "location_4_15_upper_leg");
     }
-
-    ;
 
     public DictItem() {
         gloss = null;

@@ -29,7 +29,7 @@ public class SignVideoFragment extends Fragment {
     private View mRootView;
     private View mAnchorView;
     private boolean mMediaControllerLaidOut = false;
-    private Dictionary.DictItem mDictItem;
+    private DictItem mDictItem;
     private MediaController mMediaController;
     private View mNoNetworkFrame;
     private IntentFilter mConnectivityIntentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -52,7 +52,7 @@ public class SignVideoFragment extends Fragment {
      * @param dictItem The dictItem to use as the context for the fragment
      * @return A new instance of fragment SignIllustrationFragment.
      */
-    public static SignVideoFragment newInstance(Dictionary.DictItem dictItem) {
+    public static SignVideoFragment newInstance(DictItem dictItem) {
         SignVideoFragment fragment = new SignVideoFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_DICT_ITEM, dictItem);
@@ -65,7 +65,7 @@ public class SignVideoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mMediaController = new MediaController(getContext());
         if (getArguments() != null) {
-            mDictItem = (Dictionary.DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
+            mDictItem = (DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
         }
     }
 
