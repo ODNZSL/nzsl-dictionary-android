@@ -2,7 +2,7 @@ import androidx.test.filters.SmallTest;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.hewgill.android.nzsldict.Dictionary;
-import com.hewgill.android.nzsldict.Dictionary.DictItem;
+import com.hewgill.android.nzsldict.DictItem;
 
 import org.junit.After;
 import org.junit.Before;

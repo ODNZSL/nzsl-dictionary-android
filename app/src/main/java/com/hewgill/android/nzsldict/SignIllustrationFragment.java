@@ -19,7 +19,7 @@ import java.io.InputStream;
  */
 public class SignIllustrationFragment extends Fragment {
     private static final String ARG_DICT_ITEM = "dictItem";
-    private Dictionary.DictItem mDictItem;
+    private DictItem mDictItem;
 
     public SignIllustrationFragment() {
         // Required empty public constructor
@@ -32,7 +32,7 @@ public class SignIllustrationFragment extends Fragment {
      * @param dictItem The dictItem to use as the context for the fragment
      * @return A new instance of fragment SignIllustrationFragment.
      */
-    public static SignIllustrationFragment newInstance(Dictionary.DictItem dictItem) {
+    public static SignIllustrationFragment newInstance(DictItem dictItem) {
         SignIllustrationFragment fragment = new SignIllustrationFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_DICT_ITEM, dictItem);
@@ -44,7 +44,7 @@ public class SignIllustrationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mDictItem = (Dictionary.DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
+            mDictItem = (DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
         }
     }
 
