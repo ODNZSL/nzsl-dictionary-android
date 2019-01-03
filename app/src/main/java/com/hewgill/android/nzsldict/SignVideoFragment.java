@@ -30,6 +30,7 @@ public class SignVideoFragment extends Fragment {
     private View mAnchorView;
     private boolean mMediaControllerLaidOut = false;
     private DictItem mDictItem;
+    private DictItemOfflineAvailability mOfflineAvailability;
     private MediaController mMediaController;
     private View mNoNetworkFrame;
     private IntentFilter mConnectivityIntentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -66,6 +67,7 @@ public class SignVideoFragment extends Fragment {
         mMediaController = new MediaController(getContext());
         if (getArguments() != null) {
             mDictItem = (DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
+            mOfflineAvailability = new DictItemOfflineAvailability(getActivity(), mDictItem);
         }
     }
 
@@ -82,18 +84,18 @@ public class SignVideoFragment extends Fragment {
     }
 
     public boolean updateViewForConnectivityStatus() {
-        boolean networkIsAvailable = isNetworkAvailable();
+        boolean videoIsAvailable = isVideoAvailable();
 
-        if (networkIsAvailable) {
+        if (videoIsAvailable) {
             mVideo.setVisibility(View.VISIBLE);
             mNoNetworkFrame.setVisibility(View.GONE);
-            mVideo.setVideoURI(Uri.parse(mDictItem.video));
+            mVideo.setVideoURI(mOfflineAvailability.cacheFirstVideoUri());
         } else {
             mVideo.setVisibility(View.GONE);
             mNoNetworkFrame.setVisibility(View.VISIBLE);
         }
 
-        return networkIsAvailable;
+        return videoIsAvailable;
     }
 
     @Override
@@ -119,18 +121,16 @@ public class SignVideoFragment extends Fragment {
         });
 
         // Start loading video if network is available
-        if (isNetworkAvailable()) updateViewForConnectivityStatus();
+        if (isVideoAvailable()) updateViewForConnectivityStatus();
 
         return mRootView;
     }
 
-
-
-    private boolean isNetworkAvailable() {
+    private boolean isVideoAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        return mOfflineAvailability.availableOffline() || (activeNetworkInfo != null && activeNetworkInfo.isConnected());
     }
 
     public void showControls() {
