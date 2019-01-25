@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class VocabSheetRepository {
+public class FavouritesRepository {
     private final Context mContext;
     private final SharedPreferences mPrefsStore;
     private final String KEY = "NZSL_VOCAB_SHEET";
     private final String PREF_KEY = "VOCAB_SHEET_ITEMS";
 
-    public VocabSheetRepository(Context ctx) {
+    public FavouritesRepository(Context ctx) {
         mContext = ctx;
         mPrefsStore = ctx.getSharedPreferences(KEY, Context.MODE_PRIVATE);
     }

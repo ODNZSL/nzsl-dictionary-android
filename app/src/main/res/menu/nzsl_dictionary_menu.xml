@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
-            android:id="@+id/action_vocab_sheet"
+            android:id="@+id/action_favourites"
             android:icon="@drawable/ic_list_white_48dp"
-            android:title="Vocab Sheet"
+            android:title="Favourites"
             app:showAsAction="always" />
         <item
             android:id="@+id/action_search_mode_handshape"

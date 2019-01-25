@@ -7,7 +7,7 @@
     android:layout_height="fill_parent">
 
     <ListView
-        android:id="@+id/vocab_sheet"
+        android:id="@+id/favourites"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:visibility="gone"
@@ -18,7 +18,7 @@
         android:layout_height="fill_parent"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:id="@+id/empty_vocab_sheet"
+        android:id="@+id/empty_favourites"
        >
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center"
             android:padding="16dp"
-            android:text="You haven't added anything to your vocab sheet yet!"
+            android:text="You haven't added anything to your favourites yet!"
             android:textAlignment="center"
             android:textAllCaps="false" />
 

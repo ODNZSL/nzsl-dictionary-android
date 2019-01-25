@@ -28,8 +28,8 @@ public class BaseActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.action_vocab_sheet:
-                startActivity(new Intent(this, VocabSheetActivity.class));
+            case R.id.action_favourites:
+                startActivity(new Intent(this, FavouritesActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

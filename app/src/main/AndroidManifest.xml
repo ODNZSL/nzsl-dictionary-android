@@ -25,7 +25,10 @@
         <activity
             android:name=".WordActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".VocabSheetActivity" android:theme="@style/WindowedAppTheme" />
+        <activity
+            android:name=".FavouritesActivity"
+            android:theme="@style/WindowedAppTheme" />
+
     </application>
 
 </manifest>

@@ -41,7 +41,7 @@ public class WordActivity extends BaseActivity {
         minor = (TextView) findViewById(R.id.minor);
         maori = (TextView) findViewById(R.id.maori);
         vocabSheetToggle = (FloatingActionButton) findViewById(R.id.add_to_vocab_sheet);
-        setupVocabSheetToggle(vocabSheetToggle);
+        setupFavouritesToggle(vocabSheetToggle);
         viewPager = (ViewPager) findViewById(R.id.sign_media_pager);
         setupSignMediaPager(viewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sign_tabs);
@@ -52,8 +52,8 @@ public class WordActivity extends BaseActivity {
         maori.setText(item.maori);
     }
 
-    private void setupVocabSheetToggle(final FloatingActionButton vocabSheetToggle) {
-        final VocabSheetRepository repo = new VocabSheetRepository(this);
+    private void setupFavouritesToggle(final FloatingActionButton vocabSheetToggle) {
+        final FavouritesRepository repo = new FavouritesRepository(this);
 
         if (repo.contains(item)) {
             vocabSheetToggle.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_star_white_48dp));
@@ -68,10 +68,10 @@ public class WordActivity extends BaseActivity {
 
                 if (repo.contains(item)) {
                     repo.remove(item);
-                    msg = "Removed from your vocab sheet";
+                    msg = "Removed from your favourites";
                 } else {
                     repo.add(item);
-                    msg = "Added to your vocab sheet";
+                    msg = "Added to your favourites";
                 }
 
                 Snackbar
@@ -79,11 +79,11 @@ public class WordActivity extends BaseActivity {
                         .setAction("View", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent vocabSheetActivity = new Intent(WordActivity.this, VocabSheetActivity.class);
+                                Intent vocabSheetActivity = new Intent(WordActivity.this, FavouritesActivity.class);
                                 startActivity(vocabSheetActivity);
                             }
                         }).show();
-                setupVocabSheetToggle(vocabSheetToggle);
+                setupFavouritesToggle(vocabSheetToggle);
             }
         });
     }

@@ -408,8 +408,8 @@ public class NZSLDictionary extends AppCompatActivity {
                 handshapeHeader.setVisibility(View.GONE);
                 adapter.getFilter().filter(null);
                 break;
-            case R.id.action_vocab_sheet:
-                startActivity(new Intent(this, VocabSheetActivity.class));
+            case R.id.action_favourites:
+                startActivity(new Intent(this, FavouritesActivity.class));
                 break;
         }
 
