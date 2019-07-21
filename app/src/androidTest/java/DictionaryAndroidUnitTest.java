@@ -97,8 +97,10 @@ public class DictionaryAndroidUnitTest {
         }
 
         // The term 'Auckland' matches both an exact match and has few enough results it appears
-        // as a 'starts with'. If duplicate detection is working, the sign should appear only once.
-        assertEquals(resultsThatAreAuckland.size(), 1);
+        // as a 'starts with'. If duplicate detection is working, each sign should appear only once.
+        // As of Dec 2018, there are exactly 5 unique results for 'Auckland':
+        // 2259, 2348, 2619, 2623, 6912
+        assertEquals(resultsThatAreAuckland.size(), 5);
     }
 
     @Test
