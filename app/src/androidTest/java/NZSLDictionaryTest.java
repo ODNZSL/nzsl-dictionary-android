@@ -63,7 +63,7 @@ public class NZSLDictionaryTest {
 
     @Test
     public void test_toggleHandshapeSearch() {
-        onView(withId(R.id.toggle_search_mode)).perform(click());
+        onView(withId(R.id.action_search_mode_handshape)).perform(click());
         onView(withId(R.id.building_list_search_box))
                 .check(matches(withText("(handshape search)")))
                 .check(matches(not(isEnabled())));
@@ -76,9 +76,10 @@ public class NZSLDictionaryTest {
 
     @Test
     public void test_toggleNormalSearch() {
-        onView(withId(R.id.toggle_search_mode))
-                .perform(click())
-                .perform(click()); // Toggle twice to switch back
+        onView(withId(R.id.action_search_mode_handshape))
+                .perform(click());
+        onView(withId(R.id.action_search_mode_keyword))
+                .perform(click()); // Switch back
         onView(withId(R.id.building_list_search_box))
                 .check(matches(withText("")))
                 .check(matches(isEnabled()));
