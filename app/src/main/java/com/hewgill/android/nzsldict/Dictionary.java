@@ -217,10 +217,7 @@ public class Dictionary {
         results.addAll(exactSecondaryMatches);
         results.addAll(containsSecondaryMatches);
 
-        ArrayList<DictItem> indexAccessibleCollection = new ArrayList<>();
-        indexAccessibleCollection.addAll(results);
-
-        return indexAccessibleCollection;
+        return new ArrayList<>(results);
     }
 
     public List<DictItem> getWordsByHandshape(String handshape, String location) {
