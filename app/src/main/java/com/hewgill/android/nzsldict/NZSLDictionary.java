@@ -211,8 +211,8 @@ public class NZSLDictionary extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = super.getView(position, convertView, parent);
-            TextView tv = (TextView) v.findViewById(R.id.handshape_label);
-            ImageView iv = (ImageView) v.findViewById(R.id.handshape_item);
+            TextView tv = v.findViewById(R.id.handshape_label);
+            ImageView iv = v.findViewById(R.id.handshape_item);
             if (position == 0) {
                 tv.setText("(any)");
                 tv.setVisibility(View.VISIBLE);

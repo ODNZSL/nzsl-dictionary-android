@@ -56,10 +56,10 @@ class DictionaryAdapter extends BaseAdapter {
         } else {
             v = convertView;
         }
-        TextView gv = (TextView) v.findViewById(R.id.item_gloss);
-        TextView mv = (TextView) v.findViewById(R.id.item_minor);
-        TextView mtv = (TextView) v.findViewById(R.id.item_maori);
-        ImageView dv = (ImageView) v.findViewById(R.id.diagram);
+        TextView gv = v.findViewById(R.id.item_gloss);
+        TextView mv = v.findViewById(R.id.item_minor);
+        TextView mtv = v.findViewById(R.id.item_maori);
+        ImageView dv = v.findViewById(R.id.diagram);
         if (position >= getCount()) {
             Log.e("filter", "request for item " + position + " in list of size " + getCount());
             return v;
