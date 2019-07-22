@@ -22,7 +22,7 @@ class DictionaryAdapter extends BaseAdapter {
     private Filter filter;
     private Context context;
 
-    public DictionaryAdapter(Context context, int resource, List<DictItem> words) {
+    DictionaryAdapter(Context context, int resource, List<DictItem> words) {
         this.resource = resource;
         this.words = words;
         this.context = context;
