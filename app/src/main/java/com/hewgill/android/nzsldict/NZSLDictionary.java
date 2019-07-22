@@ -33,7 +33,7 @@ import java.util.List;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
-public class NZSLDictionary extends AppCompatActivity {
+public class NZSLDictionary extends AppCompatActivity implements DictionaryAdapter.Presenter {
     private Dictionary dictionary;
     private EditText filterText;
     private TextWatcher filterTextWatcher;
@@ -46,6 +46,7 @@ public class NZSLDictionary extends AppCompatActivity {
     private Toolbar mToolbar;
     private View filterTextContainer;
     private List<DictItem> words;
+
 
     protected class HandshapeFilter extends Filter {
         @Override
@@ -269,7 +270,7 @@ public class NZSLDictionary extends AppCompatActivity {
         handshapeHeader = header.findViewById(R.id.handshape_header);
         handshapeHeader.setVisibility(View.GONE);
 
-        adapter = new DictionaryAdapter(this, R.layout.list_item, words);
+        adapter = new DictionaryAdapter(R.layout.list_item, this, words);
         adapter.setFilter(new HandshapeFilter());
         getListView().setAdapter(adapter);
         filterText = (EditText) findViewById(R.id.building_list_search_box);
@@ -298,12 +299,7 @@ public class NZSLDictionary extends AppCompatActivity {
         filterText.addTextChangedListener(filterTextWatcher);
 
         getListView().setVisibility(View.GONE);
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onListItemClick((ListView) parent, view, position, id);
-            }
-        });
+
 
         wotd = findViewById(R.id.building_list_wotd);
         ImageView wotdImage = (ImageView) findViewById(R.id.building_list_wotd_image);
@@ -358,15 +354,6 @@ public class NZSLDictionary extends AppCompatActivity {
         adapter.getFilter().filter(hf + "|" + lf);
     }
 
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        DictItem item = (DictItem) getListView().getItemAtPosition(position);
-        Log.d("list", item.gloss);
-        Intent next = new Intent();
-        next.setClass(this, WordActivity.class);
-        next.putExtra("item", item);
-        startActivity(next);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.nzsl_dictionary_menu, menu);
@@ -419,5 +406,26 @@ public class NZSLDictionary extends AppCompatActivity {
 
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    public void listItemClicked(DictItem item) {
+        Log.d("list", item.gloss);
+        Intent next = new Intent();
+        next.setClass(this, WordActivity.class);
+        next.putExtra("item", item);
+        startActivity(next);
+    }
+
+
+
+    @Override
+    public View getControlView(DictItem item, ViewGroup parent) {
+        return null;
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }

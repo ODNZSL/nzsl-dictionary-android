@@ -2,6 +2,7 @@ package com.hewgill.android.nzsldict;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,18 +16,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-class DictionaryAdapter extends BaseAdapter {
-    private int resource;
-    private List<DictItem> words;
-    private LayoutInflater inflater;
-    private Filter filter;
-    private Context context;
 
-    DictionaryAdapter(Context context, int resource, List<DictItem> words) {
-        this.resource = resource;
+
+class DictionaryAdapter extends BaseAdapter {
+    interface Presenter {
+        View getControlView(DictItem item, ViewGroup parent);
+        void listItemClicked(DictItem item);
+        Context getContext();
+    }
+
+    private static final int LIST_ITEM_CONTROLS = 100100;
+    private int itemLayout;
+    private List<DictItem> words;
+    private Filter filter;
+    private Presenter presenter;
+
+    DictionaryAdapter(int itemLayout, Presenter callback, List<DictItem> words) {
+        this.itemLayout = itemLayout;
+        this.presenter = presenter;
         this.words = words;
-        this.context = context;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -50,12 +58,25 @@ class DictionaryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v;
+        ViewGroup v;
+        final DictItem item = getItem(position);
+
         if (convertView == null) {
-            v = inflater.inflate(resource, parent, false);
+            v = (ViewGroup) ((LayoutInflater) presenter
+                    .getContext()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                    .inflate(itemLayout, parent, false);
         } else {
-            v = convertView;
+            v = (ViewGroup) convertView;
         }
+
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.listItemClicked(item);
+            }
+        });
+
         TextView gv = v.findViewById(R.id.item_gloss);
         TextView mv = v.findViewById(R.id.item_minor);
         TextView mtv = v.findViewById(R.id.item_maori);
@@ -64,13 +85,20 @@ class DictionaryAdapter extends BaseAdapter {
             Log.e("filter", "request for item " + position + " in list of size " + getCount());
             return v;
         }
-        DictItem item = getItem(position);
+
         gv.setText(item.gloss);
         mv.setText(item.minor);
         mtv.setText(item.maori);
 
+        View controlView = presenter.getControlView(item, v);
+        if (controlView != null && v.findViewWithTag(LIST_ITEM_CONTROLS) == null) {
+            controlView.setTag(LIST_ITEM_CONTROLS);
+            v.addView(controlView);
+        }
+
+
         try {
-            InputStream ims = context.getAssets().open(item.imagePath());
+            InputStream ims = presenter.getContext().getAssets().open(item.imagePath());
             Drawable d = Drawable.createFromStream(ims, null);
             dv.setImageDrawable(d);
         } catch (IOException e) {
@@ -80,11 +108,11 @@ class DictionaryAdapter extends BaseAdapter {
         return v;
     }
 
-    public Filter getFilter() {
+    Filter getFilter() {
         return filter;
     }
 
-    public void setFilter(Filter f) {
+    void setFilter(Filter f) {
         filter = f;
     }
 }
