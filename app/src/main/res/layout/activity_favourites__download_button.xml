@@ -1,0 +1,12 @@
+<ImageButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/action_favourite_item_download"
+    android:layout_width="24dp"
+    android:layout_height="24dp"
+    android:layout_gravity="center_vertical"
+    android:layout_marginStart="16dp"
+    android:layout_marginLeft="16dp"
+    android:contentDescription="Download this sign"
+    android:src="@drawable/ic_cloud_download"
+    android:background="@android:color/transparent"
+    android:tint="@color/accent" />

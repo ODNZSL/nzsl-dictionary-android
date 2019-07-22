@@ -47,17 +47,4 @@
         </TextView>
     </LinearLayout>
 
-    <ImageButton
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:src="@android:drawable/stat_sys_download"
-        android:background="@android:color/transparent"
-        android:tint="@color/primaryDark" />
-
-
-
-
 </LinearLayout>
