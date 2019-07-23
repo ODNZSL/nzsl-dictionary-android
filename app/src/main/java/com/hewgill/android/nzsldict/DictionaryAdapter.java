@@ -84,7 +84,8 @@ class DictionaryAdapter extends BaseAdapter {
         mtv.setText(item.maori);
 
         View controlView = presenter.getControlView(item, v);
-        if (controlView != null && v.findViewWithTag(LIST_ITEM_CONTROLS) == null) {
+        v.removeView(v.findViewWithTag(LIST_ITEM_CONTROLS));
+        if (controlView != null) {
             controlView.setTag(LIST_ITEM_CONTROLS);
             v.addView(controlView);
         }
