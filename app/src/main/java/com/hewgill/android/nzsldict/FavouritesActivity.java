@@ -148,16 +148,19 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
         adapter.notifyDataSetChanged();
     }
 
+
     @Override
-    public void listItemClicked(DictItem item) {
-        Log.d("list", item.gloss);
-        Intent next = new Intent();
-        next.setClass(this, WordActivity.class);
-        next.putExtra("item", item);
-        startActivity(next);
-    }
+    public View getControlView(final DictItem item, ViewGroup parent) {
 
+        boolean inProgress = item.downloadStatus == DownloadManager.STATUS_PENDING ||
+                item.downloadStatus == DownloadManager.STATUS_PAUSED ||
+                item.downloadStatus == DownloadManager.STATUS_RUNNING;
 
+        if (inProgress) {
+            TextView tv = new TextView(this);
+            tv.setText("...");
+            return tv;
+        }
 
     @Override
     public View getControlView(final DictItem item, ViewGroup parent) {
@@ -181,20 +184,11 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
     }
 
     private boolean notifyDownloadProgress(DictItem item, int downloadStatus) {
-        switch (downloadStatus) {
-            case DownloadManager.STATUS_SUCCESSFUL:
-                Toast.makeText(this, "Download of " + item.gloss + " completed.", Toast.LENGTH_SHORT).show();
-                return true; // Complete
-            case DownloadManager.STATUS_PENDING:
-                case DownloadManager.STATUS_PAUSED:
-                Toast.makeText(this, "Download of " + item.gloss + " is waiting to start.", Toast.LENGTH_SHORT).show();
-                return false; // Incomplete
-            case DownloadManager.STATUS_FAILED:
-                Toast.makeText(this, "Download of " + item.gloss + " failed. Please try again.", Toast.LENGTH_SHORT).show();
-                return true; // Complete
-        }
+        item.downloadStatus = downloadStatus;
+        mListView.invalidateViews();
 
-        return false;
+        return downloadStatus == DownloadManager.STATUS_SUCCESSFUL ||
+                downloadStatus == DownloadManager.STATUS_FAILED;
     }
 
     @Override
@@ -226,6 +220,11 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
 
             }
         }).start();
+    }
+
+    @Override
+    public void onDownloadCompleted() {
+        mListView.invalidateViews();
     }
 
 
