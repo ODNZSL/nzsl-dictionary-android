@@ -149,6 +149,8 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
 
     @Override
     public View getControlView(final DictItem item, ViewGroup parent) {
+        DictItemOfflineAvailability availability = new DictItemOfflineAvailability(this, item);
+        if (availability.availableOffline()) return null;
 
         boolean inProgress = item.downloadStatus == DownloadManager.STATUS_PENDING ||
                 item.downloadStatus == DownloadManager.STATUS_PAUSED ||
@@ -160,12 +162,18 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
             return tv;
         }
 
-    @Override
-    public View getControlView(final DictItem item, ViewGroup parent) {
-        View downloadButton =  getLayoutInflater().inflate(
+        View downloadButton = getLayoutInflater().inflate(
                 R.layout.activity_favourites__download_button,
                 parent,
                 false);
+
+        if (mNetworkManager.connected) {
+            ((ImageButton) downloadButton).clearColorFilter();
+        } else {
+            ((ImageButton) downloadButton).setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            return downloadButton;
+        }
+
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
