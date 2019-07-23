@@ -33,7 +33,7 @@ import java.util.List;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
-public class NZSLDictionary extends AppCompatActivity implements DictionaryAdapter.Presenter {
+public class NZSLDictionary extends AppCompatActivity implements DictionaryAdapter.Presenter, AdapterView.OnItemClickListener {
     private Dictionary dictionary;
     private EditText filterText;
     private TextWatcher filterTextWatcher;
@@ -240,6 +240,7 @@ public class NZSLDictionary extends AppCompatActivity implements DictionaryAdapt
         setContentView(R.layout.main);
 
         mSearchResultsList = (ListView) findViewById(android.R.id.list);
+        mSearchResultsList.setOnItemClickListener(this);
         mToolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(mToolbar);
 
@@ -409,14 +410,14 @@ public class NZSLDictionary extends AppCompatActivity implements DictionaryAdapt
     }
 
     @Override
-    public void listItemClicked(DictItem item) {
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        DictItem item = adapter.getItem(position);
         Log.d("list", item.gloss);
         Intent next = new Intent();
         next.setClass(this, WordActivity.class);
         next.putExtra("item", item);
         startActivity(next);
     }
-
 
 
     @Override

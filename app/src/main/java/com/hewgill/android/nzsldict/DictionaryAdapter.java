@@ -21,7 +21,6 @@ import java.util.List;
 class DictionaryAdapter extends BaseAdapter {
     interface Presenter {
         View getControlView(DictItem item, ViewGroup parent);
-        void listItemClicked(DictItem item);
         Context getContext();
     }
 
@@ -31,7 +30,7 @@ class DictionaryAdapter extends BaseAdapter {
     private Filter filter;
     private Presenter presenter;
 
-    DictionaryAdapter(int itemLayout, Presenter callback, List<DictItem> words) {
+    DictionaryAdapter(int itemLayout, Presenter presenter, List<DictItem> words) {
         this.itemLayout = itemLayout;
         this.presenter = presenter;
         this.words = words;
@@ -70,12 +69,6 @@ class DictionaryAdapter extends BaseAdapter {
             v = (ViewGroup) convertView;
         }
 
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.listItemClicked(item);
-            }
-        });
 
         TextView gv = v.findViewById(R.id.item_gloss);
         TextView mv = v.findViewById(R.id.item_minor);

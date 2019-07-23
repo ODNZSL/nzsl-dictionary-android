@@ -45,6 +45,7 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
         mListView.setEmptyView(findViewById(R.id.empty_favourites));
         mNetworkManager = new NetworkManager();
         mDownloadManager = (DownloadManager) this.getSystemService(DOWNLOAD_SERVICE);
+        mListView.setOnItemClickListener(this);
 
         findViewById(R.id.finish_activity).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,4 +232,16 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
             }
         }).start();
     }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        DictItem item = adapter.getItem(position);
+        Log.d("list", item.gloss);
+        Intent next = new Intent();
+        next.setClass(this, WordActivity.class);
+        next.putExtra("item", item);
+        startActivity(next);
+    }
+
 }
