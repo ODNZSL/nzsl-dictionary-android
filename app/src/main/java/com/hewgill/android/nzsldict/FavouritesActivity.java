@@ -113,19 +113,17 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
 
 
     private void enqueueFavouritesDownload() {
-        Toast.makeText(this, "Downloading favourites...", Toast.LENGTH_LONG).show();
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to make all of your favourites available offline?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
+                    public void onClick(DialogInterface dialog, int whichButton) {
         for (DictItem item : repo.all()) {
             downloadRequested(item);
         }
     }
-
-    private void registerDownloadReceiver() {
-        mDownloadReceiver = new DownloadReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        intentFilter.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED);
-        this.registerReceiver(mDownloadReceiver, intentFilter);
+                })
+                .setNegativeButton(android.R.string.no, null).show();
     }
 
 
