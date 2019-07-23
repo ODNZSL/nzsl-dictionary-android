@@ -41,7 +41,7 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
         mListView = (ListView) findViewById(R.id.favourites);
         repo = new FavouritesRepository(this);
         adapter = new DictionaryAdapter(R.layout.list_item, this, repo.all());
-        getListView().setAdapter(adapter);
+        mListView.setAdapter(adapter);
         mListView.setEmptyView(findViewById(R.id.empty_favourites));
         mNetworkManager = new NetworkManager();
         mDownloadManager = (DownloadManager) this.getSystemService(DOWNLOAD_SERVICE);
@@ -102,9 +102,10 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
                         for (DictItem item : repo.all()) {
                             removeRequested(item);
                         }
-                        ((DictionaryAdapter) getListView().getAdapter()).setWords(new ArrayList<DictItem>());
-                        ((DictionaryAdapter) getListView().getAdapter()).notifyDataSetChanged();
-                    }})
+                        adapter.setWords(new ArrayList<DictItem>());
+                        adapter.notifyDataSetChanged();
+                    }
+                })
                 .setNegativeButton(android.R.string.no, null).show();
 
     }
@@ -126,11 +127,6 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
         this.registerReceiver(mDownloadReceiver, intentFilter);
     }
 
-    private void unregisterDownloadReceiver() {
-        this.unregisterReceiver(mDownloadReceiver);
-    }
-
-    private ListView getListView() { return mListView; }
 
     private void downloadRequested(DictItem item) {
         if (new DictItemOfflineAvailability(this, item).availableOffline()) {
@@ -149,8 +145,7 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
 
     private void removeRequested(DictItem item) {
         repo.remove(item);
-        ((DictionaryAdapter) getListView().getAdapter()).notifyDataSetChanged();
-
+        adapter.notifyDataSetChanged();
     }
 
     @Override
