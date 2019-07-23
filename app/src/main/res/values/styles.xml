@@ -7,6 +7,8 @@
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/accent</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
     </style>
 
     <style name="WindowedAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -17,11 +19,15 @@
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:actionBarStyle">@style/WindowedAppTheme.ActionBarStyle</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
     </style>
 
-    <style name="WindowedAppTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+    <style name="WindowedAppTheme.ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
         <item name="android:titleTextStyle">@style/WindowedAppTheme.ActionBar.TitleTextStyle</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
     </style>
+
 
     <style name="WindowedAppTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@android:color/white</item>
