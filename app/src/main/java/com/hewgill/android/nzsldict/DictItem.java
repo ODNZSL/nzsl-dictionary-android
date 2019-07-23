@@ -14,6 +14,7 @@ public class DictItem implements Serializable, Comparable {
     public String video;
     public String handshape;
     public String location;
+    public int downloadStatus;
 
     static Map<String, String> Locations = new HashMap<String, String>();
 
