@@ -45,6 +45,7 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
         mListView.setEmptyView(findViewById(R.id.empty_favourites));
         mNetworkManager = new NetworkManager();
         mDownloadManager = (DownloadManager) this.getSystemService(DOWNLOAD_SERVICE);
+        mDownloadReceiver = new DownloadReceiver();
         mListView.setOnItemClickListener(this);
 
         findViewById(R.id.finish_activity).setOnClickListener(new View.OnClickListener() {
@@ -59,13 +60,13 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
     protected void onResume() {
         super.onResume();
         mNetworkManager.registerContext(getContext(), this);
-        registerDownloadReceiver();
+        mDownloadReceiver.registerContext(getContext(), this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterDownloadReceiver();
+        mDownloadReceiver.unregisterContext(getContext());
         mNetworkManager.unregisterContext(getContext());
     }
 
