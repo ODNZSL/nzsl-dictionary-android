@@ -96,7 +96,6 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
     private void clearFavourites() {
         new AlertDialog.Builder(this)
                 .setMessage("Are you sure you want to clear your favourites?")
-                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
