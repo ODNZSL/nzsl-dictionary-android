@@ -1,18 +1,16 @@
 package com.hewgill.android.nzsldict;
 
 import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
-import android.net.Network;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +18,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class FavouritesActivity extends BaseActivity implements DictionaryAdapter.Presenter, NetworkManager.NetworkCallback {
+public class FavouritesActivity extends BaseActivity implements DictionaryAdapter.Presenter,
+        NetworkManager.NetworkCallback,
+        DownloadReceiver.DownloadCallback,
+        AdapterView.OnItemClickListener {
+
     private ListView mListView;
     private DictionaryAdapter adapter;
     private FavouritesRepository repo;
@@ -117,10 +119,10 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-        for (DictItem item : repo.all()) {
-            downloadRequested(item);
-        }
-    }
+                        for (DictItem item : repo.all()) {
+                            downloadRequested(item);
+                        }
+                    }
                 })
                 .setNegativeButton(android.R.string.no, null).show();
     }
