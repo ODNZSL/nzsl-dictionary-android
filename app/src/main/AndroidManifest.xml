@@ -32,16 +32,6 @@
         <activity
             android:name=".FavouritesActivity"
             android:theme="@style/WindowedAppTheme" />
-
-        <receiver
-            android:name="com.hewgill.android.nzsldict.DownloadReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter android:priority="1099">
-                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
-                <action android:name="android.intent.action.DOWLOAD_COMPLETE" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>
