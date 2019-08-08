@@ -21,23 +21,10 @@
         android:id="@+id/empty_favourites"
        >
 
-        <TextView
-            android:id="@+id/empty_favourites_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center"
-            android:padding="16dp"
-            android:text="You haven't added anything to your favourites yet!"
-            android:textAlignment="center"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/finish_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_gravity="center"
-            android:text="Back" />
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/empty_favourites_webview" />
 
     </LinearLayout>
 

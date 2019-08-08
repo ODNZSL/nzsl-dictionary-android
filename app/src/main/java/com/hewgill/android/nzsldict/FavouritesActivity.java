@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -49,13 +50,8 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
         mDownloadManager = (DownloadManager) this.getSystemService(DOWNLOAD_SERVICE);
         mDownloadReceiver = new DownloadReceiver();
         mListView.setOnItemClickListener(this);
-
-        findViewById(R.id.finish_activity).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        ((WebView) findViewById(R.id.empty_favourites_webview))
+                .loadUrl("file:///android_asset/html/favourites.html");
     }
 
     @Override
