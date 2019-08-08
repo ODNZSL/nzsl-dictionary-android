@@ -10,13 +10,11 @@ import java.util.TreeSet;
 
 public class FavouritesRepository {
     private final Context mContext;
-    private final SharedPreferences mPrefsStore;
     private final String KEY = "NZSL_VOCAB_SHEET";
     private final String PREF_KEY = "VOCAB_SHEET_ITEMS";
 
     public FavouritesRepository(Context ctx) {
         mContext = ctx;
-        mPrefsStore = ctx.getSharedPreferences(KEY, Context.MODE_PRIVATE);
     }
 
     public List<DictItem> all() {
@@ -31,7 +29,8 @@ public class FavouritesRepository {
     }
 
     public void add(DictItem item) {
-        SharedPreferences.Editor edit = mPrefsStore.edit();
+        SharedPreferences.Editor edit = getPreferences().edit();
+        edit.clear();
         Set<String> newKeys = allKeys();
         newKeys.add(item.uniqueKey());
         edit.putStringSet(PREF_KEY, newKeys);
@@ -39,7 +38,8 @@ public class FavouritesRepository {
     }
 
     public void remove(DictItem item) {
-        SharedPreferences.Editor edit = mPrefsStore.edit();
+        SharedPreferences.Editor edit = getPreferences().edit();
+        edit.clear();
         Set<String> newKeys = allKeys();
         newKeys.remove(item.uniqueKey());
         (new DictItemOfflineAvailability(mContext, item)).unavailableOffline();
@@ -53,6 +53,10 @@ public class FavouritesRepository {
 
     private Set<String> allKeys() {
         Set<String> defaultValue = new TreeSet<>();
-        return mPrefsStore.getStringSet(PREF_KEY, defaultValue);
+        return getPreferences().getStringSet(PREF_KEY, defaultValue);
+    }
+
+    private SharedPreferences getPreferences() {
+        return mContext.getSharedPreferences(KEY, Context.MODE_PRIVATE);
     }
 }
