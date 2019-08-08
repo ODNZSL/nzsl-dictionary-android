@@ -411,7 +411,7 @@ public class NZSLDictionary extends AppCompatActivity implements DictionaryAdapt
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        DictItem item = adapter.getItem(position);
+        DictItem item = words.get(position - 1);
         Log.d("list", item.gloss);
         Intent next = new Intent();
         next.setClass(this, WordActivity.class);
