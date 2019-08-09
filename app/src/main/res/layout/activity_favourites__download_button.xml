@@ -7,6 +7,6 @@
     android:layout_marginStart="16dp"
     android:layout_marginLeft="16dp"
     android:contentDescription="Download this sign"
-    android:src="@drawable/ic_cloud_download"
+    android:src="@android:drawable/stat_sys_download"
     android:background="@android:color/transparent"
     android:tint="@color/accent" />
