@@ -21,45 +21,65 @@
       line-height: 1.6;
       font-size: 15px;
       -webkit-font-smoothing: antialiased;
+      flex-direction: column;
+      display: flex;
     }
 
-    figure {
-      margin: 0;
-      padding: 0;
-      padding-top: 2rem;
+    .favourites-help__title {
+      font-size: 24px; 
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex: 4;
     }
 
-    img { 
-      max-width: 100%;
+    .favourites-help__content {
+      flex: 6;
     }
 
-    #about-favourites {
-      background-color: #E0EEF7;
+    .media-item {
+      display: flex;
+      width: 100%;
+      border-top: solid 1px #ccc;
+      padding: 16px 16px 32px 16px;
       margin: auto -16px;
-      padding: 16px;
+    }
+
+    .media-item__image {
+      width: 48px;
+      margin-right: 16px;
+    }
+
+    .media-item__content h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
+  <div class="favourites-help__title">Your favourites list is empty</div>
+  <div class="favourites-help__content">
+    <div class="media-item">
+      <div class="media-item__image">
+        <img src="favourite-circle.svg" width="48" alt="Favourite icon" />
+      </div>
+      <div class="media-item__content">
+        <h2>1. Save signs to a favourites list</h2>
+        Use the favourite star button on any sign to add to your favourites list.
+        Deselect the star to remove the sign from your favourites.
+      </div>
+    </div>
 
-</body>
-  <p><em>Your favourites list is empty</em></p>
-
-  <div id="about-favourites">
-
-  <p>
-  Favourites are signs that you want to save to refer back to later. Favourites can be downloaded to your
-  device so that you can access all the information about the sign offline, including descriptions, illustrations and example videos.
-  </p>
-
-  <figure>
-    <img src="add_to_favourites.png" />
-    <figcaption>You can use the favourite button on any sign to add or remove it from your favourites list</figcaption>
-  </figure>
-
-  <figure>
-    <img src="download_favourites.png" />
-    <figcaption>You can use the download button in your favourites list to download all signs for offline use (requires internet connection)</figcaption>
-  </figure>
+    <div class="media-item">
+      <div class="media-item__image">
+        <img src="download-box.svg" width="48" alt="Download icon" />
+      </div>
+      <div class="media-item__content">
+        <h2>2. Download for use offline</h2>
+        Download your favourites list to your device so that you can access all the sign information offline.
+      </div>
+    </div>
   </div>
+  </body>
 </html>
