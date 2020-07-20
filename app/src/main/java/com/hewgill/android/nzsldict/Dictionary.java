@@ -33,7 +33,40 @@ public class Dictionary {
     private static final Integer EXACT_SECONDARY_MATCH_WEIGHTING = 70;
     private static final Integer CONTAINS_SECONDARY_MATCH_WEIGHTING = 60;
 
-    public static class DictItem implements Serializable, Comparable {
+    public static class SignLocations {
+        private static Map<String, String> locations = new HashMap<String, String>();
+        static {
+            locations.put("in front of body", "location_1_1_in_front_of_body");
+            //"palm",
+            locations.put("chest", "location_4_12_chest");
+            locations.put("lower head", "location_3_9_lower_head");
+            locations.put("fingers/thumb", "location_6_20_fingers_thumb");
+            locations.put("in front of face", "location_2_2_in_front_of_face");
+            locations.put("top of head", "location_3_4_top_of_head");
+            locations.put("head", "location_3_3_head");
+            locations.put("cheek", "location_3_8_cheek");
+            locations.put("nose", "location_3_6_nose");
+            locations.put("back of hand", "location_6_22_back_of_hand");
+            locations.put("neck/throat", "location_4_10_neck_throat");
+            locations.put("shoulders", "location_4_11_shoulders");
+            //"blades",
+            locations.put("abdomen", "location_4_13_abdomen");
+            locations.put("eyes", "location_3_5_eyes");
+            locations.put("ear", "location_3_7_ear");
+            locations.put("hips/pelvis/groin", "location_4_14_hips_pelvis_groin");
+            locations.put("wrist", "location_6_19_wrist");
+            locations.put("lower arm", "location_5_18_lower_arm");
+            locations.put("upper arm", "location_5_16_upper_arm");
+            locations.put("elbow", "location_5_17_elbow");
+            locations.put("upper leg", "location_4_15_upper_leg");
+        }
+
+        static Map<String, String> all() {
+            return locations;
+        }
+    }
+
+    public class DictItem implements Serializable, Comparable {
         public String gloss;
         public String minor;
         public String maori;
@@ -41,36 +74,6 @@ public class Dictionary {
         public String video;
         public String handshape;
         public String location;
-
-        static Map<String, String> Locations = new HashMap<String, String>();
-
-        static {
-            Locations.put("in front of body", "location_1_1_in_front_of_body");
-            //"palm",
-            Locations.put("chest", "location_4_12_chest");
-            Locations.put("lower head", "location_3_9_lower_head");
-            Locations.put("fingers/thumb", "location_6_20_fingers_thumb");
-            Locations.put("in front of face", "location_2_2_in_front_of_face");
-            Locations.put("top of head", "location_3_4_top_of_head");
-            Locations.put("head", "location_3_3_head");
-            Locations.put("cheek", "location_3_8_cheek");
-            Locations.put("nose", "location_3_6_nose");
-            Locations.put("back of hand", "location_6_22_back_of_hand");
-            Locations.put("neck/throat", "location_4_10_neck_throat");
-            Locations.put("shoulders", "location_4_11_shoulders");
-            //"blades",
-            Locations.put("abdomen", "location_4_13_abdomen");
-            Locations.put("eyes", "location_3_5_eyes");
-            Locations.put("ear", "location_3_7_ear");
-            Locations.put("hips/pelvis/groin", "location_4_14_hips_pelvis_groin");
-            Locations.put("wrist", "location_6_19_wrist");
-            Locations.put("lower arm", "location_5_18_lower_arm");
-            Locations.put("upper arm", "location_5_16_upper_arm");
-            Locations.put("elbow", "location_5_17_elbow");
-            Locations.put("upper leg", "location_4_15_upper_leg");
-        }
-
-        ;
 
         public DictItem() {
             gloss = null;
@@ -94,8 +97,7 @@ public class Dictionary {
 
         public String imagePath() {
             if (image.isEmpty()) return "";
-            String assetName = "images/signs/" + image.toLowerCase();
-            return assetName;
+            return "images/signs/" + image.toLowerCase();
         }
 
         public String handshapeImage() {
@@ -103,7 +105,7 @@ public class Dictionary {
         }
 
         public String locationImage() {
-            String r = Locations.get(location);
+            String r = SignLocations.all().get(location);
             if (r == null) {
                 r = "";
             }
@@ -123,8 +125,10 @@ public class Dictionary {
     }
 
     private ArrayList<DictItem> words = new ArrayList();
+    protected Context context;
 
     public Dictionary(Context context) {
+        this.context = context;
         InputStream db = null;
         try {
             db = context.getAssets().open("db/nzsl.dat");

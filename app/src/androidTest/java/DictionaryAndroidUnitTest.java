@@ -105,14 +105,14 @@ public class DictionaryAndroidUnitTest {
 
     @Test
     public void dictionaryItem_imagePathHandlesMissingImage() {
-        DictItem di = new DictItem();
+        DictItem di = mDictionary.new DictItem();
         di.image = "";
         assertEquals(di.imagePath(), "");
     }
 
     @Test
     public void dictionaryItem_imagePathHandlesRegularImage() {
-        DictItem di = new DictItem();
+        DictItem di = mDictionary.new DictItem();
         di.image = "picture_w30_6739.png";
         String expectedPath = "images/signs/picture_w30_6739.png";
         assertEquals(di.imagePath(), expectedPath);
