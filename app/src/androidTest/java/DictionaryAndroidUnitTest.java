@@ -117,4 +117,12 @@ public class DictionaryAndroidUnitTest {
         String expectedPath = "images/signs/picture_w30_6739.png";
         assertEquals(di.imagePath(), expectedPath);
     }
+
+    @Test
+    public void dictionaryItem_getVideoReplacesDeprecatedAssetServer() {
+        DictItem di = mDictionary.new DictItem();
+        di.video = "http://freelex.nzsl.vuw.ac.nz/video.mp4";
+        String expectedVideo = "https://nzsl-assets.vuw.ac.nz/video.mp4";
+        assertEquals(di.getVideo(), expectedVideo);
+    }
 }

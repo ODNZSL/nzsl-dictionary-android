@@ -112,6 +112,13 @@ public class Dictionary {
             return r;
         }
 
+        public String getVideo() {
+            Context ctx = Dictionary.this.context;
+            String deprecatedAssetServer = ctx.getString(R.string.deprecated_asset_server_origin);
+            String assetServer = ctx.getString(R.string.asset_server_origin);
+            return video.replaceFirst(deprecatedAssetServer, assetServer);
+        }
+
         public String toString() {
             return gloss + "|" + minor + "|" + maori;
         }

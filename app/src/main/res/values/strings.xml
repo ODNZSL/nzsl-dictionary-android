@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">NZSL Dictionary</string>
     <string name="menu_about">About</string>
+    <string name="deprecated_asset_server_origin">http://freelex.nzsl.vuw.ac.nz</string>
+    <string name="asset_server_origin">https://nzsl-assets.vuw.ac.nz</string>
 </resources>
