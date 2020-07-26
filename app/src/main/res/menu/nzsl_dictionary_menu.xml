@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
+            android:id="@+id/action_favourites"
+            android:icon="@drawable/ic_star_white_48dp"
+            android:title="Favourites"
+            app:showAsAction="always|withText" />
+        <item
             android:id="@+id/action_search_mode_handshape"
             android:icon="@drawable/ic_action_handshape"
             android:title="Search by Handshape/Location"

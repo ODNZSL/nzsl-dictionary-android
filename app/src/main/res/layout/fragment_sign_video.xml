@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-            android:text="Playing videos requires access to the Internet." />
+            android:text="Playing videos that have not been downloaded from your vocab sheet requires an internet connection." />
 
 
     </LinearLayout>

@@ -1,8 +1,8 @@
-import androidx.test.filters.SmallTest;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.SmallTest;
 
+import com.hewgill.android.nzsldict.DictItem;
 import com.hewgill.android.nzsldict.Dictionary;
-import com.hewgill.android.nzsldict.Dictionary.DictItem;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,7 +14,6 @@ import java.util.List;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -105,24 +104,16 @@ public class DictionaryAndroidUnitTest {
 
     @Test
     public void dictionaryItem_imagePathHandlesMissingImage() {
-        DictItem di = mDictionary.new DictItem();
+        DictItem di = new DictItem();
         di.image = "";
         assertEquals(di.imagePath(), "");
     }
 
     @Test
     public void dictionaryItem_imagePathHandlesRegularImage() {
-        DictItem di = mDictionary.new DictItem();
+        DictItem di = new DictItem();
         di.image = "picture_w30_6739.png";
         String expectedPath = "images/signs/picture_w30_6739.png";
         assertEquals(di.imagePath(), expectedPath);
-    }
-
-    @Test
-    public void dictionaryItem_getVideoReplacesDeprecatedAssetServer() {
-        DictItem di = mDictionary.new DictItem();
-        di.video = "http://freelex.nzsl.vuw.ac.nz/video.mp4";
-        String expectedVideo = "https://nzsl-assets.vuw.ac.nz/video.mp4";
-        assertEquals(di.getVideo(), expectedVideo);
     }
 }

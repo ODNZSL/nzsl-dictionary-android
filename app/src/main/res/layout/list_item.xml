@@ -3,42 +3,48 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginTop="8dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:paddingBottom="20dp"
+    android:paddingBottom="16dp"
+    android:descendantFocusability="blocksDescendants"
     android:background="#fff">
+    <ImageView android:id="@+id/diagram"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/hands"
+        android:scaleType="fitEnd" />
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/item_gloss"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="1dp"
-            style="@style/Base.TextAppearance.AppCompat.Title">
+            android:text="Three-line item"
+            style="@style/Base.TextAppearance.AppCompat.Subhead">
         </TextView>
         <TextView
             android:id="@+id/item_maori"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="1dp"
-            style="@style/Base.TextAppearance.AppCompat.Subhead">
+            android:text="Secondary text"
+            android:textColor="@android:color/black"
+            style="@style/Base.TextAppearance.AppCompat.Caption">
         </TextView>
         <TextView
             android:id="@+id/item_minor"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="1dp"
-            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:text="Secondary text"
+            style="@style/Base.TextAppearance.AppCompat.Caption"
             android:textStyle="italic">
         </TextView>
     </LinearLayout>
-    <ImageView android:id="@+id/diagram"
-        android:layout_width="120dp"
-        android:layout_height="88dp"
-        android:scaleType="fitEnd" />
+
 </LinearLayout>

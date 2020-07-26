@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_favourites_download"
+        android:icon="@android:drawable/stat_sys_download"
+        android:title="Download"
+        app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/action_favourites_clear"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="Remove"
+        app:showAsAction="always|withText" />
+</menu>

@@ -3,6 +3,8 @@ package com.hewgill.android.nzsldict;
 import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.content.Intent;
 import android.view.MenuItem;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
@@ -20,6 +22,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -27,6 +30,9 @@ public class BaseActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.action_favourites:
+                startActivity(new Intent(this, FavouritesActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,0 +1,86 @@
+<html>
+<head>
+  <title>About</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link href="file:///android_asset/fonts/Montserrat-Regular.ttf" rel="stylesheet">
+  <style type="text/css">
+    @font-face {
+          font-family: Montserrat;
+          src: url("file:///android_asset/fonts/Montserrat-Regular.ttf");
+    }
+  </style>
+
+  <style type="text/css">
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;;
+      padding: 16px;
+      padding-bottom: 0;
+      background-color: transparent;
+      color: rgba(0,0,0,0.87);
+      line-height: 1.6;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      flex-direction: column;
+      display: flex;
+    }
+
+    .favourites-help__title {
+      font-size: 24px; 
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex: 4;
+    }
+
+    .favourites-help__content {
+      flex: 6;
+    }
+
+    .media-item {
+      display: flex;
+      width: 100%;
+      border-top: solid 1px #ccc;
+      padding: 16px 16px 32px 16px;
+      margin: auto -16px;
+    }
+
+    .media-item__image {
+      width: 48px;
+      margin-right: 16px;
+    }
+
+    .media-item__content h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="favourites-help__title">Your favourites list is empty</div>
+  <div class="favourites-help__content">
+    <div class="media-item">
+      <div class="media-item__image">
+        <img src="favourite-circle.svg" width="48" alt="Favourite icon" />
+      </div>
+      <div class="media-item__content">
+        <h2>1. Save signs to a favourites list</h2>
+        Use the favourite star button on any sign to add to your favourites list.
+        Tap on the star again to remove the sign from your favourites.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-item__image">
+        <img src="download-box.svg" width="48" alt="Download icon" />
+      </div>
+      <div class="media-item__content">
+        <h2>2. Download for use offline</h2>
+        Download your favourites list to your device to download videos onto your
+        device and view them even when you're offline
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

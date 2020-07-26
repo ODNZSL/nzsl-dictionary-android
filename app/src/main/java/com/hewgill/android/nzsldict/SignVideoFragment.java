@@ -23,22 +23,17 @@ import android.widget.VideoView;
  * Use the {@link SignVideoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SignVideoFragment extends Fragment {
+public class SignVideoFragment extends Fragment implements NetworkManager.NetworkCallback {
     private static final String ARG_DICT_ITEM = "dictItem";
     private VideoView mVideo;
     private View mRootView;
     private View mAnchorView;
-    private boolean mMediaControllerLaidOut = false;
-    private Dictionary.DictItem mDictItem;
+    private DictItem mDictItem;
+    private NetworkManager mNetworkManager;
+    private DictItemOfflineAvailability mOfflineAvailability;
     private MediaController mMediaController;
     private View mNoNetworkFrame;
-    private IntentFilter mConnectivityIntentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-    private BroadcastReceiver mConnectivityChangeReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            SignVideoFragment.this.updateViewForConnectivityStatus();
-        }
-    };
+
 
     public SignVideoFragment() {
         // Required empty public constructor
@@ -52,7 +47,7 @@ public class SignVideoFragment extends Fragment {
      * @param dictItem The dictItem to use as the context for the fragment
      * @return A new instance of fragment SignIllustrationFragment.
      */
-    public static SignVideoFragment newInstance(Dictionary.DictItem dictItem) {
+    public static SignVideoFragment newInstance(DictItem dictItem) {
         SignVideoFragment fragment = new SignVideoFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_DICT_ITEM, dictItem);
@@ -64,36 +59,38 @@ public class SignVideoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMediaController = new MediaController(getContext());
+        mNetworkManager = new NetworkManager();
         if (getArguments() != null) {
-            mDictItem = (Dictionary.DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
+            mDictItem = (DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
+            mOfflineAvailability = new DictItemOfflineAvailability(getActivity(), mDictItem);
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getContext().registerReceiver(mConnectivityChangeReceiver, mConnectivityIntentFilter);
+        mNetworkManager.registerContext(getContext(), this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        getContext().unregisterReceiver(mConnectivityChangeReceiver);
+        mNetworkManager.registerContext(getContext(), this);
     }
 
     public boolean updateViewForConnectivityStatus() {
-        boolean networkIsAvailable = isNetworkAvailable();
+        boolean videoIsAvailable = isVideoAvailable();
 
-        if (networkIsAvailable) {
+        if (videoIsAvailable) {
             mVideo.setVisibility(View.VISIBLE);
             mNoNetworkFrame.setVisibility(View.GONE);
-            mVideo.setVideoURI(Uri.parse(mDictItem.video));
+            mVideo.setVideoURI(mOfflineAvailability.cacheFirstVideoUri());
         } else {
             mVideo.setVisibility(View.GONE);
             mNoNetworkFrame.setVisibility(View.VISIBLE);
         }
 
-        return networkIsAvailable;
+        return videoIsAvailable;
     }
 
     @Override
@@ -102,7 +99,7 @@ public class SignVideoFragment extends Fragment {
          mRootView = inflater.inflate(R.layout.fragment_sign_video, container, false);
          mAnchorView = mRootView.findViewById(R.id.sign_video_anchor);
 
-        mVideo = (VideoView) mRootView.findViewById(R.id.sign_video);
+        mVideo = mRootView.findViewById(R.id.sign_video);
         mNoNetworkFrame = mRootView.findViewById(R.id.sign_video_network_unavailable);
 
 
@@ -118,19 +115,12 @@ public class SignVideoFragment extends Fragment {
             }
         });
 
-        // Start loading video if network is available
-        if (isNetworkAvailable()) updateViewForConnectivityStatus();
 
         return mRootView;
     }
 
-
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    private boolean isVideoAvailable() {
+        return mOfflineAvailability.availableOffline() || mNetworkManager.connected;
     }
 
     public void showControls() {
@@ -144,4 +134,8 @@ public class SignVideoFragment extends Fragment {
         mMediaController.hide();
     }
 
+    @Override
+    public void onConnectionStatusChanged(boolean connected) {
+        this.updateViewForConnectivityStatus();
+    }
 }
