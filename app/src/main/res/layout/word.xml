@@ -6,13 +6,7 @@
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
-<<<<<<< HEAD
     <androidx.appcompat.widget.Toolbar
-=======
-
-
-    <android.support.v7.widget.Toolbar
->>>>>>> Add floating action button for toggling vocab sheet availability of signs
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primaryLight"
@@ -56,7 +50,7 @@
                     android:textStyle="italic" />
             </LinearLayout>
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/add_to_vocab_sheet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,13 +62,8 @@
                 app:srcCompat="@drawable/ic_star_white_48dp" />
 
         </LinearLayout>
-
-<<<<<<< HEAD
     </androidx.appcompat.widget.Toolbar>
-=======
 
-    </android.support.v7.widget.Toolbar>
->>>>>>> Add floating action button for toggling vocab sheet availability of signs
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/sign_tabs"

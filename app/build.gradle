@@ -26,7 +26,7 @@ android {
     }
 
     dependencies {
-        implementation 'com.google.android.material:material:1.0.0'
+        implementation 'com.google.android.material:material:1.1.0'
         implementation 'io.github.inflationx:calligraphy3:3.1.1'
         implementation 'io.github.inflationx:viewpump:2.0.3'
         androidTestImplementation 'androidx.test:core:1.2.0'
@@ -35,6 +35,11 @@ android {
         androidTestImplementation 'androidx.test:rules:1.2.0'
         androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
         androidTestImplementation 'androidx.test.espresso:espresso-web:3.2.0'
+        androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
     }
+}
+
+dependencies {
+    implementation 'com.google.android.material:material:1.1.0'
 }
 
