@@ -1,0 +1,7 @@
+New Zealand Sign Language Dictionary contains 4500+ multimedia, multilingual dictionary entries.
+
+A "Word of the Day" feature introduces you to a new vocabulary word every day.
+
+All the diagrams are built in to the application so they can be viewed offline. To view the videos, an active Internet connection is required.
+
+Feedback survey: https://insights.hotjar.com/s?siteId=587430&surveyId=26419
