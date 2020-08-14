@@ -34,3 +34,4 @@ proguard/
 app/src/main/assets/images/*
 !app/src/main/assets/images/.gitkeep
 secrets
+fastlane/report.xml
