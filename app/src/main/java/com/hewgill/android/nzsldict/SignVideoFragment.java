@@ -108,10 +108,22 @@ public class SignVideoFragment extends Fragment implements NetworkManager.Networ
                 return false;
             }
         });
+
+        final boolean[] isPrepared = { false };
         mVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             public void onPrepared(MediaPlayer mp) {
+                // avoid resetting the media controller multiple times, because
+                // that triggers the controls to be hidden which can be confusing
+                if (isPrepared[0]) {
+                    mVideo.start();
+
+                    return;
+                }
+
                 mVideo.setMediaController(mMediaController);
                 mMediaController.setAnchorView(mAnchorView);
+                isPrepared[0] = true;
+
                 mVideo.start();
             }
         });
