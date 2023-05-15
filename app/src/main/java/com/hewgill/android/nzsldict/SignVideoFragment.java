@@ -112,6 +112,7 @@ public class SignVideoFragment extends Fragment implements NetworkManager.Networ
             public void onPrepared(MediaPlayer mp) {
                 mVideo.setMediaController(mMediaController);
                 mMediaController.setAnchorView(mAnchorView);
+                mVideo.start();
             }
         });
 
