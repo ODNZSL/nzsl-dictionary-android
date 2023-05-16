@@ -58,7 +58,17 @@ public class SignVideoFragment extends Fragment implements NetworkManager.Networ
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMediaController = new MediaController(getContext());
+        mMediaController = new MediaController(getContext()) {
+            @Override
+            public void show(int timeout) {
+                // we want the controller to remain shown until hide() is called by default,
+                // which can be done by passing a timeout of 0; however some of the private
+                // internals of MediaController call show _and_ they favor doing so with the
+                // default value explicitly rather than calling show(), so we have to do this
+                // override which just turns any use of the default value into 0.
+                super.show(timeout == 3000 ? 0 : timeout);
+            }
+        };
         mNetworkManager = new NetworkManager();
         if (getArguments() != null) {
             mDictItem = (DictItem) getArguments().getSerializable(ARG_DICT_ITEM);
@@ -108,10 +118,22 @@ public class SignVideoFragment extends Fragment implements NetworkManager.Networ
                 return false;
             }
         });
+
+        final boolean[] isPrepared = { false };
         mVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             public void onPrepared(MediaPlayer mp) {
+                // avoid resetting the media controller multiple times, because
+                // that triggers the controls to be hidden which can be confusing
+                if (isPrepared[0]) {
+                    mVideo.start();
+
+                    return;
+                }
+
                 mVideo.setMediaController(mMediaController);
                 mMediaController.setAnchorView(mAnchorView);
+                isPrepared[0] = true;
+
                 mVideo.start();
             }
         });
