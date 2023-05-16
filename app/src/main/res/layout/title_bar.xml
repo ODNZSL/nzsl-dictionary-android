@@ -7,6 +7,9 @@
   >
 
     <TextView
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="MissingPrefix"
+
         style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,6 +20,9 @@
         />
 
     <TextView
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="MissingPrefix"
+
         style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
