@@ -133,15 +133,11 @@ public class WordActivity extends BaseActivity {
         }
     }
 
-    private class WordPageChangeListener implements ViewPager.OnPageChangeListener {
+    private class WordPageChangeListener extends ViewPager.SimpleOnPageChangeListener {
         private final ViewPager mPager;
 
         private WordPageChangeListener(ViewPager pager) {
             mPager = pager;
-        }
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         }
 
         @Override
@@ -152,11 +148,6 @@ public class WordActivity extends BaseActivity {
             } else {
                 mVideoFragment.stop();
             }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
         }
     }
 }
