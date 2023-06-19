@@ -217,7 +217,7 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
 
                         @Override
                         public void run() {
-                            int status = result.getInt(result.getColumnIndex(DownloadManager.COLUMN_STATUS));
+                            int status = result.getInt(result.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS));
                             isDownloading = FavouritesActivity.this.notifyDownloadProgress(item, status);
                         }
                     });
