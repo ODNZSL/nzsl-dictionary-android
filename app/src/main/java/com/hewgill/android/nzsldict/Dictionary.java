@@ -43,7 +43,7 @@ public class Dictionary {
                     break;
                 }
                 String[] a = s.split("\t");
-                words.add(new DictItem(a[0], a[1], a[2], a[3], a[4], a[5], a[6]));
+                words.add(new DictItem(a[0], a[1], a[2], a[3], a[4], a[5], a.length > 6 ? a[6] : null));
             }
         } catch (IOException x) {
             Log.d("dictionary", "exception reading from word list " + x.getMessage());
