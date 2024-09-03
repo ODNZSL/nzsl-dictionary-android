@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
+    namespace 'com.hewgill.android.nzsldict'
+
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.hewgill.android.nzsldict"
         minSdkVersion 14
-        targetSdkVersion 33
+        targetSdkVersion 34
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionCode 47
         versionName "47"
