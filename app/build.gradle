@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace 'com.hewgill.android.nzsldict'
+
     compileSdkVersion 33
 
     defaultConfig {
