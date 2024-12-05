@@ -29,7 +29,7 @@ android {
         implementation 'com.google.android.material:material:1.1.0'
         implementation 'io.github.inflationx:calligraphy3:3.1.1'
         implementation 'io.github.inflationx:viewpump:2.0.3'
-        androidTestImplementation 'androidx.test:core:1.2.0'
+        androidTestImplementation 'androidx.test:core:1.6.1'
         androidTestImplementation 'androidx.test.ext:junit:1.2.1'
         androidTestImplementation 'androidx.test:runner:1.6.2'
         androidTestImplementation 'androidx.test:rules:1.2.0'
