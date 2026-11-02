@@ -25,14 +25,13 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the toolbar's NavigationIcon as up/home button
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.action_favourites:
-                startActivity(new Intent(this, FavouritesActivity.class));
-                break;
+        int itemId = item.getItemId();
+        // Respond to the toolbar's NavigationIcon as up/home button
+        if (itemId == android.R.id.home) {
+            finish();
+            return true;
+        } else if (itemId == R.id.action_favourites) {
+            startActivity(new Intent(this, FavouritesActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
