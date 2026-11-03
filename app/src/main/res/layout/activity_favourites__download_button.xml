@@ -1,5 +1,6 @@
 <ImageButton
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/action_favourite_item_download"
     android:layout_width="24dp"
     android:layout_height="24dp"
@@ -9,4 +10,4 @@
     android:contentDescription="Download this sign"
     android:src="@android:drawable/stat_sys_download"
     android:background="@android:color/transparent"
-    android:tint="@color/accent" />
+    app:tint="@color/accent" />
