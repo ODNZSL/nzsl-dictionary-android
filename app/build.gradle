@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.hewgill.android.nzsldict"
+    namespace = "com.hewgill.android.nzsldict"
     compileSdk 36
 
     defaultConfig {
         applicationId "com.hewgill.android.nzsldict"
         minSdk 23
-        targetSdk 33
+        targetSdk 36
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionCode 47
         versionName "47"

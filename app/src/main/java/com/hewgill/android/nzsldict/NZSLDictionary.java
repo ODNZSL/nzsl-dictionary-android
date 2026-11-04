@@ -243,6 +243,7 @@ public class NZSLDictionary extends AppCompatActivity implements DictionaryAdapt
         mSearchResultsList.setOnItemClickListener(this);
         mToolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(mToolbar);
+        BaseActivity.applySystemBarInsets(this);
 
         View header = LayoutInflater.from(this).inflate(R.layout.handshape, null);
         getListView().addHeaderView(header, null, false);

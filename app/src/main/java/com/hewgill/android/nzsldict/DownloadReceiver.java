@@ -9,6 +9,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 public class DownloadReceiver {
     private DownloadCallback callback;
 
@@ -36,7 +38,8 @@ public class DownloadReceiver {
         IntentFilter filter = new IntentFilter();
         filter.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED);
         filter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        context.registerReceiver(receiver, filter);
+        // DownloadManager sends these broadcasts from another app, so the receiver must be exported.
+        ContextCompat.registerReceiver(context, receiver, filter, ContextCompat.RECEIVER_EXPORTED);
     }
 
     public void unregisterContext(Context context) {
