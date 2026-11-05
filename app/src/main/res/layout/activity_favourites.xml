@@ -6,6 +6,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/app_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:elevation="4dp"
+        app:titleTextColor="@android:color/white" />
+
     <ListView
         android:id="@+id/favourites"
         android:layout_width="match_parent"

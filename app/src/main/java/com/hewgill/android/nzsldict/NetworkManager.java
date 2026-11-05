@@ -7,6 +7,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import androidx.core.content.ContextCompat;
+
 public class NetworkManager {
 
     protected boolean connected;
@@ -32,7 +34,7 @@ public class NetworkManager {
     public void registerContext(Context context, NetworkCallback callback) {
         this.callback = callback;
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        context.registerReceiver(receiver, filter);
+        ContextCompat.registerReceiver(context, receiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
         updateStatus(context);
     }
 

@@ -39,9 +39,9 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Favourites");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_favourites);
+        setupAppToolbar();
+        getSupportActionBar().setTitle("Favourites");
         mListView = (ListView) findViewById(R.id.favourites);
         repo = new FavouritesRepository(this);
         adapter = new DictionaryAdapter(R.layout.list_item, this, repo.all());
@@ -79,13 +79,11 @@ public class FavouritesActivity extends BaseActivity implements DictionaryAdapte
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_favourites_clear:
-                clearFavourites();
-                break;
-            case R.id.action_favourites_download:
-                enqueueFavouritesDownload();
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_favourites_clear) {
+            clearFavourites();
+        } else if (itemId == R.id.action_favourites_download) {
+            enqueueFavouritesDownload();
         }
 
         invalidateOptionsMenu();

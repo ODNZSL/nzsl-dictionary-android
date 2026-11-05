@@ -243,6 +243,7 @@ public class NZSLDictionary extends AppCompatActivity implements DictionaryAdapt
         mSearchResultsList.setOnItemClickListener(this);
         mToolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(mToolbar);
+        BaseActivity.applySystemBarInsets(this);
 
         View header = LayoutInflater.from(this).inflate(R.layout.handshape, null);
         getListView().addHeaderView(header, null, false);
@@ -381,24 +382,21 @@ public class NZSLDictionary extends AppCompatActivity implements DictionaryAdapt
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search_mode_handshape:
-                filterText.setText("(handshape search)");
-                filterText.setEnabled(false);
-                filterTextContainer.setVisibility(View.GONE);
-                handshapeHeader.setVisibility(View.VISIBLE);
-                updateHandshapeList();
-                break;
-            case R.id.action_search_mode_keyword:
-                filterText.setText("");
-                filterText.setEnabled(true);
-                filterTextContainer.setVisibility(View.VISIBLE);
-                handshapeHeader.setVisibility(View.GONE);
-                adapter.getFilter().filter(null);
-                break;
-            case R.id.action_favourites:
-                startActivity(new Intent(this, FavouritesActivity.class));
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_search_mode_handshape) {
+            filterText.setText("(handshape search)");
+            filterText.setEnabled(false);
+            filterTextContainer.setVisibility(View.GONE);
+            handshapeHeader.setVisibility(View.VISIBLE);
+            updateHandshapeList();
+        } else if (itemId == R.id.action_search_mode_keyword) {
+            filterText.setText("");
+            filterText.setEnabled(true);
+            filterTextContainer.setVisibility(View.VISIBLE);
+            handshapeHeader.setVisibility(View.GONE);
+            adapter.getFilter().filter(null);
+        } else if (itemId == R.id.action_favourites) {
+            startActivity(new Intent(this, FavouritesActivity.class));
         }
 
         invalidateOptionsMenu();
