@@ -42,8 +42,9 @@ public class Dictionary {
                 if (s == null) {
                     break;
                 }
-                String[] a = s.split("\t");
-                words.add(new DictItem(a[0], a[1], a[2], a[3], a[4], a[5], a.length > 6 ? a[6] : null));
+                // A limit of -1 keeps empty trailing columns, such as a word with no location.
+                String[] a = s.split("\t", -1);
+                words.add(new DictItem(a[0], a[1], a[2], a[3], a[4], a[5], a.length > 6 && !a[6].isEmpty() ? a[6] : null));
             }
         } catch (IOException x) {
             Log.d("dictionary", "exception reading from word list " + x.getMessage());
